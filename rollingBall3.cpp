@@ -64,7 +64,25 @@ int findPath(int **grid, int row, int col, int N){
 
 	return answer;
 }
+int getMax(int **grid,int N){
 
+	int row=0 , col=0, max; 
+		max = findPath(grid,row,col,N);
+
+		for( row =0 ; row< N; row++){
+				cout<<"\n";
+			for( col=0; col<N; col++){
+				if(  findPath(grid,row,col,N) > max ){
+					max = findPath(grid,row,col,N);	
+				}
+				cout << " "<< findPath(grid,row,col,N);
+				
+			}
+
+		}
+return max;
+
+}
 int main(){
 
 	freopen("input.txt", "r", stdin);
@@ -90,27 +108,17 @@ int main(){
 			}
 		
 		print(grid, N);
-		int row=0 , col=0, max; 
-		max = findPath(grid,row,col,N);
+		  
+		int max = getMax(grid,N);
 
-		for( row =0 ; row< N; row++){
-				cout<<"\n";
-			for( col=0; col<N; col++){
-				if(  findPath(grid,row,col,N) > max ){
-					max = findPath(grid,row,col,N);	
-				}
-				cout << " "<< findPath(grid,row,col,N);
-				
-			}
-
-		}
 		cout <<endl;
 		cout << "#"<<tc << ":"<< max;
 		cout << endl;
 
-	}
+		
+
+		}
+		
 
 	return 0;
 }
-
-
