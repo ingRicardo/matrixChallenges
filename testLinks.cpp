@@ -22,15 +22,8 @@ struct queueNode{
 
 struct node
 {
-	int data;
-	node *next;
-};
-
-
-struct Qnode
-{
 	queueNode data;
-	Qnode *next;
+	node *next;
 };
 
 
@@ -38,38 +31,14 @@ class linked_list
 {
 private:
 	node *head, *tail;
-private:
-	Qnode *Qhead, *Qtail;
-
 public:
 	linked_list()
 	{
 		head = NULL;
 		tail = NULL;
-		Qhead = NULL;
-		Qtail = NULL;
 	}
 
 	void push(queueNode n)
-	{
-		Qnode *tmp = new Qnode;
-		tmp->data = n;
-		tmp->next = NULL;
-
-		if (Qhead == NULL)
-		{
-			Qhead = tmp;
-			Qtail = tmp;
-		}
-		else
-		{
-			Qtail->next = tmp;
-			Qtail = Qtail->next;
-		}
-	}
-
-
-	void add_node(int n)
 	{
 		node *tmp = new node;
 		tmp->data = n;
@@ -94,17 +63,6 @@ public:
 		temp = head;
 		while (temp != NULL)
 		{
-			cout << "data " << temp->data << "\n";
-			temp = temp->next;
-		}
-	}
-
-	void Qdisplay()
-	{
-		Qnode *temp = new Qnode;
-		temp = Qhead;
-		while (temp != NULL)
-		{
 
 			cout << "data X " << temp->data.pt.x << "\n";
 			cout << "data Y " << temp->data.pt.y << "\n";
@@ -112,6 +70,7 @@ public:
 			temp = temp->next;
 		}
 	}
+
 
 	bool isEmpty(){
 		node *temp = new node;
@@ -122,16 +81,7 @@ public:
 			return false;
 	}
 
-	bool isEmptyQ(){
-		Qnode *temp = new Qnode;
-		temp = Qhead;
-		if (temp == NULL)
-			return true;
-		else
-			return false;
-	}
-
-	void delete_first()
+	void pop()
 	{
 		node *temp = new node;
 		temp = head;
@@ -139,23 +89,10 @@ public:
 		delete temp;
 	}
 
-	void pop()
-	{
-		Qnode *temp = new Qnode;
-		temp = Qhead;
-		Qhead = Qhead->next;
-		delete temp;
-	}
 
 	node front()  {
 		node *temp = new node;
 		temp = head;
-		return *temp;
-	}
-
-	Qnode frontQ()  {
-		Qnode *temp = new Qnode;
-		temp = Qhead;
 		return *temp;
 	}
 
@@ -188,9 +125,9 @@ int shortestPathBinaryMatrixBFS(int **grid, Point src, Point dest, int N, int M)
 	queueNode s = { src, 1 };
 	q.push(s);
 
-	while (!q.isEmptyQ()){
+	while (!q.isEmpty()){
 
-		Qnode curr = q.frontQ();
+		node curr = q.front();
 		Point pt = curr.data.pt;
 
 		if (pt.x == dest.x && pt.y == dest.y)
