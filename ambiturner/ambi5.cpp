@@ -1,86 +1,158 @@
 #include <iostream>
 using namespace std;
 
+void printVisit( bool **visited ,int h, int w )
+{
 
+	for(int i=0; i< h; i++)
+	{
+		for(int j=0; j<w; j++)
+		{
+
+			cout << visited[i][j]<< " ";
+		}
+		cout << endl;
+	}
+
+}
 bool isValid(int **grid, bool **visited, int h, int w , int row, int col)
 {
 
-    return row>-1 && row<h && col >-1 && col<w && grid[row][col] ==48 && !visited[row][col];
+    return row>-1 && row<h && col >-1 && col<w /*&& grid[row][col] ==48*/ && !visited[row][col];
 
 }
-void recursion(int cc ,int &spins ,int **grid, bool **visited, int h, int w, int row, int col, int &max)
+void recursion(int startX, int startY,int &direc ,int &spins ,int **grid, bool **visited, int h, int w, int row, int col, int &max)
 {
         //R,D,L,U
         //0,1,2,3
     
    int deltaRow [] = {0,1, 0,-1};
    int deltaCol [] = {1,0,-1, 0};
+   
+   //int deltaRow [] = {0,1,-1};
+   //int deltaCol [] = {1,0, 0};
+
    int deltaSize = sizeof(deltaRow)/sizeof(deltaRow[0]);
-        
+      //cc++;
    visited[row][col]=true;
-   cc++;
+   max++;
+
    // 85 //UP
    // 82 //RIGTH
    // 68 // DOWN
    // 76 //LEFT
   // 48 //cero 0
-  // 41 //one 1
-  if(grid[row][col] == 85   )
-   {
-	cout << "\n UP "<< grid[row][col]<< endl;	
-
-   }
-   else if (   grid[row][col]==82 )  
-   {
-	cout << " \nRIGHT "<< grid[row][col]<<endl;
-   }
-  else if (  grid[row][col]==68 )
-  {
-	cout<< "\n DOWN"<< grid[row][col]<< endl;
-
-  }
-  else if (   grid[row][col]==76  )
-  {
-	cout<<"\nLEFT"<< grid[row][col]<< endl;
-
-  }
-  else
-  {
-
-//	return;
-  }
-
- int sp =0;  	
+  // 49 //one 1
+/*
+#1:4
+#2:12
+#3:6
+#4:53
+#5:27
+#6:1300
+#7:25
+#8:1
+#9:524
+#10:69
+*/
    for(int idx =0; idx<deltaSize; idx ++)
    {
-	sp++;
+
         int nextRow = row + deltaRow[idx];
         int nextCol = col + deltaCol[idx];
-        if(isValid(grid,visited,h,w,nextRow,nextCol)  )
+	if (direc == 3 && idx ==2 && isValid(grid,visited,h,w,nextRow,nextCol) && grid[nextRow][nextCol] !=49  )
+		{
+		cout << "SHOULD RETURN "<<endl;
+			return;
+		}
+
+        if(isValid(grid,visited,h,w,nextRow,nextCol) && grid[nextRow][nextCol] !=49  /*&& ( direc !=3 && idx!=2 ) */)
         {
-              recursion(cc,spins,grid,visited,h,w,nextRow,nextCol,max);     
+		int next = grid[nextRow][nextCol];
+ 		cout << " valid "<< nextRow <<", "<< nextCol<<endl;
+		if (next == 49)
+			cout << "WALL"<<endl;
+
+		direc = idx;
+		if(visited[nextRow][nextCol] )
+			cout << "VISITED"<<endl;
+        
+			recursion(startX, startY,direc,spins,grid,visited,h,w,nextRow,nextCol,max);     
+		
+			if(startX == row && startY == col || idx == 2 && direc == 3)
+				return;
         }
+	else
+	{
+
+			//cout << " not valid "<< nextRow <<", "<< nextCol<<endl;
+ 
+	}
     }
+   //if(sp ==3)
+  // {
+//	cout << "return "<<max<<endl;
 
-   if(sp ==4)
-   {
-	   return;
-
-   }
-   cc--;
-   visited[row][col]=false;
+   //}
+   //cc--;
+   //max--;
+ //  visited[row][col]=false;
 
 }
 
+int *getPos ( int **grid , int h, int w , int &c)
+{
+    int *pos= new int[2];
+    for(int row =0 ; row < h; row++)
+    {
+        for(int col = 0; col< w; col++)
+        {
+	 	c++;
+	 	if(grid[row][col] == 85   )
+   		{
+			cout << "\n FOUND -----  UP "<< grid[row][col]<< endl;	
+			pos[0] = row;
+			pos[1] = col;
+			return pos ;
+  		}		
+   		else if (   grid[row][col]==82 )  
+  		{
+
+			cout << " \n FOUND -----  RIGHT "<< grid[row][col]<<endl;
+			pos[0] = row;
+			pos[1] = col;
+			return pos ;
+  		}
+  		else if (  grid[row][col]==68 )
+  		{
+			cout<< "\n FOUND ------ DOWN "<< grid[row][col]<< endl;
+			pos[0] = row;
+			pos[1] = col;
+			return pos ;
+  		}
+  		else if (   grid[row][col]==76  )
+ 		{
+			cout<<"\nFOUND ------ LEFT "<< grid[row][col]<< endl;
+			pos[0] = row;
+			pos[1] = col;
+			return pos ;
+
+ 		}
+
+	}	
+    }
+   
+    return pos; 
+}
 
 void getAns(int **grid, bool ** visited, int h, int w, int &max)
 {
-
-   int deltaID =0, spins =0,row=0, col=0;
-
-   recursion(deltaID,spins ,grid, visited,h, w, row, col, max);
-
-
+	int deltaID =0, spins =0,row=0, col=0, c=0;
+	int *start =getPos(grid,h,w,c);
+	cout << " START --> "<< start[0] <<", "<< start[1]<<  " c -> "<< c<< endl;
+	recursion(start[0],start[1],deltaID,spins ,grid, visited,h, w, start[0],start[1], max);
+	cout<<endl;
+	printVisit(visited,h,w);
 }
 
 int main()
