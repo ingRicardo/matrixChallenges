@@ -5,7 +5,7 @@ using namespace std;
 bool isValid(int **grid, bool **visited, int h, int w , int row, int col)
 {
 
-    return row>-1 && row<h && col >-1 /*&& col<w && grid[row][col] ==48*/ && !visited[row][col];
+    return row>-1 && row<h && col >-1 && col<w && grid[row][col] ==48 && !visited[row][col];
 
 }
 void recursion(int cc ,int &spins ,int **grid, bool **visited, int h, int w, int row, int col, int &max)
@@ -23,24 +23,37 @@ void recursion(int cc ,int &spins ,int **grid, bool **visited, int h, int w, int
    // 82 //RIGTH
    // 68 // DOWN
    // 76 //LEFT
-
-  if(grid[row][col] == 85 || grid[row][col]==82 ||   grid[row][col]==68 ||  grid[row][col]==76  )
+  // 48 //cero 0
+  // 41 //one 1
+  if(grid[row][col] == 85   )
    {
-	
-	   cout << "FOUND  "<< grid[row][col]<<endl;
+	cout << "\n UP "<< grid[row][col]<< endl;	
 
    }
-   else 
+   else if (   grid[row][col]==82 )  
    {
-  	return; 
-//	if(cc == 5)
-//		return;
+	cout << " \nRIGHT "<< grid[row][col]<<endl;
    }
+  else if (  grid[row][col]==68 )
+  {
+	cout<< "\n DOWN"<< grid[row][col]<< endl;
+
+  }
+  else if (   grid[row][col]==76  )
+  {
+	cout<<"\nLEFT"<< grid[row][col]<< endl;
+
+  }
+  else
+  {
+
+//	return;
+  }
 
  int sp =0;  	
    for(int idx =0; idx<deltaSize; idx ++)
    {
-	   sp++;
+	sp++;
         int nextRow = row + deltaRow[idx];
         int nextCol = col + deltaCol[idx];
         if(isValid(grid,visited,h,w,nextRow,nextCol)  )
@@ -49,6 +62,11 @@ void recursion(int cc ,int &spins ,int **grid, bool **visited, int h, int w, int
         }
     }
 
+   if(sp ==4)
+   {
+	   return;
+
+   }
    cc--;
    visited[row][col]=false;
 
