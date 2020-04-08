@@ -21,6 +21,53 @@ bool isValid(int **grid, bool **visited, int h, int w , int row, int col)
     return row>-1 && row<h && col >-1 && col<w /*&& grid[row][col] ==48*/ && !visited[row][col];
 
 }
+
+
+
+void recursion2(int startX, int startY,int &direc ,int &spins ,int **grid, bool **visited, int h, int w, int row, int col, int &max)
+{
+        //R,D,L,U
+        //0,1,2,3
+ 
+   int deltaRow [] = {0,1, 0,-1};
+   int deltaCol [] = {1,0,-1, 0};
+  	
+   int deltaSize = sizeof(deltaRow)/sizeof(deltaRow[0]);
+	
+   if(spins == 4)
+   {
+	 return;
+
+   }
+   visited[row][col]=true;
+   max++;
+   for(int idx =0; idx<deltaSize; idx ++)
+   {
+        //R,D,L,U
+        //0,1,2,3
+ 
+        int nextRow = row + deltaRow[idx];
+        int nextCol = col + deltaCol[idx];
+
+        if(isValid(grid,visited,h,w,nextRow,nextCol) && grid[nextRow][nextCol] !=1 )
+        {
+		spins=0;
+		cout << " valid in "<<idx <<endl;
+		int next = grid[nextRow][nextCol];
+		recursion2(startX, startY,direc,spins,grid,visited,h,w,nextRow,nextCol,max);     
+		if(  startX == row && startY == col  )
+			return;		
+
+        }
+	else
+	{
+		spins++;
+		cout << " Invalid in "<<idx <<" VALUES ARE -- >  R=0,D=1,L=2,U=3"<<endl;
+	}
+
+    }
+
+}
 void recursion(int startX, int startY,int &direc ,int &spins ,int **grid, bool **visited, int h, int w, int row, int col, int &max)
 {
         //R,D,L,U
@@ -157,7 +204,8 @@ void getAns(int **grid, bool ** visited, int h, int w, int &max)
 	int deltaID =0, spins =0,row=0, col=0, c=0;
 	int *start =getPos(grid,h,w,c);
 	cout << " START --> "<< start[0] <<", "<< start[1]<<  " c -> "<< c<< endl;
-	recursion(start[0],start[1],deltaID,spins ,grid, visited,h, w, start[0],start[1], max);
+	//recursion(start[0],start[1],deltaID,spins ,grid, visited,h, w, start[0],start[1], max);
+	recursion2(start[0],start[1],deltaID,spins ,grid, visited,h, w, start[0],start[1], max);
 	cout<<endl;
 	cout<< "print bool "<<endl;
 	printVisit(visited,h,w);
