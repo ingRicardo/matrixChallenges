@@ -54,7 +54,7 @@ void recursion2(bool &right,bool &down, bool &left, bool up, int startX, int sta
    if(spins == 4)
    {
 	   cout << " return spins "<<spins <<endl; 
-	   return;
+//	   return;
    }
 
   int current = grid[row][col];
@@ -80,7 +80,9 @@ void recursion2(bool &right,bool &down, bool &left, bool up, int startX, int sta
   if(current == 76)
   {
 	left = true;
-	direc = 2; 
+	//idirec = 2; 
+	direc = 3;
+	spins++;
 
   }     
 //   cout << " direc "<<direc << " spins "<< spins<< endl; 
@@ -105,24 +107,24 @@ void recursion2(bool &right,bool &down, bool &left, bool up, int startX, int sta
          */
 	if(direc == 3 && idx == 2)
 	{
-	//	cout << " RETURN "<< direc << " -- "<< idx<<endl;
+		cout << " RETURN "<< direc << " -- "<< idx<<endl;
 		return;
 	}
 	if(direc == 2 && idx == 1  )
 	{	
-	//	cout << " RETURN "<< direc << " -- "<< idx<<endl;
+		cout << " RETURN "<< direc << " -- "<< idx<<endl;
 		return;
 	}
 	if(direc == 1 && idx == 0)
 	{
 
-	//	cout << " RETURN "<< direc << " -- "<< idx<<endl;
+		cout << " RETURN "<< direc << " -- "<< idx<<endl;
 		return;
 	}
 	if(direc ==0 && idx == 3)
 	{
 
-	//	cout << " RETURN "<< direc << " -- "<< idx<<endl;
+		cout << " RETURN "<< direc << " -- "<< idx<<endl;
 		return;
 	}
 	else {
@@ -162,10 +164,9 @@ void recursion2(bool &right,bool &down, bool &left, bool up, int startX, int sta
 			cout << "NOTHING AGAIN "<< endl;
 		}
 
-	//	if(spins == 4 )
-	//		return;
-
 		spins++;
+		if(spins == 4)
+			cout << "Invalid spins "<< spins <<endl;
 	}
    }
 
@@ -321,7 +322,7 @@ int main()
     int T,h,w,num,max =0;
     cin >> T;
     char c;
-    for(int tc =1; tc<=T ; ++tc)
+    for(int tc =1; tc<=4 ; ++tc)
     {
         cin >> h; cin >>w;
         max =0;
