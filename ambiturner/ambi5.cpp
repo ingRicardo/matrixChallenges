@@ -23,7 +23,64 @@ bool isValid(int **grid, bool **visited, int h, int w , int row, int col)
 }
 
 
+void recursion3(bool &right,bool &down, bool &left, bool up, int startX, int startY,int &direc ,int &spins ,int &curdirec, int **grid, bool **visited, int h, int w, int row, int col, int &max)
+{
 
+
+  int deltaRow [] = {0,1, 0,-1};
+  int deltaCol [] = {1,0,-1, 0};
+  	
+  int deltaSize = sizeof(deltaRow)/sizeof(deltaRow[0]);
+
+  int current = grid[row][col];
+  visited[row][col]=true;
+  max++;
+  if (current == 85)
+  {
+	up = true;
+  	direc = 3;	
+  }
+  if(current == 82)
+  {	 
+	  right = true;
+	  direc = 0;
+  }
+  if(current == 68)
+  {	
+       	down = true;
+	direc = 1;
+  }
+  if(current == 76)
+  {
+	left = true;
+	direc = 3;
+  }
+ //R,D,L,U
+ //0,1,2,3
+  while(true)
+  {
+	if(direc == 4)
+		direc = 0;
+
+        int nextRow = row + deltaRow[direc];
+        int nextCol = col + deltaCol[direc];
+	
+	if(isValid(grid,visited,h,w,nextRow,nextCol) && grid[nextRow][nextCol] !=1  )
+	{
+		spins =0;
+		recursion3(right,down,left,up,startX, startY,direc,spins,curdirec,grid,visited,h,w,nextRow,nextCol,max);    
+	}	
+	else 
+	{
+		if(spins == 4)
+		{
+			return;
+		}
+		spins++;
+		direc++; 
+	}
+  }
+}
 void recursion2(bool &right,bool &down, bool &left, bool up, int startX, int startY,int &direc ,int &spins ,int &curdirec, int **grid, bool **visited, int h, int w, int row, int col, int &max)
 {
         //R,D,L,U
@@ -87,6 +144,7 @@ void recursion2(bool &right,bool &down, bool &left, bool up, int startX, int sta
   }     
 //   cout << " direc "<<direc << " spins "<< spins<< endl; 
 //	cout << "valid "<<direc<< endl;
+
     for(int idx =direc; ; )
     {
         //R,D,L,U
@@ -105,37 +163,42 @@ void recursion2(bool &right,bool &down, bool &left, bool up, int startX, int sta
          *              CANT GO TO 2 left
          *
          */
+
+
+
 	if(direc == 3 && idx == 2)
 	{
-		cout << " RETURN "<< direc << " -- "<< idx<<endl;
+//		cout << " RETURN "<< direc << " -- "<< idx<<endl;
 		return;
 	}
 	if(direc == 2 && idx == 1  )
 	{	
-		cout << " RETURN "<< direc << " -- "<< idx<<endl;
+//		cout << " RETURN "<< direc << " -- "<< idx<<endl;
 		return;
 	}
 	if(direc == 1 && idx == 0)
 	{
 
-		cout << " RETURN "<< direc << " -- "<< idx<<endl;
+//		cout << " RETURN "<< direc << " -- "<< idx<<endl;
 		return;
 	}
 	if(direc ==0 && idx == 3)
 	{
 
-		cout << " RETURN "<< direc << " -- "<< idx<<endl;
+//		cout << " RETURN "<< direc << " -- "<< idx<<endl;
 		return;
 	}
 	else {
 
-		cout << "NOTHING spins "<< spins <<" idx "<<idx<< " direc "<< direc << endl;
+//		cout << "NOTHING spins "<< spins <<" idx "<<idx<< " direc "<< direc << endl;
 	}
 
        	if(isValid(grid,visited,h,w,nextRow,nextCol) && grid[nextRow][nextCol] !=1  )
        	{
 
-			int next = grid[nextRow][nextCol];
+
+		//cout << "Valid direc "<< direc << " idx "<< idx<<endl;
+		int next = grid[nextRow][nextCol];
 			direc = idx;
 			spins=0;
 			recursion2(right,down,left,up,startX, startY,direc,spins,curdirec,grid,visited,h,w,nextRow,nextCol,max);    
@@ -143,6 +206,9 @@ void recursion2(bool &right,bool &down, bool &left, bool up, int startX, int sta
 	}
 	else 
 	{
+
+
+		//cout << "Invalid direc "<< direc << " idx "<< idx<<endl;
 		if( idx == 3 )
 		{
 			idx = 0;
@@ -308,8 +374,7 @@ void getAns(int **grid, bool ** visited, int h, int w, int &max)
 	int deltaID =0, spins =0,row=0, col=0, c=0,curdirec=0;
 	int *start =getPos(grid,h,w,c);
 	cout << " START --> "<< start[0] <<", "<< start[1]<<  " c -> "<< c<< endl;
-	//recursion(start[0],start[1],deltaID,spins ,grid, visited,h, w, start[0],start[1], max);
-	recursion2(right,down,left,up,start[0],start[1],deltaID,spins ,curdirec, grid, visited,h, w, start[0],start[1], max);
+	recursion3(right,down,left,up,start[0],start[1],deltaID,spins ,curdirec, grid, visited,h, w, start[0],start[1], max);
 	cout<<endl;
 	cout<< "print bool "<<endl;
 	printVisit(visited,h,w);
