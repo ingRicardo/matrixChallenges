@@ -39,45 +39,133 @@ void recursion2(bool &right,bool &down, bool &left, bool up, int startX, int sta
   	
    int deltaSize = sizeof(deltaRow)/sizeof(deltaRow[0]);
 
-
 	/*
-	 *	if( oldDirec == 0 )
-	 *		CANT GO TO  3
-	 *	if ( oldDirec == 1 )
-	 *		CANT GO TO 0
-	 * 	if (odDirec == 2 )
-	 *		CANTO GO 1
-	 *	if (oldDirec == 3 )
-	 *		CANT GO TO 2
+	 *	if( oldDirec == 0 ) right
+	 *		CANT GO TO  3 up
+	 *	if ( oldDirec == 1 ) down 
+	 *		CANT GO TO 0 right
+	 * 	if (odDirec == 2 )  left
+	 *		CANTO GO 1 down
+	 *	if (oldDirec == 3 ) up
+	 *		CANT GO TO 2 left
 	 *
 	 */
 
-   int current = grid[row][col];
-   visited[row][col]=true;
-   max++;
-  if (current == 85)
-  	direc = 3;	
-
-    
-   cout << " direc "<<direc <<endl; 
-
-    for(int idx =0; idx<deltaSize; idx ++)
+   if(spins == 4)
    {
+	   cout << " return spins "<<spins <<endl; 
+	   return;
+   }
+
+  int current = grid[row][col];
+  visited[row][col]=true;
+  max++;
+  if (current == 85)
+  {
+	up = true;
+  	direc = 3;	
+	spins++;
+  }
+  if(current == 82)
+  {	 
+	  right = true;
+	  direc = 0;
+
+  }
+  if(current == 68)
+  {	
+       	down = true;
+	direc = 1;
+  }
+  if(current == 76)
+  {
+	left = true;
+	direc = 2; 
+
+  }     
+//   cout << " direc "<<direc << " spins "<< spins<< endl; 
+//	cout << "valid "<<direc<< endl;
+    for(int idx =direc; ; )
+    {
         //R,D,L,U
         //0,1,2,3
- 	if (direc == 3 && idx ==2 )
-  	 //   idx = 0;
-	     return;
-      
+
         int nextRow = row + deltaRow[idx];
         int nextCol = col + deltaCol[idx];
-   
+        /*
+         *      if( oldDirec == 0 ) right
+         *              CANT GO TO  3 up
+         *      if ( oldDirec == 1 ) down 
+         *              CANT GO TO 0 right
+         *      if (odDirec == 2 )  left
+         *              CANTO GO 1 down
+         *      if (oldDirec == 3 ) up
+         *              CANT GO TO 2 left
+         *
+         */
+	if(direc == 3 && idx == 2)
+	{
+	//	cout << " RETURN "<< direc << " -- "<< idx<<endl;
+		return;
+	}
+	if(direc == 2 && idx == 1  )
+	{	
+	//	cout << " RETURN "<< direc << " -- "<< idx<<endl;
+		return;
+	}
+	if(direc == 1 && idx == 0)
+	{
+
+	//	cout << " RETURN "<< direc << " -- "<< idx<<endl;
+		return;
+	}
+	if(direc ==0 && idx == 3)
+	{
+
+	//	cout << " RETURN "<< direc << " -- "<< idx<<endl;
+		return;
+	}
+	else {
+
+		cout << "NOTHING spins "<< spins <<" idx "<<idx<< " direc "<< direc << endl;
+	}
 
        	if(isValid(grid,visited,h,w,nextRow,nextCol) && grid[nextRow][nextCol] !=1  )
        	{
+
 			int next = grid[nextRow][nextCol];
 			direc = idx;
+			spins=0;
 			recursion2(right,down,left,up,startX, startY,direc,spins,curdirec,grid,visited,h,w,nextRow,nextCol,max);    
+			//return;
+	}
+	else 
+	{
+		if( idx == 3 )
+		{
+			idx = 0;
+		}
+		else if( idx == 2)
+		{	
+			idx = 3;
+		}
+		else if(idx == 1)
+		{
+			idx =2;
+		}
+		else if( idx == 0 )
+		{
+			idx = 1;
+		}
+		else 
+		{
+			cout << "NOTHING AGAIN "<< endl;
+		}
+
+	//	if(spins == 4 )
+	//		return;
+
+		spins++;
 	}
    }
 
