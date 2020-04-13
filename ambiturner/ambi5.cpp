@@ -97,7 +97,7 @@ void recursion3(bool &right,bool &down, bool &left, bool up, int startX, int sta
     
 		spins++;
 	}
-  }while(spins <=120);
+  }while(spins <=h*w);
 
 }
 
@@ -196,8 +196,6 @@ int main()
         cout<<endl;
      cout << "#"<<tc<<":"<<max<<endl;   
     }
-
-
 
 	return 0;
 }
