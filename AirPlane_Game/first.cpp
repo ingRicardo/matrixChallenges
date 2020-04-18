@@ -5,7 +5,11 @@
 */
 #include <iostream>
 using namespace std;
-
+void func1(int grid[7][5], int x, int y, int limX)
+{
+	cout<<"limitX-> "<<limX<<endl;
+	cout<<"current-> "<<grid[x][y]<<endl;
+}
 int main()
 {
 
@@ -44,8 +48,29 @@ int main()
 	 *
 	 *    	IF LEFT ==2 AND RIGHT ==2 AND CURRENT =2
 	 *    		USE THE BOMB 	
-	 */
-
+	*/	 
 	cout << "Airplane Game under construction "<<endl;
+int h=7;
+	int mat[h][5] =   { 
+			     { 1,2,0,0,1}, 
+			     { 2,0,0,1,0}, 
+			     { 0,1,2,0,1}, 
+			     { 1,0,0,2,1}, 
+			     { 0,2,1,0,1}, 
+			     { 0,1,2,2,2}, 
+			     { 1,0,1,1,0} 
+			} ;   
+//Top
+int limitX= h-5;
+int limitY= 0;
+//Down
+
+int endX = 0;
+int endY = 0;
+//current
+int curX = h-1;
+int curY = 2;
+
+	func1(mat,curX,curY,limitX);
 	return 0;
 }
