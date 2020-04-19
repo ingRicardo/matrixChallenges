@@ -5,7 +5,7 @@
 */
 #include <iostream>
 using namespace std;
-void func1(int grid[7][5], int x, int y, int height, int width,int hX)
+void func1(int grid[7][5], int x, int y, int height, int width,int hX, bool bomb)
 {
 	cout<<"height -> "<<height <<endl;
 	cout <<"width -> "<<width<<endl;
@@ -19,7 +19,14 @@ void func1(int grid[7][5], int x, int y, int height, int width,int hX)
 	 *		END GAME
 	 *      	
 	 *	move to the left or right or stay
-	 *	
+	 *		if left == 1
+	 *			move = left
+	 *		else if right = 1
+	 *			move right
+	 *		else if stay == 1
+	 *			move = stay
+	 *		else 
+	 *			move = left
 	 *
 	 *	check if there's 1 or 2
 	 *
@@ -30,6 +37,8 @@ void func1(int grid[7][5], int x, int y, int height, int width,int hX)
 	 *	
 	 *	if left == 2 AND right == 2 AND current == 2
 	 *		apply the bomb
+	 *			
+	 *
 	 *     SHRINK THE GAME ZONE
 	 *     		if hX >1
 	 *     			hX -=1
@@ -107,7 +116,7 @@ int endY = 0;
 //current
 int curX = h-1;
 int curY = 2;
-
-	func1(mat,curX,curY,height,width,hX);
+bool bomb = false;
+	func1(mat,curX,curY,height,width,hX,bomb);
 	return 0;
 }
