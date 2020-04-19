@@ -5,10 +5,45 @@
 */
 #include <iostream>
 using namespace std;
-void func1(int grid[7][5], int x, int y, int limX)
+void func1(int grid[7][5], int x, int y, int height, int width,int hX)
 {
-	cout<<"limitX-> "<<limX<<endl;
-	cout<<"current-> "<<grid[x][y]<<endl;
+	cout<<"height -> "<<height <<endl;
+	cout <<"width -> "<<width<<endl;
+
+	cout <<"hX -> " << hX<<endl;
+	cout<<"current_val -> "<<grid[x][y]<<endl;
+
+	/*
+	 *
+	 *      if coins < 0 OR height == 0
+	 *		END GAME
+	 *      	
+	 *	move to the left or right or stay
+	 *	
+	 *
+	 *	check if there's 1 or 2
+	 *
+	 *		if current == 1 
+	 *			add 1 to coins
+	 *		else if current == 2
+	 *			susbtract 1 to coins
+	 *	
+	 *	if left == 2 AND right == 2 AND current == 2
+	 *		apply the bomb
+	 *     SHRINK THE GAME ZONE
+	 *     		if hX >1
+	 *     			hX -=1
+	 *
+	 *     		height -=1
+	 *
+	 *      recursion 
+	 *
+	 *
+	 *
+	 *
+	 *
+	 */
+
 }
 int main()
 {
@@ -61,8 +96,10 @@ int h=7;
 			     { 1,0,1,1,0} 
 			} ;   
 //Top
-int limitX= h-5;
-int limitY= 0;
+
+int hX= h-5;
+int height = h - ( h - 5);
+int width= 5;
 //Down
 
 int endX = 0;
@@ -71,6 +108,6 @@ int endY = 0;
 int curX = h-1;
 int curY = 2;
 
-	func1(mat,curX,curY,limitX);
+	func1(mat,curX,curY,height,width,hX);
 	return 0;
 }
