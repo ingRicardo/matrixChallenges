@@ -5,14 +5,51 @@
 */
 #include <iostream>
 using namespace std;
-void func1(int grid[7][5], int x, int y, int height, int width,int hX, bool bomb)
+
+bool isValid(int grid [7][5],int width, int height, int x, int y ,int hX)
+{
+
+	return x>-1 && x < height && y>-1 && y< width;
+
+}
+
+void func1(int grid[7][5], int x, int y, int height, int width,int hX,int coins )
 {
 	cout<<"height -> "<<height <<endl;
 	cout <<"width -> "<<width<<endl;
 
 	cout <<"hX -> " << hX<<endl;
 	cout<<"current_val -> "<<grid[x][y]<<endl;
+        cout <<"coins -> "<<coins<<endl;	
+	int current = grid[x][y];
 
+	int deltaX[] = {0 ,0,0};
+	int deltaY[] = {-1,1,0};
+
+	int dsize =  sizeof(deltaX)/sizeof(deltaX[0]);
+
+	cout << "deltaSize "<< dsize <<endl;
+
+	for (int idx = 0; idx < dsize; idx ++)
+	{
+
+		int nextX = deltaX[idx] + x;
+		int nextY = deltaY[idx] + y;
+		if( isValid( grid, width,height,nextX, nextY ,hX))
+		{
+			int next =  grid[nextX][nextY];
+			if( next == 1)
+				coins+=1;
+			else if (next == 2 )
+				coins-=1;
+
+			next = grid[ nextX-1][nextY];// move Up
+
+
+		}
+
+
+	}
 	/*
 	 *
 	 *      if coins < 0 OR height == 0
@@ -37,6 +74,12 @@ void func1(int grid[7][5], int x, int y, int height, int width,int hX, bool bomb
 	 *	
 	 *	if left == 2 AND right == 2 AND current == 2
 	 *		apply the bomb
+	 *
+	 *		for (int i = hX; i< height ; i++)
+	 *			for(int j =0; j<width; j++ )
+	 *				if(grid[i][j]) == 2)
+	 *					grid[i][j]=0;
+	 *
 	 *			
 	 *
 	 *     SHRINK THE GAME ZONE
@@ -52,6 +95,8 @@ void func1(int grid[7][5], int x, int y, int height, int width,int hX, bool bomb
 	 *
 	 *
 	 */
+
+	
 
 }
 int main()
@@ -107,7 +152,7 @@ int h=7;
 //Top
 
 int hX= h-5;
-int height = h - ( h - 5);
+int height =  h ;
 int width= 5;
 //Down
 
@@ -116,7 +161,7 @@ int endY = 0;
 //current
 int curX = h-1;
 int curY = 2;
-bool bomb = false;
-	func1(mat,curX,curY,height,width,hX,bomb);
+int coins =0;
+	func1(mat,curX,curY,height,width,hX,coins);
 	return 0;
 }
