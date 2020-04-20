@@ -9,11 +9,24 @@ using namespace std;
 bool isValid(int grid [7][5],int width, int height, int x, int y ,int hX)
 {
 
-	return x>-1 && x < height && y>-1 && y< width;
+	return x>-1 && x <height  && y>-1 && y< width;
 
 }
 
-void func1(int grid[7][5], int x, int y, int height, int width,int hX,int coins )
+void printGrid(int grid[7][5],int &height, int width)
+{
+	for(int row =0; row<height; row++)
+	{
+		cout << endl;
+		for(int col =0; col< width; col++)
+		{
+			cout <<" "<< grid[row][col];
+		}
+	}
+
+}
+
+void func1(int grid[7][5], int x, int y, int &height, int width,int &hX,int &coins )
 {
 	cout<<"height -> "<<height <<endl;
 	cout <<"width -> "<<width<<endl;
@@ -29,27 +42,62 @@ void func1(int grid[7][5], int x, int y, int height, int width,int hX,int coins 
 	int dsize =  sizeof(deltaX)/sizeof(deltaX[0]);
 
 	cout << "deltaSize "<< dsize <<endl;
+		
+	if (coins <0 || height == 0)
+	{
+		//END GAME
+		return;
+	}
 
+	int eneCount =0,next =0,nextRow=0,nextCol=0;
+	bool rec = false;
 	for (int idx = 0; idx < dsize; idx ++)
 	{
 
-		int nextX = deltaX[idx] + x;
-		int nextY = deltaY[idx] + y;
-		if( isValid( grid, width,height,nextX, nextY ,hX))
+		nextRow = deltaX[idx] + x;
+		nextCol = deltaY[idx] + y;
+		if( isValid( grid, width,height,nextRow, nextCol ,hX))
 		{
-			int next =  grid[nextX][nextY];
+			next =  grid[nextRow][nextCol];
 			if( next == 1)
 				coins+=1;
 			else if (next == 2 )
+			{
 				coins-=1;
+				eneCount+=1;
+			}
 
-			next = grid[ nextX-1][nextY];// move Up
-
+			cout << "valid "<<nextRow << ","<< nextCol<<endl;
+			nextRow -=1;
+			next = grid[ nextRow][nextCol];// move Up from inferior limit
+			height -=1;
+			rec = true;
+		//	cout << "next "<< nextRow<<","<< nextCol<<endl;
+		//	func1(grid, nextRow, nextCol, height, width,hX,coins );
 
 		}
 
+	}
+	//apply bomb
+	if (eneCount >=2)
+	{
+		cout <<"BOMB APPLIED "<<endl;
+		for (int i = hX; i< height ; i++)
+	    		for(int j =0; j<width; j++ )
+	 			if(grid[i][j] == 2)
+	 			grid[i][j]=0;
 
 	}
+
+	if (hX>0)
+		hX-=1;//move up from superior limit 
+	if(rec)
+	{
+		cout << "next "<< nextRow<<","<< nextCol<<endl;
+		func1(grid, nextRow, nextCol, height, width,hX,coins );
+	}
+
+
 	/*
 	 *
 	 *      if coins < 0 OR height == 0
@@ -86,7 +134,7 @@ void func1(int grid[7][5], int x, int y, int height, int width,int hX,int coins 
 	 *     		if hX >1
 	 *     			hX -=1
 	 *
-	 *     		height -=1
+	 *     		height -=1 MOVE UP
 	 *
 	 *      recursion 
 	 *
@@ -163,5 +211,11 @@ int curX = h-1;
 int curY = 2;
 int coins =0;
 	func1(mat,curX,curY,height,width,hX,coins);
+
+	cout << "print altered Grid "<<endl;
+	printGrid(mat,height,width);
+	cout<<endl;
+
+
 	return 0;
 }
