@@ -13,7 +13,20 @@ bool isValid(int grid [7][5],int width, int height, int x, int y ,int hX)
 
 }
 
-void printGrid(int grid[7][5],int &height, int width)
+void printGrid(int grid[7][5],int &height, int width, int hX)
+{
+	cout << "hX ----> "<< hX<<endl;
+	for(int row =hX; row<height; row++)
+	{
+		cout << endl;
+		for(int col =0; col< width; col++)
+		{
+			cout <<" "<< grid[row][col];
+		}
+	}
+
+}
+void printGridNormal(int grid[7][5],int &height, int width )
 {
 	for(int row =0; row<height; row++)
 	{
@@ -26,34 +39,31 @@ void printGrid(int grid[7][5],int &height, int width)
 
 }
 
-void func1(int grid[7][5], int x, int y, int &height, int width,int &hX,int &coins )
+void func1(int (&grid)[7][5], int x, int y, int &height, int width,int &hX,int &coins )
 {
 	cout<<"height -> "<<height <<endl;
 	cout <<"width -> "<<width<<endl;
-
 	cout <<"hX -> " << hX<<endl;
-	cout<<"current_val -> "<<grid[x][y]<<endl;
-        cout <<"coins -> "<<coins<<endl;	
+	//cout<<"current_val -> "<<grid[x][y]<<endl;
+       // cout <<"coins -> "<<coins<<endl;	
 	int current = grid[x][y];
-
 	int deltaX[] = {0 ,0,0};
 	int deltaY[] = {-1,1,0};
-
 	int dsize =  sizeof(deltaX)/sizeof(deltaX[0]);
-
 	cout << "deltaSize "<< dsize <<endl;
 		
 	if (coins <0 || height == 0)
 	{
 		//END GAME
+		cout << "End coins "<<coins << " height "<<height<<endl;
 		return;
 	}
 
-	int eneCount =0,next =0,nextRow=0,nextCol=0;
-	bool rec = false;
+	int eneCount =0,next =0,nextRow=0,nextCol=0,horizontalMoves =0;
+	bool bomb = false,rec=false;
 	for (int idx = 0; idx < dsize; idx ++)
 	{
-
+		horizontalMoves+=1;
 		nextRow = deltaX[idx] + x;
 		nextCol = deltaY[idx] + y;
 		if( isValid( grid, width,height,nextRow, nextCol ,hX))
@@ -65,38 +75,62 @@ void func1(int grid[7][5], int x, int y, int &height, int width,int &hX,int &coi
 			{
 				coins-=1;
 				eneCount+=1;
+				//needs to validate 2 or 3 enemies around 
 			}
 
 			cout << "valid "<<nextRow << ","<< nextCol<<endl;
 			nextRow -=1;
 			next = grid[ nextRow][nextCol];// move Up from inferior limit
 			height -=1;
-			rec = true;
-		//	cout << "next "<< nextRow<<","<< nextCol<<endl;
-		//	func1(grid, nextRow, nextCol, height, width,hX,coins );
-
+			cout << "eneCount -> "<< eneCount<<endl;
+			if (hX>0 )
+			{
+				cout<<"shrink hX "<< hX<<endl;
+				hX-=1;//move up from superior limit 
+			}
+			cout << " height ---> "<<height <<endl;
+			rec= true;
+			//func1(grid, nextRow, nextCol, height, width,hX,coins );
+		
 		}
 
 	}
+	cout << "horizontal moves "<< horizontalMoves << " eneCount "<<eneCount <<endl;
 	//apply bomb
-	if (eneCount >=2)
+	if (eneCount <=3)
 	{
-		cout <<"BOMB APPLIED "<<endl;
+
+		cout <<"********** BOMB APPLIED ***********"<<endl;
 		for (int i = hX; i< height ; i++)
+		{
 	    		for(int j =0; j<width; j++ )
+			{
 	 			if(grid[i][j] == 2)
-	 			grid[i][j]=0;
+				{
+	 				grid[i][j]=0;
+				}
+			}
+		}
+	}//end if
+	if (horizontalMoves <3)
+	{
+
+		func1(grid, nextRow, nextCol, height, width,hX,coins );
 
 	}
 
-	if (hX>0)
+/*
+	if (hX>0 && rec)
+	{
+		cout<<"shrink hX "<< hX<<endl;
 		hX-=1;//move up from superior limit 
+	}
 	if(rec)
 	{
-		cout << "next "<< nextRow<<","<< nextCol<<endl;
+		cout << " height ---> "<<height <<endl;
 		func1(grid, nextRow, nextCol, height, width,hX,coins );
 	}
-
+*/
 
 	/*
 	 *
@@ -188,7 +222,7 @@ int main()
 	*/	 
 	cout << "Airplane Game under construction "<<endl;
 int h=7;
-	int mat[h][5] =   { 
+	int mat[7][5] =   { 
 			     { 1,2,0,0,1}, 
 			     { 2,0,0,1,0}, 
 			     { 0,1,2,0,1}, 
@@ -210,12 +244,15 @@ int endY = 0;
 int curX = h-1;
 int curY = 2;
 int coins =0;
+		
+	printGridNormal(mat,height,width);
+	cout<<endl;
 	func1(mat,curX,curY,height,width,hX,coins);
 
-	cout << "print altered Grid "<<endl;
-	printGrid(mat,height,width);
+	cout << "\nprint altered Grid "<<endl;
+	
+	printGrid(mat,height,width,hX);
 	cout<<endl;
-
 
 	return 0;
 }
