@@ -20,7 +20,7 @@ bool isValid(int **grid,int row, int col, int h, int w)
 
 }
 
-void funcRecTest1(int **&gridAux,int &coins,int row, int col, int &h, int w, int &hX)
+void funcRecTest1(int **&gridAux,int &coins,int row, int col, int &h, int w, int &hX, bool &bomb)
 {
 
 	int current = gridAux[row][col];
@@ -29,6 +29,7 @@ void funcRecTest1(int **&gridAux,int &coins,int row, int col, int &h, int w, int
         int dsize =  sizeof(deltaX)/sizeof(deltaX[0]);
 	
 
+cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 
 	/*
 	 *	1. move to the left, right or stay
@@ -55,23 +56,44 @@ void funcRecTest1(int **&gridAux,int &coins,int row, int col, int &h, int w, int
 
 	if(coins <0 )
 	{
-
+		cout << " end coins -> "<<coins << " height "<< h<< " hX "<< hX <<" bomb "<<bomb<<endl;
 		return;
 	}
 
-	if(current == 1)
-		coins+=1;
-	else if (current == 2)
-		coins-=1;
-	
+	if(current == 1){
 
-	int enemies =0,nextRow=0,nextCol=0;
-	bool validUP = false, bomb = false;
+		coins+=1;
+
+	}
+	else if (current == 2)
+	{
+		if(!bomb)
+		{
+			//next step is how to apply the bomb
+                	cout <<"********** BOMB APPLIED ***********"<<" h  "<<h << " hX "<< hX<<endl;
+                	for (int i = hX; i< h ; i++)
+                	{
+                        	for(int j =0; j<w; j++ )
+                        	{
+                                	if(gridAux[i][j] == 2)
+                                	{
+                                        	gridAux[i][j]=0;
+                                	}
+                        	}
+                	}
+		//
+			bomb = true;	
+		}else
+		{
+			coins-=1;
+		}
+
+	}
 	for(int idx =0; idx < dsize; idx++)//move horizontal 
 	{
-		 nextRow = row + deltaX[idx] -1 ;
-		 nextCol = col + deltaY[idx];
-		if(isValid(gridAux,nextRow,nextCol,h,w))
+		int nextRow = row + deltaX[idx] -1 ;
+		int nextCol = col + deltaY[idx];
+		if(isValid(gridAux,nextRow,nextCol,h,w)  )
 		{
 			int next = gridAux[nextRow][nextCol];
 			cout << "valid "<<next<<":"<<nextRow<<","<<nextCol<<endl;
@@ -80,7 +102,7 @@ void funcRecTest1(int **&gridAux,int &coins,int row, int col, int &h, int w, int
 
 			h-=1;//decrease inferior limit
 			
-			funcRecTest1(gridAux,coins,nextRow, nextCol,h,w,hX);
+			funcRecTest1(gridAux,coins,nextRow, nextCol,h,w,hX,bomb);
 
 		}
 	}
@@ -127,12 +149,12 @@ printGrid(gridAux,hAux,w,hX);
 
 int curX = hAux -1; //start position in X
 int curY = 2;	//start position in Y
-cout << "current position -> "<< gridAux[curX][curY] <<" : "<< curX<<","<<curY<<endl;
-
-funcRecTest1(gridAux,coins,curX,curY,h,w,hX);
+//cout << "current position -> "<< gridAux[curX][curY] <<" : "<< curX<<","<<curY<<endl;
+bool bomb = false;
+funcRecTest1(gridAux,coins,curX,curY,h,w,hX,bomb);
 cout << endl;
-printGrid(grid,h,w,hX);
-
+printGrid(gridAux,h,w,hX);
+cout << " coins -> "<<coins <<endl;
 }
 int main()
 
