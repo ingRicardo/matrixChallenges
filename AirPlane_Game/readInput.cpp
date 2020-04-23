@@ -20,12 +20,13 @@ bool isValid(int **grid,int row, int col, int h, int w)
 
 }
 
-void funcRecTest1(int **&gridAux,int &coins,int row, int col, int &h, int w, int &hX, bool &bomb)
+void funcRecTest1(int **&gridAux,int &coins,int row, int col, int &h, int w, int &hX, bool &bomb, bool &isPath)
 {
 
 	int current = gridAux[row][col];
         int deltaX[] = {0 ,0,0};
-        int deltaY[] = {-1,1,0};
+        int deltaY[] = {1,-1,0};
+
         int dsize =  sizeof(deltaX)/sizeof(deltaX[0]);
 	
 
@@ -54,11 +55,6 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 	 *
 	 */
 
-	if(coins <0 )
-	{
-		cout << " end coins -> "<<coins << " height "<< h<< " hX "<< hX <<" bomb "<<bomb<<endl;
-		return;
-	}
 
 	if(current == 1){
 
@@ -89,24 +85,46 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 		}
 
 	}
+
+	if(coins <0 || h == 0 || h==hX )
+	{
+		cout << " end coins -> "<<coins << " height "<< h<< " hX "<< hX <<" bomb "<<bomb<<" isPath "<<isPath<<endl;
+		return;
+	}
+	isPath = false;
+//HOW TO KNOW IF THERE IS A PATH 
+	int noValid =0;
+	int nextRow =0,nextCol =0;
 	for(int idx =0; idx < dsize; idx++)//move horizontal 
 	{
-		int nextRow = row + deltaX[idx] -1 ;
-		int nextCol = col + deltaY[idx];
-		if(isValid(gridAux,nextRow,nextCol,h,w)  )
+		nextRow = row + deltaX[idx] -1 ;
+		nextCol = col + deltaY[idx];
+		noValid+=1;
+		if(isValid(gridAux,nextRow,nextCol,h,w) && ( gridAux[nextRow][nextCol] == 1 ||  gridAux[nextRow][nextCol]==2    )   )
 		{
+			isPath = true;
 			int next = gridAux[nextRow][nextCol];
 			cout << "valid "<<next<<":"<<nextRow<<","<<nextCol<<endl;
 			if(hX>0)
 				hX-=1;//decrease superior limit 	
 
 			h-=1;//decrease inferior limit
-			
-			funcRecTest1(gridAux,coins,nextRow, nextCol,h,w,hX,bomb);
+			funcRecTest1(gridAux,coins,nextRow, nextCol,h,w,hX,bomb,isPath);
 
 		}
 	}
 
+	cout <<" isPath "<<isPath <<" noValid "<< noValid<<endl; 
+	if(isValid(gridAux,nextRow,nextCol,h,w) && gridAux[nextRow][nextCol] == 0)
+	{
+
+		cout << " -> "<<gridAux[nextRow][nextCol]<<endl; 
+		cout << "end THERE IS NO PATH coins "<<coins << " bomb "<<bomb<<  endl;
+
+		if (bomb && coins == 0)
+			coins =-1;
+		return;
+	}	
 }
 
 void func1(int **grid, int h, int &res)
@@ -126,7 +144,7 @@ int **gridAux = new int*[hAux];
 		gridAux[row] = new int[hAux];
 		for(int col=0; col<5; col++)
 		{
-			gridAux[row][col] = 0;
+			gridAux[row][col] = 6;
 		}
 
 	}
@@ -151,10 +169,12 @@ int curX = hAux -1; //start position in X
 int curY = 2;	//start position in Y
 //cout << "current position -> "<< gridAux[curX][curY] <<" : "<< curX<<","<<curY<<endl;
 bool bomb = false;
-funcRecTest1(gridAux,coins,curX,curY,h,w,hX,bomb);
+bool isPath = true;
+funcRecTest1(gridAux,coins,curX,curY,h,w,hX,bomb,isPath);
 cout << endl;
 printGrid(gridAux,h,w,hX);
-cout << " coins -> "<<coins <<endl;
+cout << " coins -> "<<coins <<" h "<<h << " hX "<<hX<< endl;
+res = coins;
 }
 int main()
 
@@ -164,7 +184,7 @@ int main()
 	int T,res=0;
 	cin>>T;
 
-	for(int tc=1; tc<=1; ++tc)
+	for(int tc=1; tc<=4; ++tc)
 	{
 		int h;
 		cin>> h;
