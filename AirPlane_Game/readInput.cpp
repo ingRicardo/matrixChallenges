@@ -93,6 +93,10 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 	}
 	isPath = false;
 //HOW TO KNOW IF THERE IS A PATH 
+//
+
+// NEEDS TO VALIDATE IF THERE IS AN ENEMY TO APPLY THE BOM BEFORE STARTS TO MOVE
+//
 	int noValid =0;
 	int nextRow =0,nextCol =0;
 	for(int idx =0; idx < dsize; idx++)//move horizontal 
