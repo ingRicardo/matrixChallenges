@@ -162,6 +162,17 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 		nextRow = (row + deltaX[idx]) -1 ;
 		nextCol = col + deltaY[idx];
 		noValid+=1;
+
+
+		/**
+		 *
+		 *	check here if is there a enemy and apply the bomb
+		 *			if there is an enemy apply the bomb
+		 *
+		 * 	only you can move trought the ones
+		 */
+
+
 		if(isValid(gridAux,nextRow,nextCol,h,w) && ( gridAux[nextRow][nextCol] == 1 ||  gridAux[nextRow][nextCol]==2    )   )
 		{
 			isPath = true;
