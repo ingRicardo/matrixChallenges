@@ -148,15 +148,16 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 	int nextRow =0,nextCol =0;
 
 
-	nextRow = (row + deltaX[0]) -1 ;
-	nextCol = col + deltaY[0];
+	nextRow = row + deltaX[1] -1 ;
+	nextCol = col + deltaY[1];
+	int tmpDir = 0;
 	if(isValid(gridAux,nextRow,nextCol,h,w) &&  gridAux[nextRow][nextCol] == 2) 
 	{
 		cout << "SHOULD APPLY THE BOMB AT THE START OF THE GAME "<<endl;
-
+		tmpDir =1;
 	}
 
-	for(int idx =0; idx < dsize; idx++)//move horizontal 
+	for(int idx =tmpDir; idx < dsize; idx++)//move horizontal 
 	{
 		nextRow = (row + deltaX[idx]) -1 ;
 		nextCol = col + deltaY[idx];
@@ -256,7 +257,7 @@ int main()
 	int T,res=0;
 	cin>>T;
 
-	for(int tc=1; tc<=4; ++tc)
+	for(int tc=1; tc<=T; ++tc)
 	{
 		int h;
 		cin>> h;
