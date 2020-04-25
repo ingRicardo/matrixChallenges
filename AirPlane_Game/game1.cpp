@@ -74,7 +74,7 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 	{
 		if(bomb)
 		{
-		
+				
 			coins-=1;
 		}
 
@@ -96,7 +96,18 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 	int noValid =0;
 	int nextRow =0,nextCol =0;
 	int passOne = 0;	
+
+	
+	//NEED TO IMPLEMENT SOMETHING THAT TELLS ME IF THERE'S A 0 IF YES LOOK FOR 1 AND RECURSE
 	// loop to find a enemy an apply the bomb
+
+	/*
+	 *
+	 *	loop moves and check if there are empty space or 0 on the 3 moves if yes move to the first
+	 *	loop moves and check if there is a coin or 1 in one of the three moves if yes move to the one 
+	 *
+	 */
+
 	for(int idx =0; idx < dsize; idx++)//move horizontal 
 	{
 		nextRow = (row + deltaX[idx]) -1 ;
@@ -123,6 +134,13 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 			break;
 
 		}
+		else  if (isValid(gridAux,nextRow,nextCol,h,w) && gridAux[nextRow][nextCol]==0   )
+		{
+
+			
+
+		}
+
 
 	}
 
@@ -132,8 +150,9 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 		nextRow = (row + deltaX[idx]) -1 ;
 		nextCol = col + deltaY[idx];
 		noValid+=1;
+		
 
-               	if(isValid(gridAux,nextRow,nextCol,h,w)   )
+               	if(isValid(gridAux,nextRow,nextCol,h,w)    )
 		{
 		
 			int next = gridAux[nextRow][nextCol];
@@ -146,7 +165,9 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 			funcRecTest1(gridAux,coins,nextRow, nextCol,h,w,hX,bomb,isPath,prevDirec);
 
 
-		}
+		} 
+
+			
 
 	}
 
