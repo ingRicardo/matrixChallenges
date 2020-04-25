@@ -99,7 +99,6 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 
 	
 	//NEED TO IMPLEMENT SOMETHING THAT TELLS ME IF THERE'S A 0 IF YES LOOK FOR 1 AND RECURSE
-	// loop to find a enemy an apply the bomb
 
 	/*
 	 *
@@ -107,13 +106,13 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 	 *	loop moves and check if there is a coin or 1 in one of the three moves if yes move to the one 
 	 *
 	 */
-
+	int empty=0;	
+	// loop to find a enemy an apply the bomb
 	for(int idx =0; idx < dsize; idx++)//move horizontal 
 	{
 		nextRow = (row + deltaX[idx]) -1 ;
 		nextCol = col + deltaY[idx];
 		noValid+=1;
-
                	if(isValid(gridAux,nextRow,nextCol,h,w) && gridAux[nextRow][nextCol]==2   && !bomb   )
 		{
 		
@@ -125,6 +124,7 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 			bomb = true;	
 			isPath = true;
 			prevDirec = idx;
+			passOne = idx+1;
 			break;
 					
 		}
@@ -137,8 +137,7 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 		else  if (isValid(gridAux,nextRow,nextCol,h,w) && gridAux[nextRow][nextCol]==0   )
 		{
 
-			
-
+			empty+=1;
 		}
 
 
