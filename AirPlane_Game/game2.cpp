@@ -116,22 +116,6 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 		nextRow = (row + deltaX[idx]) -1 ;
 		nextCol = col + deltaY[idx];
 		noValid+=1;
-               /*	if(isValid(gridAux,nextRow,nextCol,h,w) && gridAux[nextRow][nextCol]==2   && !bomb   )
-		{
-		
-			cout <<"********** BOMB APPLIED ***********"<<" h  "<<h << " hX "<< hX<<endl;
-                	for (int i = hX; i< h ; i++)
-                        	for(int j =0; j<w; j++ )
-                                	if(gridAux[i][j] == 2)
-                                        	gridAux[i][j]=0;
-			bomb = true;	
-			isPath = true;
-			prevDirec = idx;
-			passOne = idx;
-			break;
-					
-		}
-		else*/
 	       	if(isValid(gridAux,nextRow,nextCol,h,w) && gridAux[nextRow][nextCol]==1   )
 		{
 			passOne = idx;
@@ -165,6 +149,10 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 		passOne=0;
 	}
 		
+	//
+	//NEED TO CHECK AGAIN IF THERE IS A ONE OR COIN 
+	//
+	
 
 	//loop for moving horizontally
 	for(int idx =passOne; idx < dsize; idx++)//move horizontal 
