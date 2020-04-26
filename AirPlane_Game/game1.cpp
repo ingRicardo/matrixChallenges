@@ -105,8 +105,11 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 	 *	loop moves and check if there are empty space or 0 on the 3 moves if yes move to the first
 	 *	loop moves and check if there is a coin or 1 in one of the three moves if yes move to the one 
 	 *
+	 *
+	 *
+	 * 		
 	 */
-	int empty=0;	
+	int ene=0,space=0,c=0;	
 	// loop to find a enemy an apply the bomb
 	for(int idx =0; idx < dsize; idx++)//move horizontal 
 	{
@@ -124,25 +127,30 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 			bomb = true;	
 			isPath = true;
 			prevDirec = idx;
-			passOne = idx+1;
+			passOne = idx;
 			break;
 					
 		}
 		else if(isValid(gridAux,nextRow,nextCol,h,w) && gridAux[nextRow][nextCol]==1   )
 		{
 			passOne = idx;
+			c+=1;
 			break;
 
 		}
-		else  if (isValid(gridAux,nextRow,nextCol,h,w) && gridAux[nextRow][nextCol]==0   )
+		else  if (isValid(gridAux,nextRow,nextCol,h,w) && gridAux[nextRow][nextCol]==2 && bomb   )
+		{
+			ene+=1;
+		}
+		else  if (isValid(gridAux,nextRow,nextCol,h,w) && gridAux[nextRow][nextCol]==0 && bomb    )
 		{
 
-			empty+=1;
+			space+=1;	
+
 		}
 
-
 	}
-
+	cout << " how many enemies -> "<< ene << " space "<< space<<" coins "<< c<< endl;
 	//loop for moving horizontally
 	for(int idx =passOne; idx < dsize; idx++)//move horizontal 
 	{
@@ -151,7 +159,7 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 		noValid+=1;
 		
 
-               	if(isValid(gridAux,nextRow,nextCol,h,w)    )
+               	if(isValid(gridAux,nextRow,nextCol,h,w) && (gridAux[nextRow][nextCol]==1 || gridAux[nextRow][nextCol] ==0 || ene>=2)  )
 		{
 		
 			int next = gridAux[nextRow][nextCol];
