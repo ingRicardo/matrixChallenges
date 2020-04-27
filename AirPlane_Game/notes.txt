@@ -1,0 +1,5 @@
+if enemyCount >=2
+	apply the bomb then
+	look for one's if it exits add it to coins and then
+	move to right
+ 
