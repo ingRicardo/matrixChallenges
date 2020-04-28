@@ -1,5 +1,49 @@
+
+2 2 0 2 2 
+0 1 0 2 1 x  
+0 2 0 1 0   
+2 1 2 1 0  
+0 2 2 1 2  x  
+0 1 2 2 2     
+0 2 1 0 2   
+2 0 1 1 2    
+2 1 1 0 1       
+0 2 2 0 0 
+2 0 1 2 2 
+2 2 1 2 1
+    x	
+
+output = 9
+11111111
+
+2 2 2 2 2
+1 2 0 0 2
+0 2 0 0 0  
+2 2 0 0 2  
+0 2 2 2 0 
+0 0 0 0 0 
+1 0 0 0 2 
+0 0 0 0 0
+2 2 0 2 1
+0 2 2 2 0
+    x	
+output = 0
+0
+
+
+**starts in the center or row -1
+**every turn it starts moving to the right
+
+
+-starts moving to the right until you found the 1 or until is no path
+-if the 1 was not found check in your current position if there is the one (STAY)
+-if the 1 was not found in the current postiion (STAY) starts moving to the left
+-if the 1 was not found moving to the left you move one step to the right and then move up ???
+
+
+---------------------------------------
 if enemyCount >=2
 	apply the bomb then
 	look for one's if it exits add it to coins and then
 	move to right
- 
+-------------------------------------------
