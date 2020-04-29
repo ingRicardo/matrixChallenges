@@ -30,15 +30,9 @@ output = 9
 output = 0
 0
 
-
-**starts in the center or row -1
-**every turn it starts moving to the right
-
-
--starts moving to the right until you found the 1 or until is no path
--if the 1 was not found check in your current position if there is the one (STAY)
--if the 1 was not found in the current postiion (STAY) starts moving to the left
--if the 1 was not found moving to the left you move one step to the right and then move up ???
+move all width right , stay or 
+it can pass by only 1 if there's no 1 move to the last 0
+apply bomb when  three enemies found 
 
 
 ---------------------------------------
