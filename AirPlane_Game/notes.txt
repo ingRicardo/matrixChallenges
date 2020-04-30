@@ -1,4 +1,4 @@
-
+#1
 1 2 0 0 1
 2 0 0 1 0
 0 1 2 0 1
@@ -6,16 +6,121 @@
 0 2 1 0 1
 0 1 2 2 2
 1 0 1 1 0
-
+         
 output = 6
 
+turn1
+	move right
+	map descends	
+	+1 coin
+	control area cleared
+	bomb used
+turn2
+	move right
+	map descends
+	control area cleared
+turn3
+	stay
+	map descends
+	+1coin
+	control area cleared
+turn4
+	stay
+	map descends
+	+1coin
+	control area cleared
+turn5
+	stay
+	map descends
+	+1coin
+	control area cleared
+turn6
+	move left
+	map descends
+	+1coin
+	control area cleared
+turn7
+	move right
+	map descends
+	+1coin
+	control area cleared
+
+
+#2
 1 1 0 0 0
 1 2 2 2 1
 1 1 2 2 1
 2 2 2 1 2
 2 2 0 2 0
-
+            
+turn1
+     stay
+     map descends
+     control area cleared
+turn2
+    move right
+    map descends
+    +1coin
+    control area cleared 
+turn3
+    move right
+    map descends
+    +1coin	
+    control area cleared
+turn4
+    stay
+    map descends
+    +1coin
+    control area cleared
+turn5
+    stay
+    map descends
+    control area cleared
 output =3
+
+#3
+2 2 2 2 2
+0 0 0 0 0
+0 0 2 0 0
+2 2 2 2 2
+0 0 0 0 0
+1 2 2 2 1
+           
+turn1
+      
+      bomb used
+turn2
+      move right
+      map descends
+      control area cleared
+turn3
+      move right
+      map descends
+      control area cleared
+turn4
+      stay
+      map descends
+      control area cleared
+
+turn5
+      stay
+      map descends
+      control area cleared
+
+turn6
+      stay
+      map descends
+      control area cleared
+
+turn7
+      stay
+      map descends
+      -1coins	
+      control area cleared
+
+
+output= -1
+
 
 #5
 2 2 0 2 2 
@@ -23,7 +128,7 @@ output =3
 0 2 0 1 0   
 2 1 2 1 0  
 0 2 2 1 2    
-0 1 2 2 2 bomb      
+0 1 2 2 2 x      
 0 2 1 0 2   
 2 0 1 1 2    
 2 1 1 0 1       
@@ -32,16 +137,47 @@ output =3
 2 2 1 2 1
     x	
 
+ ***** SOLUTION FOUND APROX. ****
+-WHEN YOU USE THE BOMB IS ONE TURN SPENT WITH NO VERTICAL NEITHER HORIZONTAL MOVEMENTS 
+-USE THE BOMB WHEN YOU FIND 2 ENEMIES(2) AND ONE SPACE(0)  OR USE THE BOMB WHEN YOU FIND 3 ENEMIES(2)
+-FIRST SPACE(0) YOU FIND MOVE UP TO IT
+-IF YOU FIND 2 ENEMIES(2) AND ONE COIN(1) MOVE UP TO THE COIN
 
-move right unti is invalid or find One, stay or left
-if not one found move to the ??
-
+turn1
+	stay
+	map descends
+	+1coin
+	control area cleared
+turn2
+	stay
+	map descends
+	+1coin
+	control area cleared
+turn3
+	move right
+	map descends
+	control area cleared
+turn4
+	move right
+	map descends
+	+1coin
+	control area cleared
+turn5	
+	move left
+	map descends
+	+1coin
+	control area cleared
+turn6
+	move left
+	map descends
+	+1 coin
+	control area cleared
 
 output = 9
-11111111
 
+#4
 2 2 2 2 2
-1 2 0 0 2
+1 2 0 0 2 
 0 2 0 0 0  
 2 2 0 0 2  
 0 2 2 2 0 
@@ -50,7 +186,48 @@ output = 9
 0 0 0 0 0
 2 2 0 2 1
 0 2 2 2 0
-    x	
+       
+turn1
+    bomb used
+turn2
+    move right
+    map decends
+    control area cleared
+turn3
+     move right
+     map descends
+     +1coin
+     control area cleared
+turn4
+	stay
+	map descends
+	control area cleared
+turn5
+	move left
+	map descends
+	control area cleared
+turn6
+	move right
+	map descends
+	control area cleared
+turn7
+	stay
+	map descends
+	control area cleared
+turn8
+	move left
+	map descends
+	control area cleared
+turn9 
+	move right
+	map descends
+	control area cleared
+turn10
+	move left
+	map descends
+	-1coin
+	control area cleared
+
 output = 0
 
 
