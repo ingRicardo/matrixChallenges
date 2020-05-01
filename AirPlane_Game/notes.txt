@@ -121,6 +121,60 @@ turn7
 
 output= -1
 
+#4
+2 2 2 2 2
+1 2 0 0 2 
+0 2 0 0 0  
+2 2 0 0 2  
+0 2 2 2 0 
+0 0 0 0 0 
+1 0 0 0 2 
+0 0 0 0 0
+2 2 0 2 1
+0 2 2 2 0
+       
+turn1
+    bomb used
+turn2
+    move right
+    map decends
+    control area cleared
+turn3
+     move right
+     map descends
+     +1coin
+     control area cleared
+turn4
+	stay
+	map descends
+	control area cleared
+turn5
+	move left
+	map descends
+	control area cleared
+turn6
+	move right
+	map descends
+	control area cleared
+turn7
+	stay
+	map descends
+	control area cleared
+turn8
+	move left
+	map descends
+	control area cleared
+turn9 
+	move right
+	map descends
+	control area cleared
+turn10
+	move left
+	map descends
+	-1coin
+	control area cleared
+
+output = 0
 
 #5
 2 2 0 2 2 
@@ -143,6 +197,87 @@ output= -1
 	IF it founds 2 enemies at row It uses the bomb 
 -CHECK IF THERE IS A ONE ON THE THREE MOVEMENTS IF NOT IT MOVES TO THE LAST SPACE(0) YOU FIND MOVE UP TO IT
 -IF YOU FIND 2 ENEMIES(2) AND ONE COIN(1) MOVE UP TO THE COIN
+
+			-------
+			int enemyCount =0;
+			int coinCount =0;
+			int spaceCount =0;
+			int moveTo =0;
+			bool move = false;
+			int nextRow=0;
+			int nextCol=0;
+			int spaceRow =0;
+			int spaceCol =0;
+			for(int idx = 0 ; idx<=3; idx++)
+			{
+
+				nextRow= row + deltaRow[idx]-1;
+				nextCol= col + deltaCol[idx];
+
+				if(isValid)
+				{
+					int next = grid[nextRow][nextCol];
+					
+					if (next == 0)
+					{
+						spaceCount+=1;
+						spaceRow = nextRow;
+						spaceCol = nextCol;
+
+					}
+					else if (next == 1)
+					{
+						coinCount+=1;
+						move = true;
+						break;			
+		
+					}
+					else if (next == 2)
+					{
+						enemyCount+=1;
+					
+					}
+					if(enemyCount>=2  && coinCount==0 && !bomb)
+					{
+						Use Bomb
+						nextRow =0;
+						nextCol =0;
+						bomb = true;
+						break;
+
+					}
+
+					moveTo = idx;
+
+					
+				}
+
+			}
+
+		if (!move)
+			if (  ( coinCount == 0 && spaceCount > 0 ) )
+			{
+				nextRow = spaceRow;
+				nextCol = spaceCol;
+				move = true;
+			}
+			else if ( coinCount == 0 && spaceCount == 0 && (enemyCount>0  || enemyCount ==0 ))   )
+			{
+				move = true;
+
+			}
+
+			
+
+
+			if (move)
+			{
+
+				recursion();
+
+			}
+
+
 
 turn1
 	stay
@@ -206,60 +341,7 @@ turn13
 
 output = 9
 
-#4
-2 2 2 2 2
-1 2 0 0 2 
-0 2 0 0 0  
-2 2 0 0 2  
-0 2 2 2 0 
-0 0 0 0 0 
-1 0 0 0 2 
-0 0 0 0 0
-2 2 0 2 1
-0 2 2 2 0
-       
-turn1
-    bomb used
-turn2
-    move right
-    map decends
-    control area cleared
-turn3
-     move right
-     map descends
-     +1coin
-     control area cleared
-turn4
-	stay
-	map descends
-	control area cleared
-turn5
-	move left
-	map descends
-	control area cleared
-turn6
-	move right
-	map descends
-	control area cleared
-turn7
-	stay
-	map descends
-	control area cleared
-turn8
-	move left
-	map descends
-	control area cleared
-turn9 
-	move right
-	map descends
-	control area cleared
-turn10
-	move left
-	map descends
-	-1coin
-	control area cleared
 
-output = 0
 
 
 
