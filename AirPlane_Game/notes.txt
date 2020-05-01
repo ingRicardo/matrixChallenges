@@ -140,7 +140,8 @@ output= -1
  ***** SOLUTION FOUND APROX. ****
 -WHEN YOU USE THE BOMB IS ONE TURN SPENT WITH NO VERTICAL NEITHER HORIZONTAL MOVEMENTS 
 -USE THE BOMB WHEN YOU FIND 2 ENEMIES(2) AND ONE SPACE(0)  OR USE THE BOMB WHEN YOU FIND 3 ENEMIES(2)
--FIRST SPACE(0) YOU FIND MOVE UP TO IT
+	IF it founds 2 enemies at row It uses the bomb 
+-CHECK IF THERE IS A ONE ON THE THREE MOVEMENTS IF NOT IT MOVES TO THE LAST SPACE(0) YOU FIND MOVE UP TO IT
 -IF YOU FIND 2 ENEMIES(2) AND ONE COIN(1) MOVE UP TO THE COIN
 
 turn1
@@ -171,6 +172,36 @@ turn6
 	move left
 	map descends
 	+1 coin
+	control area cleared
+turn7
+	move left
+	map descends
+	+1 coin
+	control area cleared
+turn8
+	bomb used
+turn9
+	move right
+	map descends
+	control area cleared
+turn10
+	move right
+	map descends
+	+1coin
+	control area cleared
+turn11
+	stay
+	map descends
+	+1con
+	control area cleared
+turn12
+	right
+	map descends
+	+1coin
+	control area cleared
+turn13
+	stay
+	map descends
 	control area cleared
 
 output = 9
