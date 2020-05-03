@@ -219,8 +219,6 @@ output = 0
 
 
 
-
-
 			int enemyCount =0;
 			int coinCount =0;
 			int spaceCount =0;
@@ -230,39 +228,45 @@ output = 0
 			int nextCol=0;
 			int spaceRow =0;
 			int spaceCol =0;
-			for(int idx = 0 ; idx<=3; idx++)
+
+			int deltaRow [] = {0,0, 0};
+			int deltaCol [] = {1,0,-1};
+			int deltaSize  =  sizeof(deltaRow)/sizeof(deltaRow[0]);
+
+
+			for(int idx = 0 ; idx<=deltaSize; idx++) // move starts from right,stay,left
 			{
 
-				nextRow= row + deltaRow[idx]-1;
-				nextCol= col + deltaCol[idx];
+				nextRow= row + deltaRow[idx]-1;  // move right but one row up to check the next posibility
+				nextCol= col + deltaCol[idx];   
 
-				if(isValid)
+				if(isValid())
 				{
 					int next = grid[nextRow][nextCol];
 					
-					if (next == 0)
+					if (next == 0) //space
 					{
 						spaceCount+=1;
 						spaceRow = nextRow;
 						spaceCol = nextCol;
 
 					}
-					else if (next == 1)
+					else if (next == 1) // coin
 					{
-						coinCount+=1;
-						move = true;
+						coinCount+=1; 
+						move = true; // found a coin and go trhought it
 						break;			
 		
 					}
-					else if (next == 2)
+					else if (next == 2) // enemy
 					{
-						enemyCount+=1;
+						enemyCount-=1;
 					
 					}
 					if(enemyCount>=2  && coinCount==0 && !bomb)
 					{
-						Use Bomb
-						nextRow =0;
+						//Use Bomb
+						nextRow =0; //move to the right 
 						nextCol =0;
 						bomb = true;
 
@@ -274,14 +278,14 @@ output = 0
 
 					}
 
-					moveTo = idx;
-
+					
 					
 				}
 
 			}
 
 		if (!move)
+		{
 			if (  ( coinCount == 0 && spaceCount > 0 ) )
 			{
 				nextRow = spaceRow;
@@ -294,8 +298,7 @@ output = 0
 
 			}
 
-			
-
+		}
 
 			if (move)
 			{
@@ -304,7 +307,7 @@ output = 0
 
 					bottom_grid-=1;
 
-				recursion();
+				recursion(grid,nextRow,nextCol,height,width,move,bomb,top_grid,bottom_grid,coins);
 
 			}
 
