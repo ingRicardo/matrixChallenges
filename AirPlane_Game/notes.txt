@@ -201,116 +201,126 @@ output = 0
 			-------
 
 
-			if(coins <0 || bottom_grid  ==0 )
+			bool isValid(int **grid, int row, int col, int width, int height)
 			{
 
-				return;
+
+				return row>-1 &&row < height && col>-1 && col< width;
 			}
 
-
-			int current = grid[row][col];
-
-
-			if (current == 1)
-				coins +=1;
-
-			else if ( current == 2)
-				coins -=1;
-
-
-
-			int enemyCount =0;
-			int coinCount =0;
-			int spaceCount =0;
-			int moveTo =0;
-			bool move = false;
-			int nextRow=0;
-			int nextCol=0;
-			int spaceRow =0;
-			int spaceCol =0;
-
-			int deltaRow [] = {0,0, 0};
-			int deltaCol [] = {1,0,-1};
-			int deltaSize  =  sizeof(deltaRow)/sizeof(deltaRow[0]);
-
-
-			for(int idx = 0 ; idx<=deltaSize; idx++) // move starts from right,stay,left
+			recursion(int **grid,int row,int col,int height,int width,bool move,bool bomb,int top_grid,int bottom_grid,coins)
 			{
 
-				nextRow= row + deltaRow[idx]-1;  // move right but one row up to check the next posibility
-				nextCol= col + deltaCol[idx];   
+						if(coins <0 || bottom_grid  ==0 )
+						{
 
-				if(isValid())
-				{
-					int next = grid[nextRow][nextCol];
+							return;
+						}
+
+
+						int current = grid[row][col];
+
+
+						if (current == 1)
+							coins +=1;
+
+						else if ( current == 2)
+							coins -=1;
+
+
+
+						int enemyCount =0;
+						int coinCount =0;
+						int spaceCount =0;
+						int moveTo =0;
+						bool move = false;
+						int nextRow=0;
+						int nextCol=0;
+						int spaceRow =0;
+						int spaceCol =0;
+
+						int deltaRow [] = {0,0, 0};
+						int deltaCol [] = {1,0,-1};
+						int deltaSize  =  sizeof(deltaRow)/sizeof(deltaRow[0]);
+
+
+						for(int idx = 0 ; idx<=deltaSize; idx++) // move starts from right,stay,left
+						{
+
+							nextRow= row + deltaRow[idx]-1;  // move right but one row up to check the next posibility
+							nextCol= col + deltaCol[idx];   
+
+							if(isValid(grid, nextRow, nextCol, width, height))
+							{
+								int next = grid[nextRow][nextCol];
+								
+								if (next == 0) //space
+								{
+									spaceCount+=1;
+									spaceRow = nextRow;
+									spaceCol = nextCol;
+
+								}
+								else if (next == 1) // coin
+								{
+									coinCount+=1; 
+									move = true; // found a coin and go trhought it
+									break;			
 					
-					if (next == 0) //space
+								}
+								else if (next == 2) // enemy
+								{
+									enemyCount-=1;
+								
+								}
+								if(enemyCount>=2  && coinCount==0 && !bomb)
+								{
+									//Use Bomb
+									nextRow =0; //move to the right 
+									nextCol =0;
+									bomb = true;
+
+									for (int row = top_grid; row<height; row++)
+										for(int col = 0; col<width; col++)
+											if(grid[row][col] == 2)
+												grid[row][col]=0;
+									break;
+
+								}
+
+								
+								
+							}
+
+						}
+
+					if (!move)
 					{
-						spaceCount+=1;
-						spaceRow = nextRow;
-						spaceCol = nextCol;
+						if (    spaceCount >= 0  )
+						{
+							nextRow = spaceRow;
+							nextCol = spaceCol;
+							move = true;
+						}
+						else if (  enemyCount >= 0 && bomb)
+						{
+							move = true;
+
+						}
 
 					}
-					else if (next == 1) // coin
-					{
-						coinCount+=1; 
-						move = true; // found a coin and go trhought it
-						break;			
-		
-					}
-					else if (next == 2) // enemy
-					{
-						enemyCount-=1;
-					
-					}
-					if(enemyCount>=2  && coinCount==0 && !bomb)
-					{
-						//Use Bomb
-						nextRow =0; //move to the right 
-						nextCol =0;
-						bomb = true;
 
-						for (int row = top_grid; row<height; row++)
-							for(int col = 0; col<width; col++)
-								if(grid[row][col] == 2)
-									grid[row][col]=0;
-						break;
+						if (move)
+						{
+								if(grid_top>0)
+									top_grid-=1;
 
-					}
+								bottom_grid-=1;
 
-					
-					
-				}
+							recursion(grid,nextRow,nextCol,height,width,move,bomb,top_grid,bottom_grid,coins);
 
+						}
 			}
-
-		if (!move)
-		{
-			if (    spaceCount >= 0  )
-			{
-				nextRow = spaceRow;
-				nextCol = spaceCol;
-				move = true;
-			}
-			else if (  enemyCount >= 0 )
-			{
-				move = true;
-
-			}
-
-		}
-
-			if (move)
-			{
-					if(grid_top>0)
-						top_grid-=1;
-
-					bottom_grid-=1;
-
-				recursion(grid,nextRow,nextCol,height,width,move,bomb,top_grid,bottom_grid,coins);
-
-			}
-
 
 
 turn1
