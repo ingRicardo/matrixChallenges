@@ -286,13 +286,13 @@ output = 0
 
 		if (!move)
 		{
-			if (  ( coinCount == 0 && spaceCount > 0 ) )
+			if (    spaceCount >= 0  )
 			{
 				nextRow = spaceRow;
 				nextCol = spaceCol;
 				move = true;
 			}
-			else if ( coinCount == 0 && spaceCount == 0 && (enemyCount>0  || enemyCount ==0 ))   )
+			else if (  enemyCount >= 0 )
 			{
 				move = true;
 
