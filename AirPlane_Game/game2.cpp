@@ -106,6 +106,7 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 	 */
 	int ene=0,space=0,coin=0;	
 	bool test = false;
+	int moveCoin=0, moveSpace =0, moveEne=0;
 	// loop to find a enemy an apply the bomb
 	for(int idx =0; idx < dsize; idx++)//move horizontal 
 	{
@@ -114,30 +115,52 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 		noValid+=1;
 	       	if(isValid(gridAux,nextRow,nextCol,h,w) && gridAux[nextRow][nextCol]==1   )
 		{
-			passOne = idx;
+			//passOne = idx;
 			coin+=1;
+			moveCoin = idx;
 			break;
 
 		}
 		else  if (isValid(gridAux,nextRow,nextCol,h,w) && gridAux[nextRow][nextCol]==2    )
 		{
 			ene+=1;
-			if (ene == 2 )
+			moveEne =idx;
+			if (ene == 2 && !bomb)
 			{
 				test = true;
-				break;
+			//	break;
 			}
 		}
 		else  if (isValid(gridAux,nextRow,nextCol,h,w) && gridAux[nextRow][nextCol]==0    )
 		{
-
+			moveSpace= idx;
 			space+=1;	
 
 		}
 
 	}
 	cout << " how many enemies -> "<< ene << " space "<< space<<" coins "<< coin<< endl;
-	if (ene >2 && !bomb && coin == 0 || ( test && !bomb))
+
+	if (coin >0)
+		passOne = moveCoin;
+	else if (space >0) 
+	{
+		passOne = moveSpace;
+
+/*
+		if (space>ene)
+			passOne = moveSpace;
+		else if (space < ene)
+			{
+				passOne = moveEne;
+			}
+		else if (space == ene)
+			passOne = moveSpace;
+		*/			
+
+	}
+
+	if (ene >=2 && !bomb && space == 0 && coin ==0   /*&& coin == 0 || ( test && !bomb)*/ ||  ( ene >=2 && !bomb && space == 1 &&  test && coin ==0 && moveSpace>1 ) )
 	{
 			cout <<"********** BOMB APPLIED ***********"<<" h  "<<h << " hX "<< hX<<endl;
                 	for (int i = hX; i< h ; i++)
@@ -163,7 +186,7 @@ cout << "current  -> "<< gridAux[row][col] <<" : "<< row<<","<<col<<endl;
 		noValid+=1;
 		
 
-               	if(isValid(gridAux,nextRow,nextCol,h,w) && (gridAux[nextRow][nextCol]==1 || gridAux[nextRow][nextCol] ==0 /*|| (ene>=2 && space==0) */) )
+               	if(isValid(gridAux,nextRow,nextCol,h,w) && (gridAux[nextRow][nextCol]==1 || gridAux[nextRow][nextCol] ==0 /*|| (ene>=2 && space==0) */ || gridAux[nextRow][nextCol] ==2 ) )
 		{
 		
 			int next = gridAux[nextRow][nextCol];
