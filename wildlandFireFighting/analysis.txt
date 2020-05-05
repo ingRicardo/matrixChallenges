@@ -1,0 +1,10 @@
+
+
+
+
+		forest size NXM
+		every hour the the fire spreads in 4 directions (left,right, up, down)
+		and the previous fire that was caught will cease
+		the fire can be caught only when a tree exits
+		
+		
