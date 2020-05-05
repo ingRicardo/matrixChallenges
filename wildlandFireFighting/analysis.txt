@@ -7,4 +7,27 @@
 		and the previous fire that was caught will cease
 		the fire can be caught only when a tree exits
 		
-		
+7 2
+1 0 1 0 0 0 0
+1 1 1 1 0 0 1
+0 0 1 2 1 0 1
+0 0 2 0 0 1 1
+1 0 0 1 0 2 0
+0 1 1 0 0 1 0
+0 0 0 1 0 0 0
+
+
+
+		7 = with/heigh of the forest
+		2 = max number of trees that can be cut down
+		1 = spot with a tree
+		2 = spot with a caught fire
+		0 = empty spot where nothing exits and thus the fire cannot spread
+
+		------------
+		the program starts on the position where there's a fire or number 2 
+		Im going to use linkedList data structure 
+		the linkedList is going to go forward when a tree is found or number 1
+		im going to create a queue using linked list
+
+	the first fire 
