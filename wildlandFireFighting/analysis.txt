@@ -16,6 +16,77 @@
 0 1 1 0 0 1 0
 0 0 0 1 0 0 0
 
+example of first fire found at position (2,3) 
+
+    1 
+    1 1 1 1
+	1 2 1
+
+7 trees were caught by fire
+----------------------------------------------	
+example of second fire found at position (3,2)
+
+	 V	
+       0 2 0	
+	 0  		
+0 trees were caught by fire
+---------------------------------------------
+example of thirth spot with a caught fire at position (4,5)
+
+	  1
+	  1	
+	1 1
+	2
+	1
+5 trees were burnt
+-------------------------------------------
+
+example of cut 2 trees
+
+
+1 0 1 0 0 0 0
+1 1 X 1 0 0 1
+0 0 1 2 1 0 1
+0 0 2 0 0 X 1
+1 0 0 1 0 2 0
+0 1 1 0 0 1 0
+0 0 0 1 0 0 0
+-example of first fire found at position (2,3)
+
+0 0 X 1 0 0 0
+0 0 1 2 1 0 0
+0 0 0 0 0 0 0
+ 
+3 trees were burnt
+------------------------------------------
+-example of second fire found at position (3,2)
+
+0 0 V 0 0 0 0
+0 0 2 0 0 0 0
+0 0 0 0 0 0 0
+
+0 trees were burnt
+
+example of thirth spot with a caught fire at position (4,5)
+
+0 0 0 0 0 X 1
+0 0 0 0 0 2 0
+0 0 0 0 0 1 0
+
+
+1 tree was burnt
+
+burnt tree total     = 4
+trees cut down total = 2
+tree total	     = 18
+
+output = tree total - burnt tree total - tree cut down total
+  12     =     18     -        4         -        2 
+--------------------------------------
+
+output : 12 trees did not get burnt 
+
+
 
 
 		7 = with/heigh of the forest
@@ -30,4 +101,45 @@
 		the linkedList is going to go forward when a tree is found or number 1
 		im going to create a queue using linked list
 
-	the first fire 
+int BFS (int **grid, int hw, Position pos, bool **visited)
+{
+  int burn_t=0;
+
+int deltaCol[]= {1,0,-1, 0};
+int deltaRow[]= {0,1, 0,-1};
+
+int deltaSize = sizeof(deltaRow)/ sizeof(deltaRow[0]);
+
+        visited[pos.getX()][pos.getY()]=true;
+
+        list link;
+        link.createnode(pos);
+        int nextCol =0,nextRow =0;
+
+        while(!link.isEmpty()) 
+        {
+                node curr = link.front(); // take the front node
+                Position current = curr.data; // get the front data
+                link.delete_first(); // delete the first node
+
+                for(int indx =0; indx < deltaSize; indx++ ){
+
+                        nextCol = current.getY() + deltaCol[indx];
+                        nextRow = current.getX() + deltaRow[indx];
+                        Position newPos(nextRow, nextCol);
+
+                        if(isValid(grid,hw,visited,newPos) ){
+                                link.createnode(newPos); // creates a new node with the next position
+                                visited[newPos.getX()][newPos.getY()] =  true; 
+                                burn_t++;
+                        }
+
+                }
+
+        }
+
+        return burn_t;
+}
+
+
+
