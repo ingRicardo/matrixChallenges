@@ -75,6 +75,10 @@ void wildFire()
 {
 	freopen("input.txt", "r", stdin);
 
+	int T=0;
+	cin >> T;
+	cout << "T " << T << endl;
+
 	cout << " start wildFire " << endl;
 
 }
