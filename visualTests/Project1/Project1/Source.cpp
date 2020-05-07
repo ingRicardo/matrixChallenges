@@ -85,7 +85,7 @@ void wildFire()
 int main()
 {
 	
-	cout << "test riky   mac" << endl;
+	 cout << "test riky   mac AAAA  " << endl;
 	wildFire();
 	return 0;
 }
