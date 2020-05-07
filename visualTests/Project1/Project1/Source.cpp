@@ -1,4 +1,5 @@
 #include <iostream>
+
 using namespace std;
 
 /*
@@ -73,17 +74,17 @@ total = 18 - 2 - 10
 
 void wildFire()
 {
-	freopen("input.txt", "r", stdin);
-
-	int T=0;
+	freopen("C:\\Users\\SRT\\Repositories\\SoftCer\\matrixChallenges\\visualTests\\Project1\\in.txt","r", stdin);
+	int T = 0;
 	cin >> T;
-	cout << "T " << T << endl;
+	cout << "Test T --->"<< T << endl;
 
 	cout << " start wildFire " << endl;
 
 }
 int main()
 {
+	
 	cout << "test riky   mac" << endl;
 	wildFire();
 	return 0;
