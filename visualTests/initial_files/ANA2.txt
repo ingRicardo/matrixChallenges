@@ -1,0 +1,50 @@
+
+ 
+ CUT THE FIRST TREE and combine it cutting another tree 
+ 
+ example max trees that can be cut down = 2
+ 
+1 0 1 0 0 0 0	X 0 X 0 0 0 0	
+1 1 1 1 0 0 1	V V V V 0 0 V	
+0 0 1 2 1 0 1	0 0 V 2 V 0 V	
+0 0 2 0 0 1 1	0 0 2 0 0 V V	
+1 0 0 1 0 2 0	1 0 0 1 0 2 0	
+0 1 1 0 0 1 0	0 1 1 0 0 V 0	
+0 0 0 1 0 0 0	0 0 0 1 0 0 0	
+
+tota trees = 18
+2 trees cut down
+11 burnt trees
+5 trees alive
+
+trees alive = 	    tota trees - trees cut down	 - burnt trees
+	5	       18       - 2              - 11
+
+
+-------------------------------------
+1 0 1 0 0 0 0	X 0 1 0 0 0 0	
+1 1 1 1 0 0 1	X V V V 0 0 V	
+0 0 1 2 1 0 1	0 0 V 2 V 0 V	
+0 0 2 0 0 1 1	0 0 2 0 0 V V	
+1 0 0 1 0 2 0	1 0 0 1 0 2 0	
+0 1 1 0 0 1 0	0 1 1 0 0 V 0	
+0 0 0 1 0 0 0	0 0 0 1 0 0 0	
+
+total = 18 - 2 - 10 
+6
+
+---------
+	cuttree1 =0;
+	cuttree2 =0;
+	loop start from postion 0,0
+		if (current == 1)
+		{
+			cuttree1 = current;
+			loop start from position 0,1
+				if (current2 == 1 )
+				{
+					cuttree2 = current2;
+					
+				}
+			
+		}

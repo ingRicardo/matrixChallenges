@@ -2,6 +2,7 @@
 using namespace std;
 void wildFire()
 {
+	freopen("input.txt", "r", stdin);
 
 	cout << " start wildFire " << endl;
 
