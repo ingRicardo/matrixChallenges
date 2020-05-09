@@ -38,6 +38,166 @@ total = 18 - 2 - 10
 6
 ---------
 ---------
+
+class Position{
+	public:
+	int x,y;
+	Position(int xx, int yy)
+	{
+		x=xx;
+		y=yy;
+	}
+	Position(){}
+	int getX(){
+		return x;
+	}
+
+	int getY(){
+		return y;
+	}
+
+};
+
+struct node
+{
+	Position data;
+	node *next;
+
+	node(): data(data) {}	
+
+};
+
+class list
+{
+	private:
+	node *head, *tail;
+	public:
+	list()
+	{
+		head=NULL;
+		tail=NULL;
+
+	}
+
+
+void createnode(Position value)
+{
+
+	node *temp = new node;
+	temp->data=value;
+	temp->next=NULL;
+	if(head == NULL)
+	{
+		head= temp;
+		tail = temp;
+		temp = NULL;
+	}
+	else 
+	{
+		tail->next=temp;
+		tail=temp;
+	}
+}
+bool isEmpty()
+{
+	node *temp = new node;
+	temp=head;
+	if (temp == NULL)
+		return true;
+
+return false;
+}
+void display()
+{
+	node *temp = new node;
+	temp=head;
+	while(temp!=NULL)
+	{
+		cout<<temp->data.getX()<< "\t"<<temp->data.getY()<<endl;
+		temp=temp->next;
+	}
+}
+
+void insert_start(Position value)
+{
+	node *temp = new node;
+	temp->data=value;
+	temp->next=head;
+	head=temp;
+
+}
+
+void insert_position(int pos, Position value)
+{
+
+	node *pre = new node;
+	node *cur= new node;
+	node *temp= new node;
+	cur = head;
+	for(int i=1;i<pos;i++)
+	{
+
+		pre=cur;
+		cur=cur->next;
+
+	}
+	temp->data=value;
+	pre->next=temp;
+	temp->next=cur;
+}
+
+void delete_first()
+{
+	node *temp= new node;
+	temp=head;
+	head=head->next;
+	delete temp;
+}
+
+void delete_last()
+{
+
+	node *current= new node;
+	node *previous= new node;
+	current=head;
+
+	while(current->next!= NULL)
+	{
+		previous=current;
+		current=current->next;
+	}
+	tail=previous;
+	previous->next = NULL;
+	delete current;
+}
+
+void delete_position(int pos)
+{
+
+	node *current= new node;
+	node *previous= new node;
+	current= head;
+	for(int i=1; i<pos; i++)
+	{
+		previous = current;
+		current=current->next;
+
+	}
+	previous->next = current->next;
+}
+
+   node front()
+   {
+	   node *temp = new node;
+	   temp = head;
+
+	   return *temp;
+   }
+};
+
+
+
+
 bool isValid(int **grid, int row, int col, bool **visited, int h, int w )
 {
 	
@@ -47,9 +207,43 @@ bool isValid(int **grid, int row, int col, bool **visited, int h, int w )
 int BFS(int **grid,int row, int col, bool **visited)
 {
 
+int burn_t=0;
 	
+int deltaCol[]= {1,0,-1, 0};
+int deltaRow[]= {0,1, 0,-1};
+
+int deltaSize = sizeof(deltaRow)/ sizeof(deltaRow[0]);
+
+	visited[pos.getX()][pos.getY()]=true;
+
+	list link;
+	link.createnode(pos);
+	int nextCol =0,nextRow =0;
+
+	while(!link.isEmpty())
+	{
+		node curr = link.front();
+		Position current = curr.data;
+		link.delete_first();
+
+		for(int indx =0; indx < deltaSize; indx++ ){
+
+			nextCol = current.getY() + deltaCol[indx];
+			nextRow = current.getX() + deltaRow[indx];
+			Position newPos(nextRow, nextCol);
+
+			if(isValid(grid,hw,visited,newPos) ){
+				link.createnode(newPos);
+				visited[newPos.getX()][newPos.getY()] =  true;
+				burn_t++;
+			}
+
+		}
+
+	}
+
+	return burn_t;
 	
-	return 0;
 }
 
 void func1(int **grid, bool ** visited, int MAX_CUT_DOWN, int res_trees ){
