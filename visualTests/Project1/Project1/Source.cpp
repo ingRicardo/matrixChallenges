@@ -290,16 +290,52 @@ void func1(int **grid, bool ** visited, int MAX_CUT_DOWN, int res_trees ){
 }
 */
 
+int resfun(int **grid, bool **visited, int max_tree)
+{
+
+
+
+
+	return 0;
+}
+
+
 void wildFire()
 {
-	freopen("C:\\Users\\SRT\\Repositories\\SoftCer\\matrixChallenges\\visualTests\\Project1\\in.txt","r", stdin);
+	//freopen("C:\\Users\\SRT\\Repositories\\SoftCer\\matrixChallenges\\visualTests\\Project1\\in.txt","r", stdin);
+	freopen("in.txt","r", stdin);
 	int T = 0;
+	int res =0;
 	cin >> T;
 	cout << "Test T --->"<< T << endl;
-	for (int test_case = 1; test_case <=T; ++test_case)
-	{
+	for (int test_case = 1; test_case <=1; ++test_case)
+	{	
 
-		cout << "#" << test_case << endl;
+		int h,w=0,val=0,max_tree=0;
+		cin >> h;
+		cin >> max_tree;
+		w =h;
+		int **grid = new int*[h];
+		bool **visited = new bool*[h]; 
+		for(int row =0; row<h; row++)
+		{
+			grid[row] = new int[w];
+			visited[row] = new bool[w];
+			cout<<endl;
+			for(int col=0; col<w; col++)
+			{
+				cin >> val;
+
+				grid[row][col] = val;
+				visited[row][col] = false;
+				cout <<val<<" ";
+
+			}
+
+		}
+		cout << endl;
+		res = resfun(grid, visited,max_tree);
+		cout << "#" << test_case <<":"<<res<< endl;
 
 	}
 
