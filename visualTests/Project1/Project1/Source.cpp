@@ -423,18 +423,65 @@ int deltaSize = sizeof(deltaRow)/ sizeof(deltaRow[0]);
 	return burn_t;
 }
 
-int resfun(int **grid, bool **visited, int max_tree, int hw)
+int resfun(int **grid, bool **&visited, int max_tree, int hw)
 {
 
-		Position pos(2,3);
-		int burn_t = BFS(grid,hw, pos, visited);
-		cout << " bfs "<< burn_t<<endl;
+	//	Position pos(2,3);
+	//	int burn_t = BFS(grid,hw, pos, visited);
+	//	cout << " bfs "<< burn_t<<endl;
 
+	bool cuttree1 =false;
+	bool cuttree2 =false;
+	int burnt_trees_acc=0, current1=0,current2 =0;
+	int total_burnt_trees=0, total_trees=0;
+	for (int row =0 ; row < hw; row++) //loop start from postion 0,0
+	{	
+		for (int col =0; col < hw; col++)
+		{	//burnt_trees_acc =0;
+			current1 = grid[row][col];
+			if  (current1 == 1)
+				total_trees+=1;
+
+			if (current1 == 1 && !visited[row][col])
+			{
+				
+				visited[row][col] = true;
+				for (int row1 =row ; row1 < hw; row1++) //loop start from position 0,1
+				{
+					for (int col1 =col+1; col1 < hw; col1++)	
+					{
+						current2 = grid[row1][col1];
+						if (current2 == 1 && !visited[row1][col1])
+						{
+							
+							visited[row1][col1] = true;
+
+						} //end if
+				
+						if (current2 == 2 && !visited[row1][col1])
+						{
+							//int burnt_trees = BFS(grid,row1,col1,visited); 
+							Position pos(row1,col1);
+							int burnt_trees =BFS(grid, hw, pos,visited);
+							cout << " burnt_trees -> "<< burnt_trees<<endl; 
+							burnt_trees_acc += burnt_trees;
+							total_burnt_trees += burnt_trees_acc;
+						}
+
+					}// end col1
+				 }//end row1
+			}//end if
+		}//end col
+	}//end row
+	int res_trees = total_trees - total_burnt_trees - max_tree ;
+
+	cout << " total trees "<<total_trees <<" tota burnt "<< total_burnt_trees << " max tree "<< max_tree << endl;
+		cout << "\n print visited "<<endl;
 
 		printVist(visited, hw);
 		
 		cout<<endl;
-	return 0;
+	return res_trees;
 }
 
 
