@@ -383,6 +383,23 @@ void printVist(bool **visited, int hw)
 	}
 }
 
+void printAux(int** auxgrid, int hw)
+{
+
+	for (int row = 0; row < hw; row++)
+	{
+
+		for (int col = 0; col < hw; col++)
+		{
+
+			cout << " " << auxgrid[row][col];
+		}
+		cout << endl;
+
+	}
+}
+
+
 int BFS (int **grid, int hw, Position pos, bool **&visited)
 {
   int burn_t=0;
@@ -434,7 +451,7 @@ int resfun(int **grid, bool **&visited, int max_tree, int hw)
 	bool cuttree2 =false;
 	int burnt_trees_acc=0, current1=0,current2 =0;
 	int total_burnt_trees=0, total_trees=0;
-	for (int row =0 ; row < hw; row++) //loop start from postion 0,0
+	/*for (int row =0 ; row < hw; row++) //loop start from postion 0,0
 	{	
 		for (int col =0; col < hw; col++)
 		{	//burnt_trees_acc =0;
@@ -474,6 +491,134 @@ int resfun(int **grid, bool **&visited, int max_tree, int hw)
 			//grid[row][col] = 1;
 		}//end col
 	}//end row
+	*/
+	
+	// auxgrid to get values from original grid
+	int** auxgrid = new int*[hw];
+	for (int row = 0; row < hw; row++)
+	{
+		auxgrid[row] = new int[hw];
+		for (int col = 0; col < hw; col++)
+			auxgrid[row][col] = grid[row][col];
+	}
+
+	cout << "print the aux grid " << endl;
+	printAux(auxgrid, hw);
+	int down = 0;
+
+	/*
+ 1 0 1 0 0 0 0
+ 1 1 1 1 0 0 1
+ 0 0 1 2 1 0 1
+ 0 0 2 0 0 1 1
+ 1 0 0 1 0 2 0
+ 0 1 1 0 0 1 0
+ 0 0 0 1 0 0 0
+
+ 0 0 0 0 0 0 0
+ 1 1 1 1 0 0 1
+ 0 0 1 2 1 0 1
+ 0 0 2 0 0 1 1
+ 1 0 0 1 0 2 0
+ 0 1 1 0 0 1 0
+ 0 0 0 1 0 0 0
+
+ 0 0 1 0 0 0 0
+ 0 1 1 1 0 0 1
+ 0 0 1 2 1 0 1
+ 0 0 2 0 0 1 1
+ 1 0 0 1 0 2 0
+ 0 1 1 0 0 1 0
+ 0 0 0 1 0 0 0
+
+ 0 0 1 0 0 0 0
+ 1 0 1 1 0 0 1
+ 0 0 1 2 1 0 1
+ 0 0 2 0 0 1 1
+ 1 0 0 1 0 2 0
+ 0 1 1 0 0 1 0
+ 0 0 0 1 0 0 0
+
+ 0 0 1 0 0 0 0
+ 1 1 0 1 0 0 1
+ 0 0 1 2 1 0 1
+ 0 0 2 0 0 1 1
+ 1 0 0 1 0 2 0
+ 0 1 1 0 0 1 0
+ 0 0 0 1 0 0 0
+
+ 0 0 1 0 0 0 0
+ 1 1 1 0 0 0 1
+ 0 0 1 2 1 0 1
+ 0 0 2 0 0 1 1
+ 1 0 0 1 0 2 0
+ 0 1 1 0 0 1 0
+ 0 0 0 1 0 0 0
+
+ 0 0 1 0 0 0 0
+ 1 1 1 1 0 0 0
+ 0 0 1 2 1 0 1
+ 0 0 2 0 0 1 1
+ 1 0 0 1 0 2 0
+ 0 1 1 0 0 1 0
+ 0 0 0 1 0 0 0
+
+ 0 0 1 0 0 0 0
+ 1 1 1 1 0 0 1
+ 0 0 0 2 1 0 1
+ 0 0 2 0 0 1 1
+ 1 0 0 1 0 2 0
+ 0 1 1 0 0 1 0
+ 0 0 0 1 0 0 0
+
+
+
+
+	*/
+
+	for (int row = 0; row < hw; row++)
+	{
+		for (int col = 0; col < hw; col++)
+		{
+			if (auxgrid[row][col] == 1)
+			{
+				auxgrid[row][col] = 0;
+				for (int row1 = 0; row1 < hw; row1++)
+				{
+
+					for (int col1 = 0; col1 < hw; col1++)
+					{
+						if (auxgrid[row1][col1] == 1)
+						{
+
+							auxgrid[row1][col1] = 0;
+							cout << "-----" << endl;
+							printAux(auxgrid, hw);
+							auxgrid[row1][col1] = 1;
+						}
+						else if (auxgrid[row1][col1] == 2)
+						{
+						//	Position pos(row1, col1);
+						//	int burnt_trees = BFS(auxgrid, hw, pos, visited);
+
+
+						}
+					}
+
+
+				}
+				break;
+
+
+
+			}
+
+
+		}
+
+		break;
+	}
+
 	int res_trees = total_trees - burnt_trees_acc - max_tree ;
 
 	cout << " total trees "<<total_trees <<" tota burnt "<< burnt_trees_acc << " max tree "<< max_tree << endl;
