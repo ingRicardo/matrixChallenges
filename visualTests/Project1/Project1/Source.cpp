@@ -383,7 +383,7 @@ void printVist(bool **visited, int hw)
 	}
 }
 
-int BFS (int **grid, int hw, Position pos, bool **visited)
+int BFS (int **grid, int hw, Position pos, bool **&visited)
 {
   int burn_t=0;
 	
@@ -444,38 +444,39 @@ int resfun(int **grid, bool **&visited, int max_tree, int hw)
 
 			if (current1 == 1 && !visited[row][col])
 			{
-				
-				visited[row][col] = true;
+				//grid[row][col] = 0;
+				//visited[row][col] = true;
 				for (int row1 =row ; row1 < hw; row1++) //loop start from position 0,1
 				{
 					for (int col1 =col+1; col1 < hw; col1++)	
 					{
 						current2 = grid[row1][col1];
-						if (current2 == 1 && !visited[row1][col1])
-						{
-							
-							visited[row1][col1] = true;
 
-						} //end if
-				
+						if (current2 == 1 &&  !visited[row1][col1]){
+							//grid[row1][col1] = 0;	
+							//visited[row1][col1] = true;
+						}
+							
+
 						if (current2 == 2 && !visited[row1][col1])
 						{
-							//int burnt_trees = BFS(grid,row1,col1,visited); 
+							
 							Position pos(row1,col1);
 							int burnt_trees =BFS(grid, hw, pos,visited);
 							cout << " burnt_trees -> "<< burnt_trees<<endl; 
 							burnt_trees_acc += burnt_trees;
-							total_burnt_trees += burnt_trees_acc;
+			
 						}
 
 					}// end col1
 				 }//end row1
 			}//end if
+			//grid[row][col] = 1;
 		}//end col
 	}//end row
-	int res_trees = total_trees - total_burnt_trees - max_tree ;
+	int res_trees = total_trees - burnt_trees_acc - max_tree ;
 
-	cout << " total trees "<<total_trees <<" tota burnt "<< total_burnt_trees << " max tree "<< max_tree << endl;
+	cout << " total trees "<<total_trees <<" tota burnt "<< burnt_trees_acc << " max tree "<< max_tree << endl;
 		cout << "\n print visited "<<endl;
 
 		printVist(visited, hw);
