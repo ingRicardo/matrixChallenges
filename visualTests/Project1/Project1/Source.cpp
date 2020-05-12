@@ -440,7 +440,7 @@ int deltaSize = sizeof(deltaRow)/ sizeof(deltaRow[0]);
 	return burn_t;
 }
 
-int resfun(int **grid, bool **&visited, int max_tree, int hw)
+int resfun(int **grid, bool **visited, int max_tree, int hw)
 {
 
 	//	Position pos(2,3);
@@ -575,22 +575,24 @@ int resfun(int **grid, bool **&visited, int max_tree, int hw)
 
 
 	*/
-
+	/*int down = 0;
 	for (int row = 0; row < hw; row++)
 	{
 		for (int col = 0; col < hw; col++)
 		{
+			down = 0;
 			if (auxgrid[row][col] == 1)
 			{
+				down++;
 				auxgrid[row][col] = 0;
-				for (int row1 = 0; row1 < hw; row1++)
+				for (int row1 = row; row1 < hw; row1++)
 				{
 
-					for (int col1 = 0; col1 < hw; col1++)
+					for (int col1 = col+1; col1 < hw; col1++)
 					{
-						if (auxgrid[row1][col1] == 1)
+						if (auxgrid[row1][col1] == 1 && down < max_tree)
 						{
-
+							down++;
 							auxgrid[row1][col1] = 0;
 							cout << "-----" << endl;
 							printAux(auxgrid, hw);
@@ -598,8 +600,8 @@ int resfun(int **grid, bool **&visited, int max_tree, int hw)
 						}
 						else if (auxgrid[row1][col1] == 2)
 						{
-						//	Position pos(row1, col1);
-						//	int burnt_trees = BFS(auxgrid, hw, pos, visited);
+							Position pos(row1, col1);
+							int burnt_trees = BFS(auxgrid, hw, pos, visited);
 
 
 						}
@@ -607,7 +609,7 @@ int resfun(int **grid, bool **&visited, int max_tree, int hw)
 
 
 				}
-				break;
+				//break;
 
 
 
@@ -616,9 +618,142 @@ int resfun(int **grid, bool **&visited, int max_tree, int hw)
 
 		}
 
-		break;
+		//break;
 	}
+	*/
+	
+	/*
+		steps
+		-find a tree and cut down
+		-find next tree and cut down
+		-find the fire and starts the BFS
+		-find next fire and starts the BFS and so on.
+		-bring back the cut down tree(N) and cut the next one(N) and starts again.
 
+
+		1 0 1 0 0 0 0
+		1 1 1 1 0 0 1
+		0 0 1 2 1 0 1
+		0 0 2 0 0 1 1
+		1 0 0 1 0 2 0
+		0 1 1 0 0 1 0
+		0 0 0 1 0 0 0
+
+		step 1 - found max trees in this case 2 trees where cut down and use the BFS when 2 is found
+		0 0 0 0 0 0 0
+		v v v v 0 0 v
+		0 0 v 2 v 0 v
+		0 0 2 0 0 v v
+		1 0 0 1 0 2 0
+		0 1 1 0 0 v 0
+		0 0 0 1 0 0 0
+
+		5 saved trees
+
+		step 2- bring back the trees that where cut down, bring back the visited rows to no visited and cut the next trees
+
+		0 0 v 0 0 0 0
+		0 v v v 0 0 v
+		0 0 v 2 v 0 v
+		0 0 2 0 0 v v
+		1 0 0 1 0 2 0
+		0 1 1 0 0 v 0
+		0 0 0 1 0 0 0
+
+		5 saved trees
+
+
+		X 0 X 0 0 0 0
+		1 1 1 1 0 0 1
+		0 0 1 2 1 0 1
+		0 0 2 0 0 1 1
+		1 0 0 1 0 2 0
+		0 1 1 0 0 1 0
+		0 0 0 1 0 0 0
+
+		int cc_down=0,acc=0;
+		int tmp_row=0,tmp_col=0,saved_trees=-1;
+		for row=0
+			for col=0
+			{		cc_down=0
+					if acc>saved_trees
+						saved_trees=acc
+
+					if current == 1
+						auxgrid = 0
+						cc_down+=1;
+					for row1= row
+					{
+						for col1= col+1
+						{
+							if current == 1 && cc_down < max_tree
+								auxgrid = 0
+								cc_down+=1;
+								//save position
+								tmp_row = row1
+								tmp_col = col1
+							if current == 2
+								acc+=BFS(auxgrid,row1,col1,visited);
+						}
+					}
+					//return 1 on the saved position
+					auxgrid[tmp_row][tmp_col] = 1;
+					//return visited to none visited
+					for(int r=0; r<hw; r++)
+						for(int c=0; c<hw; c++)
+							visited[r][c] = false;
+			}
+		return saved_trees;
+	*/
+
+int cc_down = 0, acc = 0;
+int tmp_row = 0, tmp_col = 0, saved_trees = -1;
+int tmp_row1 = 0, tmp_col1 = 0;
+	for (int row = 0; row<hw; row++)
+		for(int col = 0; col<hw; col++)
+		{ 
+			cc_down = 0;
+			int current = auxgrid[row][col];
+			if(acc > saved_trees)
+				saved_trees = acc;
+			acc = 0;
+			if (current == 1)
+			{
+				auxgrid[row][col] = 0;
+				cc_down += 1;
+			}
+			for (int row1 = row; row1<hw;row1++)
+			{
+				for(int col1 = col + 1; col1<hw;col1++)
+				{
+					int current = auxgrid[row1][col1];
+					if (current == 1 && cc_down < max_tree)
+					{
+						cout << "cc_down " << cc_down << endl;
+						auxgrid[row1][col1] = 0;
+						cc_down += 1;
+						//save position
+						tmp_row = row1;
+						tmp_col = col1;
+					}
+						
+					if (current == 2)
+					{
+						Position pos(row1,col1);
+						acc += BFS(auxgrid, hw,pos,visited );
+						
+					}
+						
+				}
+			}
+			//return 1 on the saved position
+			auxgrid[tmp_row][tmp_col] = 1;
+			//return visited to none visited
+			for (int r = 0; r < hw; r++)
+				for (int c = 0; c < hw; c++)
+					visited[r][c] = false;
+		}
+	cout << "saved_trees -> " << saved_trees << endl;
 	int res_trees = total_trees - burnt_trees_acc - max_tree ;
 
 	cout << " total trees "<<total_trees <<" tota burnt "<< burnt_trees_acc << " max tree "<< max_tree << endl;
