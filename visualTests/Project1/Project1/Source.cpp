@@ -721,6 +721,7 @@ int tmp_row1 = 0, tmp_col1 = 0;
 			{
 				auxgrid[row][col] = 0;
 				cc_down += 1;
+				tmp_row1 = row; tmp_col1 = col;
 			}
 			for (int row1 = row; row1<hw;row1++)
 			{
@@ -729,7 +730,7 @@ int tmp_row1 = 0, tmp_col1 = 0;
 					int current = auxgrid[row1][col1];
 					if (current == 1 && cc_down < max_tree)
 					{
-						cout << "cc_down " << cc_down << endl;
+						//cout << "cc_down " << cc_down << endl;
 						auxgrid[row1][col1] = 0;
 						cc_down += 1;
 						//save position
@@ -741,13 +742,14 @@ int tmp_row1 = 0, tmp_col1 = 0;
 					{
 						Position pos(row1,col1);
 						acc += BFS(auxgrid, hw,pos,visited );
-						
+						//cout << "\n acc "<< acc<<endl;
 					}
 						
 				}
 			}
 			//return 1 on the saved position
 			auxgrid[tmp_row][tmp_col] = 1;
+			auxgrid[tmp_row1][tmp_col1] = 1;
 			//return visited to none visited
 			for (int r = 0; r < hw; r++)
 				for (int c = 0; c < hw; c++)
