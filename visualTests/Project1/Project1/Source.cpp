@@ -250,58 +250,6 @@ int resfun(int **grid, bool **visited, int max_tree, int hw)
 	cout << "print the aux grid " << endl;
 	printAux(auxgrid, hw);
 	int down = 0;
-
-	//THIS SOLUTION IS JUST TO CUT ONE TREE DOWN , IT NEEDS TO BE WITH TWO TREES CUT DOWN
-/*	int burnt =0;
-	int minBurnt =1000;
-	bool isCut= false;
-	int totaltrees =0;
-	for (int row =0; row<hw; row++)
-	{
-		for(int col =0; col<hw; col++)
-		{
-			int current = auxgrid[row][col];
-			if (current == 1 )
-			{
-				totaltrees++;
-				auxgrid[row][col] = 0;
-				cout << "----aux----"<<endl;
-				printAux(auxgrid, hw);
-				for (int row1 =0; row1<hw; row1++)
-				{
-					for(int col1 =0; col1<hw; col1++)
-					{
-						int current2 = auxgrid[row1][col1];
-						if (current2 == 2)
-						{
-							Position pos(row1,col1);
-							int b = BFS(auxgrid,hw,pos,visited);
-							burnt+= b;
-								cout << "---BFS----- "<<endl;
-								printVist(visited, hw);
-								cout << "b -> "<<b<<endl;
-						}
-					}	
-				}
-				cout << "burnt "<<burnt<<endl;
-				if(burnt < minBurnt)
-					minBurnt = burnt;
-				cout<<" minBurnt "<<minBurnt<<endl;	
-				auxgrid[row][col] = 1;
-				burnt=0;
-				for (int r = 0; r < hw; r++)
-					for (int c = 0; c < hw; c++)
-						visited[r][c] = false;
-
-			}//END IF 1 tree
-		}
-	}
-
-	cout << "totaltrees -> "<<totaltrees<<endl;
-	int ans = totaltrees -1 - minBurnt;
-	cout << "trees alive "<< ans <<endl;  */
-
-
 	int burnt =0;
 	int minBurnt =1000;
 	bool isCut= false;
@@ -315,6 +263,7 @@ int resfun(int **grid, bool **visited, int max_tree, int hw)
 
 			if (currone == 1)
 			{
+				totaltrees++;
 				auxgrid[row][col] = 0;
 			
 				for (int row1 =row; row1<hw; row1++)
@@ -325,10 +274,11 @@ int resfun(int **grid, bool **visited, int max_tree, int hw)
 
 						if (current == 1  )
 						{
-							//totaltrees++;
-							auxgrid[row1][col1] = 0;
-							cout << "----aux----"<<endl;
-							printAux(auxgrid, hw);
+							if (max_tree == 2)
+								auxgrid[row1][col1] = 0;
+
+						//	cout << "----aux----"<<endl;
+						//	printAux(auxgrid, hw);
 							for (int rowb =0; rowb<hw; rowb++)
 							{
 								for(int colb =0; colb<hw; colb++)
@@ -339,17 +289,18 @@ int resfun(int **grid, bool **visited, int max_tree, int hw)
 										Position pos(rowb,colb);
 										int b = BFS(auxgrid,hw,pos,visited);
 										burnt+= b;
-											cout << "---BFS----- "<<endl;
-											printVist(visited, hw);
-											cout << "b -> "<<b<<endl;
+										//	cout << "---BFS----- "<<endl;
+									//		printVist(visited, hw);
+									//		cout << "b -> "<<b<<endl;
 									}
 								}	
 							}
-							cout << "burnt "<<burnt<<endl;
+							//cout << "burnt "<<burnt<<endl;
 							if(burnt < minBurnt)
 								minBurnt = burnt;
-							cout<<" minBurnt "<<minBurnt<<endl;	
-							auxgrid[row1][col1] = 1;
+						//	cout<<" minBurnt "<<minBurnt<<endl;	
+							if (max_tree == 2)
+								auxgrid[row1][col1] = 1;
 							burnt=0;
 							for (int r = 0; r < hw; r++)
 								for (int c = 0; c < hw; c++)
@@ -360,20 +311,18 @@ int resfun(int **grid, bool **visited, int max_tree, int hw)
 				}//end second row col loop
 
 				auxgrid[row][col] = 1;
-			
 			}
 			
 		}
 	}
+	cout << "totaltrees -> "<<totaltrees<<endl;
+	if (minBurnt == 0)
+		max_tree =0;
+		
+	int ans = totaltrees -max_tree - minBurnt;
+	cout << "trees alive "<< ans <<endl;
 
-	//cout << "totaltrees -> "<<totaltrees<<endl;
-	//int ans = totaltrees -1 - minBurnt;
-	//cout << "trees alive "<< ans <<endl;
-
-
-
-
-	return 0;
+	return ans;
 }
 
 
@@ -386,7 +335,7 @@ void wildFire()
 	int res =0;
 	cin >> T;
 	cout << "Test T --->"<< T << endl;
-	for (int test_case = 1; test_case <=1; ++test_case)
+	for (int test_case = 1; test_case <=4; ++test_case)
 	{	
 
 		int h,w=0,val=0,max_tree=0;
@@ -417,7 +366,7 @@ void wildFire()
 
 	}
 
-	cout << " start wildFire " << endl;
+	//cout << " start wildFire " << endl;
 
 }
 int main()
