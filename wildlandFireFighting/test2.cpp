@@ -253,69 +253,109 @@ int resfun(int **grid, bool **visited, int max_tree, int hw)
 	int minBurnt =1000;
 	bool isCut= false;
 	int totaltrees =0;
+
+
 	for (int row =0; row<hw; row++)
 	{
 		for(int col =0; col<hw; col++)
 		{
-			int current = auxgrid[row][col];
-			if (current == 1 )
+			int currone = auxgrid[row][col];
+			//cout << "currentone "<< currone<<endl;
+			if (currone == 1)
 			{
+				//cout << "currentone "<< currone<<endl;
 				totaltrees++;
-
-				for(int t =0; t<2; t++)   // cut or not cut the tree 
+				for(int t1 =0; t1<2; t1++)   // cut or not cut the tree 
 				{
-					if(t == 0)
-					{
-						cout << " tree cut down ";
-							auxgrid[row][col] = 0;
-					}
-					else
-					{
-						cout << " tree NOT cut down ";
-						auxgrid[row][col] = 1;
-					}
-						
-
-					cout << "----aux----"<<endl;
-					printAux(auxgrid, hw);
-					for (int row1 =0; row1<hw; row1++)
-					{
-						for(int col1 =0; col1<hw; col1++)
+						//auxgrid[row][col] = 0;
+						if(t1 == 0)
 						{
-							int current2 = auxgrid[row1][col1];
-							if (current2 == 2)
+						//	cout << " tree cut down ";
+								auxgrid[row][col] = 0;
+						}
+						else
+						{
+						//	cout << " tree NOT cut down ";
+							auxgrid[row][col] = 1;
+						}
+						for (int row1 =row; row1<hw; row1++)
+						{
+							for(int col1 =col; col1<hw; col1++)
 							{
-								Position pos(row1,col1);
-								int b = BFS(auxgrid,hw,pos,visited);
-								burnt+= b;
-									cout << "---BFS----- "<<endl;
-									printVist(visited, hw);
-									cout << "b -> "<<b<<endl;
-							}
-						}	
-					}
-					cout << "burnt "<<burnt<<endl;
-					if(burnt < minBurnt)
-						minBurnt = burnt;
-					cout<<" minBurnt "<<minBurnt<<endl;	
 
-					if(t == 0) //if cut down  it brings back 
-						auxgrid[row][col] = 1;
+								int current = auxgrid[row1][col1];
+								if (current == 1 )
+								{
+								//	totaltrees++;
+
+									for(int t =0; t<2; t++)   // cut or not cut the tree 
+									{
+										if(t == 0)
+										{
+										//	cout << " tree cut down ";
+											auxgrid[row1][col1] = 0;
+										}
+										else
+										{
+										//	cout << " tree NOT cut down ";
+											auxgrid[row1][col1] = 1;
+										}
+											
+
+									//	cout << "----aux----"<<endl;
+									//	printAux(auxgrid, hw);
+										for (int rowx =0; rowx<hw; rowx++)
+										{
+											for(int colx =0; colx<hw; colx++)
+											{
+												int current2 = auxgrid[rowx][colx];
+												if (current2 == 2)
+												{
+													Position pos(rowx,colx);
+													int b = BFS(auxgrid,hw,pos,visited);
+													burnt+= b;
+											//			cout << "---BFS----- "<<endl;
+											//			printVist(visited, hw);
+											//			cout << "b -> "<<b<<endl;
+												}
+											}	
+										}
+									//	cout << "burnt "<<burnt<<endl;
+										if(burnt < minBurnt)
+											minBurnt = burnt;
+									//	cout<<" minBurnt "<<minBurnt<<endl;	
+
+										if(t == 0) //if cut down  it brings back 
+											auxgrid[row1][col1] = 1;
 
 
-					burnt=0;
-					for (int r = 0; r < hw; r++)
-						for (int c = 0; c < hw; c++)
-							visited[r][c] = false;
-				}
-			}//END IF 1 tree
-		}
-	}
+										burnt=0;
+										for (int r = 0; r < hw; r++)
+											for (int c = 0; c < hw; c++)
+												visited[r][c] = false;
+									}
+								}//END IF 1 tree
 
-	cout << "totaltrees -> "<<totaltrees<<endl;
-	int ans = totaltrees -1 - minBurnt;
+
+							}//for col1
+						}//for row1
+						if(t1 == 0) //if cut down  it brings back 
+							auxgrid[row][col] = 1;
+							//auxgrid[row1][col1] = 1;
+													
+				}//for t1
+				
+			}//END IF
+		}//for col
+	}//for row
+
+	cout << "totaltrees -> "<<totaltrees<< " minBurnt "<< minBurnt<< endl;
+
+	if (minBurnt == 0)
+		max_tree=0;
+	int ans = totaltrees -max_tree - minBurnt;
 	cout << "trees alive "<< ans <<endl;  
-	return 0;
+	return ans;
 }
 
 
@@ -328,7 +368,7 @@ void wildFire()
 	int res =0;
 	cin >> T;
 	cout << "Test T --->"<< T << endl;
-	for (int test_case = 1; test_case <=1; ++test_case)
+	for (int test_case = 1; test_case <=4; ++test_case)
 	{	
 
 		int h,w=0,val=0,max_tree=0;
