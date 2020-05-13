@@ -165,7 +165,8 @@ bool isValid(int **grid, int hw, bool **visited, Position pos){
 }
 
 
-int** createaux(int ** grid, int hw){
+int** createAuxGrid(int ** grid, int hw){
+    //this method creates an auxiliar grid to not afect original grid
 	int **auxgrid = new int*[hw];
 	for (int row =0; row < hw; row++){
 		auxgrid[row] = new int[hw];
@@ -215,7 +216,7 @@ int deltaSize = sizeof(deltaRow)/ sizeof(deltaRow[0]);
 
 	return burn_t;
 }
-int getAnswer(int **grid, int cutree, int hw, bool **visited){
+int getALLBFS(int **grid, int cutree, int hw, bool **visited){
 
 	int total_t=0,burn_t=0;
 	int tbt=0;	
@@ -239,30 +240,30 @@ int getAnswer(int **grid, int cutree, int hw, bool **visited){
 }
 
 int getAnswerOne(int **grid, int hw, bool **visited, int max ){
-    int **auxgrid = createaux(grid,hw);    
-        	for(int row =0; row < hw; row ++){
-		        for(int col =0; col<hw; col++){
-                    if (auxgrid[row][col] == 1){
-                        auxgrid[row][col] = 0;
-                        int cutOneAns = getAnswer(auxgrid,0,hw,visited);
-                        if(cutOneAns > max  ){
-                            max = cutOneAns;
-                        }
-                        for (int i=0; i< hw; i++)
-						{
-							visited[i] = new bool[hw];
-							for (int j = 0; j < hw; j++)
-								visited[i][j] = false;
-						}
-                       auxgrid[row][col] = 1;     
+    int **auxgrid = createAuxGrid(grid,hw);    // get auxiliargrid
+        for(int row =0; row < hw; row ++){
+            for(int col =0; col<hw; col++){
+                if (auxgrid[row][col] == 1){
+                    auxgrid[row][col] = 0;
+                    int cutOneAns = getALLBFS(auxgrid,0,hw,visited);
+                    if(cutOneAns > max  ){
+                        max = cutOneAns;
                     }
+                    for (int i=0; i< hw; i++)
+                    {
+                        visited[i] = new bool[hw];
+                        for (int j = 0; j < hw; j++)
+                            visited[i][j] = false;
+                    }
+                    auxgrid[row][col] = 1;     
                 }
             }
+        }
 	  return max;
 }
 
 int getAnswerTwo(int **grid, int hw, bool **visited, int max){
-	int **auxgrid = createaux(grid,hw);
+	int **auxgrid = createAuxGrid(grid,hw);
 	for(int rowb =0; rowb< hw; rowb++){
 		for(int colb =0; colb < hw; colb++ ){
 				if (auxgrid[rowb][colb] == 1 ){
@@ -271,7 +272,7 @@ int getAnswerTwo(int **grid, int hw, bool **visited, int max){
 						for(int col =0; col < hw; col++ ){
 							if(auxgrid[row][col] == 1){
 								auxgrid[row][col] =0;
-								int cutOneAns = getAnswer(auxgrid,0,hw,visited);
+								int cutOneAns = getALLBFS(auxgrid,0,hw,visited);
 								if(cutOneAns > max  ){
 									max = cutOneAns;
 								}
@@ -330,10 +331,12 @@ int main(){
         cout << endl;
 		int ans = 0;
 		
-		if(cuttree == 2){
+		if(cuttree == 2)
+        {
+            // this section is when you cut 2 trees
+			int ansZero =getALLBFS(grid, cuttree, hw, visited);
 
-			int ansZero =getAnswer(grid, cuttree, hw, visited);
-
+            //Initialize the visited matrix
 			for (int i=0; i< hw; i++)
 			{
 				visited[i] = new bool[hw];
@@ -354,9 +357,10 @@ int main(){
 			
 			int ansTow = getAnswerTwo(grid,hw,visited,max);
 			ans = getMax(getMax(ansZero,ansOne),ansTow);			
-		}else if (cuttree == 1){
+		}
+        else if (cuttree == 1){
 
-			int ansZero =getAnswer(grid, cuttree, hw, visited);
+			int ansZero =getALLBFS(grid, cuttree, hw, visited);
 
 			for (int i=0; i< hw; i++)
 			{
