@@ -251,10 +251,8 @@ int resfun(int **grid, bool **visited, int max_tree, int hw)
 	printAux(auxgrid, hw);
 	int down = 0;
 
-
-
 	//THIS SOLUTION IS JUST TO CUT ONE TREE DOWN , IT NEEDS TO BE WITH TWO TREES CUT DOWN
-	int burnt =0;
+/*	int burnt =0;
 	int minBurnt =1000;
 	bool isCut= false;
 	int totaltrees =0;
@@ -301,7 +299,80 @@ int resfun(int **grid, bool **visited, int max_tree, int hw)
 
 	cout << "totaltrees -> "<<totaltrees<<endl;
 	int ans = totaltrees -1 - minBurnt;
-	cout << "trees alive "<< ans <<endl;
+	cout << "trees alive "<< ans <<endl;  */
+
+
+	int burnt =0;
+	int minBurnt =1000;
+	bool isCut= false;
+	int totaltrees =0;
+
+	for (int row =0; row<hw; row++)
+	{
+		for(int col =0; col<hw; col++)
+		{
+			int currone = auxgrid[row][col];
+
+			if (currone == 1)
+			{
+				auxgrid[row][col] = 0;
+			
+				for (int row1 =row; row1<hw; row1++)
+				{
+					for(int col1 =col; col1<hw; col1++)
+					{
+						int current = auxgrid[row1][col1];
+
+						if (current == 1  )
+						{
+							//totaltrees++;
+							auxgrid[row1][col1] = 0;
+							cout << "----aux----"<<endl;
+							printAux(auxgrid, hw);
+							for (int rowb =0; rowb<hw; rowb++)
+							{
+								for(int colb =0; colb<hw; colb++)
+								{
+									int current2 = auxgrid[rowb][colb];
+									if (current2 == 2)
+									{
+										Position pos(rowb,colb);
+										int b = BFS(auxgrid,hw,pos,visited);
+										burnt+= b;
+											cout << "---BFS----- "<<endl;
+											printVist(visited, hw);
+											cout << "b -> "<<b<<endl;
+									}
+								}	
+							}
+							cout << "burnt "<<burnt<<endl;
+							if(burnt < minBurnt)
+								minBurnt = burnt;
+							cout<<" minBurnt "<<minBurnt<<endl;	
+							auxgrid[row1][col1] = 1;
+							burnt=0;
+							for (int r = 0; r < hw; r++)
+								for (int c = 0; c < hw; c++)
+									visited[r][c] = false;
+
+						}//END IF 1 tree
+					}
+				}//end second row col loop
+
+				auxgrid[row][col] = 1;
+			
+			}
+			
+		}
+	}
+
+	//cout << "totaltrees -> "<<totaltrees<<endl;
+	//int ans = totaltrees -1 - minBurnt;
+	//cout << "trees alive "<< ans <<endl;
+
+
+
+
 	return 0;
 }
 
