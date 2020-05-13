@@ -779,7 +779,9 @@ int tmp_row1 = 0, tmp_col1 = 0;
 
 	//cut down just one tree
 
-	int acc =0;
+	//THIS SOLUTION IS JUST TO CUT ONE TREE DOWN , IT NEEDS TO BE WITH TWO TREES CUT DOWN
+	int burnt =0;
+	int minBurnt =1000;
 	bool isCut= false;
 	for (int row =0; row<hw; row++)
 	{
@@ -788,40 +790,36 @@ int tmp_row1 = 0, tmp_col1 = 0;
 			int current = auxgrid[row][col];
 			if (current == 1 )
 			{
-				isCut= true;
 				auxgrid[row][col] = 0;
-
-					cout << "----aux----"<<endl;
-					printAux(auxgrid, hw);
-
-					for (int row1 =row; row1<hw; row1++)
+				cout << "----aux----"<<endl;
+				printAux(auxgrid, hw);
+				for (int row1 =0; row1<hw; row1++)
+				{
+					for(int col1 =0; col1<hw; col1++)
 					{
-						for(int col1 =col+1; col1<hw; col1++)
+						int current2 = auxgrid[row1][col1];
+						if (current2 == 2)
 						{
-							int current2 = auxgrid[row1][col1];
-							if (current2 == 2)
-							{
-								Position pos(row1,col1);
-								int b = BFS(auxgrid,hw,pos,visited);
-								acc+= b;
-									cout << "---BFS----- "<<endl;
-									printVist(visited, hw);
-									cout << "b -> "<<b<<endl;
-							}
+							Position pos(row1,col1);
+							int b = BFS(auxgrid,hw,pos,visited);
+							burnt+= b;
+								cout << "---BFS----- "<<endl;
+								printVist(visited, hw);
+								cout << "b -> "<<b<<endl;
+						}
+					}	
+				}
+				cout << "burnt "<<burnt<<endl;
+				if(burnt < minBurnt)
+					minBurnt = burnt;
+				cout<<" minBurnt "<<minBurnt<<endl;	
+				auxgrid[row][col] = 1;
+				burnt=0;
+				for (int r = 0; r < hw; r++)
+					for (int c = 0; c < hw; c++)
+						visited[r][c] = false;
 
-						}	
-					}
-
-					cout << "acc "<<acc<<endl;
-					auxgrid[row][col] = 1;
-					acc=0;
-					for (int r = 0; r < hw; r++)
-						for (int c = 0; c < hw; c++)
-							visited[r][c] = false;
-
-			}
-
-
+			}//END IF 1 tree
 		}
 	}
 
