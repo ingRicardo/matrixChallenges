@@ -400,7 +400,7 @@ void printAux(int** auxgrid, int hw)
 }
 
 
-int BFS (int **grid, int hw, Position pos, bool **&visited)
+int BFS (int **grid, int hw, Position pos, bool **visited)
 {
   int burn_t=0;
 	
@@ -409,7 +409,7 @@ int deltaRow[]= {0,1, 0,-1};
 
 int deltaSize = sizeof(deltaRow)/ sizeof(deltaRow[0]);
 
-	visited[pos.getX()][pos.getY()]=true;
+	//visited[pos.getX()][pos.getY()]=true;
 
 	list link;
 	link.createnode(pos);
@@ -705,7 +705,7 @@ int resfun(int **grid, bool **visited, int max_tree, int hw)
 			}
 		return saved_trees;
 	*/
-
+/*
 int cc_down = 0, acc = 0;
 int tmp_row = 0, tmp_col = 0, saved_trees = -1;
 int tmp_row1 = 0, tmp_col1 = 0;
@@ -717,8 +717,10 @@ int tmp_row1 = 0, tmp_col1 = 0;
 			if(acc > saved_trees)
 				saved_trees = acc;
 			acc = 0;
+			
 			if (current == 1)
 			{
+				
 				auxgrid[row][col] = 0;
 				cc_down += 1;
 				tmp_row1 = row; tmp_col1 = col;
@@ -742,7 +744,8 @@ int tmp_row1 = 0, tmp_col1 = 0;
 					{
 						Position pos(row1,col1);
 						acc += BFS(auxgrid, hw,pos,visited );
-						//cout << "\n acc "<< acc<<endl;
+						
+
 					}
 						
 				}
@@ -750,10 +753,19 @@ int tmp_row1 = 0, tmp_col1 = 0;
 			//return 1 on the saved position
 			auxgrid[tmp_row][tmp_col] = 1;
 			auxgrid[tmp_row1][tmp_col1] = 1;
+
+
+			//cout << "-----------------"<<endl;
+			//printVist(visited,hw);
+
+
 			//return visited to none visited
 			for (int r = 0; r < hw; r++)
 				for (int c = 0; c < hw; c++)
 					visited[r][c] = false;
+			
+			//cout << "acc "<< acc<<endl;
+			acc=0;
 		}
 	cout << "saved_trees -> " << saved_trees << endl;
 	int res_trees = total_trees - burnt_trees_acc - max_tree ;
@@ -763,9 +775,60 @@ int tmp_row1 = 0, tmp_col1 = 0;
 
 		printVist(visited, hw);
 		
-		cout<<endl;
-	return res_trees;
+		cout<<endl;  */
+
+	//cut down just one tree
+
+	int acc =0;
+	bool isCut= false;
+	for (int row =0; row<hw; row++)
+	{
+		for(int col =0; col<hw; col++)
+		{
+			int current = auxgrid[row][col];
+			if (current == 1 )
+			{
+				isCut= true;
+				auxgrid[row][col] = 0;
+
+					cout << "----aux----"<<endl;
+					printAux(auxgrid, hw);
+
+					for (int row1 =row; row1<hw; row1++)
+					{
+						for(int col1 =col+1; col1<hw; col1++)
+						{
+							int current2 = auxgrid[row1][col1];
+							if (current2 == 2)
+							{
+								Position pos(row1,col1);
+								int b = BFS(auxgrid,hw,pos,visited);
+								acc+= b;
+									cout << "---BFS----- "<<endl;
+									printVist(visited, hw);
+									cout << "b -> "<<b<<endl;
+							}
+
+						}	
+					}
+
+					cout << "acc "<<acc<<endl;
+					auxgrid[row][col] = 1;
+					acc=0;
+					for (int r = 0; r < hw; r++)
+						for (int c = 0; c < hw; c++)
+							visited[r][c] = false;
+
+			}
+
+
+		}
+	}
+
+
+	return 0;
 }
+
 
 
 void wildFire()
