@@ -237,10 +237,17 @@ int deltaSize = sizeof(deltaRow)/ sizeof(deltaRow[0]);
 
 int resfun(int **grid, bool **visited, int max_tree, int hw)
 {
+	// auxgrid to get values from original grid
+	int** auxgrid = new int*[hw];
+	for (int row = 0; row < hw; row++)
+	{
+		auxgrid[row] = new int[hw];
+		for (int col = 0; col < hw; col++)
+			auxgrid[row][col] = grid[row][col];
+	}
 
 
 
-	
 	//THIS SOLUTION IS JUST TO CUT ONE TREE DOWN , IT NEEDS TO BE WITH TWO TREES CUT DOWN
 	int burnt =0;
 	int minBurnt =1000;
@@ -254,35 +261,53 @@ int resfun(int **grid, bool **visited, int max_tree, int hw)
 			if (current == 1 )
 			{
 				totaltrees++;
-				auxgrid[row][col] = 0;
-				cout << "----aux----"<<endl;
-				printAux(auxgrid, hw);
-				for (int row1 =0; row1<hw; row1++)
-				{
-					for(int col1 =0; col1<hw; col1++)
-					{
-						int current2 = auxgrid[row1][col1];
-						if (current2 == 2)
-						{
-							Position pos(row1,col1);
-							int b = BFS(auxgrid,hw,pos,visited);
-							burnt+= b;
-								cout << "---BFS----- "<<endl;
-								printVist(visited, hw);
-								cout << "b -> "<<b<<endl;
-						}
-					}	
-				}
-				cout << "burnt "<<burnt<<endl;
-				if(burnt < minBurnt)
-					minBurnt = burnt;
-				cout<<" minBurnt "<<minBurnt<<endl;	
-				auxgrid[row][col] = 1;
-				burnt=0;
-				for (int r = 0; r < hw; r++)
-					for (int c = 0; c < hw; c++)
-						visited[r][c] = false;
 
+				for(int t =0; t<2; t++)   // cut or not cut the tree 
+				{
+					if(t == 0)
+					{
+						cout << " tree cut down ";
+							auxgrid[row][col] = 0;
+					}
+					else
+					{
+						cout << " tree NOT cut down ";
+						auxgrid[row][col] = 1;
+					}
+						
+
+					cout << "----aux----"<<endl;
+					printAux(auxgrid, hw);
+					for (int row1 =0; row1<hw; row1++)
+					{
+						for(int col1 =0; col1<hw; col1++)
+						{
+							int current2 = auxgrid[row1][col1];
+							if (current2 == 2)
+							{
+								Position pos(row1,col1);
+								int b = BFS(auxgrid,hw,pos,visited);
+								burnt+= b;
+									cout << "---BFS----- "<<endl;
+									printVist(visited, hw);
+									cout << "b -> "<<b<<endl;
+							}
+						}	
+					}
+					cout << "burnt "<<burnt<<endl;
+					if(burnt < minBurnt)
+						minBurnt = burnt;
+					cout<<" minBurnt "<<minBurnt<<endl;	
+
+					if(t == 0) //if cut down  it brings back 
+						auxgrid[row][col] = 1;
+
+
+					burnt=0;
+					for (int r = 0; r < hw; r++)
+						for (int c = 0; c < hw; c++)
+							visited[r][c] = false;
+				}
 			}//END IF 1 tree
 		}
 	}
@@ -303,7 +328,7 @@ void wildFire()
 	int res =0;
 	cin >> T;
 	cout << "Test T --->"<< T << endl;
-	for (int test_case = 1; test_case <=4; ++test_case)
+	for (int test_case = 1; test_case <=1; ++test_case)
 	{	
 
 		int h,w=0,val=0,max_tree=0;
