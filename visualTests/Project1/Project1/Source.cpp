@@ -783,6 +783,7 @@ int tmp_row1 = 0, tmp_col1 = 0;
 	int burnt =0;
 	int minBurnt =1000;
 	bool isCut= false;
+	int totaltrees =0;
 	for (int row =0; row<hw; row++)
 	{
 		for(int col =0; col<hw; col++)
@@ -790,6 +791,7 @@ int tmp_row1 = 0, tmp_col1 = 0;
 			int current = auxgrid[row][col];
 			if (current == 1 )
 			{
+				totaltrees++;
 				auxgrid[row][col] = 0;
 				cout << "----aux----"<<endl;
 				printAux(auxgrid, hw);
@@ -823,7 +825,9 @@ int tmp_row1 = 0, tmp_col1 = 0;
 		}
 	}
 
-
+	cout << "totaltrees -> "<<totaltrees<<endl;
+	int ans = totaltrees -1 - minBurnt;
+	cout << "trees alive "<< ans <<endl;
 	return 0;
 }
 
