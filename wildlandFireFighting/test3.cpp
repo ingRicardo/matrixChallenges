@@ -216,9 +216,9 @@ int deltaSize = sizeof(deltaRow)/ sizeof(deltaRow[0]);
 
 	return burn_t;
 }
-int getALLBFS(int **grid, int cutree, int hw, bool **visited){
+int savedTrees(int **grid, int cutree, int hw, bool **visited){
 
-	int total_t=0,burn_t=0;
+	int saved_trees=0,burn_t=0;
 	int tbt=0;	
 
 	for(int row =0; row < hw; row ++){
@@ -230,70 +230,82 @@ int getALLBFS(int **grid, int cutree, int hw, bool **visited){
 				tbt += burn_t;
 			}
 			else if ( grid[row][col] == 1){
-				total_t++;	
+				saved_trees++;	
 
 			}
 		}
 	}
 	
-	return total_t-tbt;
+	return saved_trees-tbt;
 }
 
-int getAnswerOne(int **grid, int hw, bool **visited, int max ){
+int cutOne(int **grid, int hw, bool **visited, int maxSavedtrees ){
     int **auxgrid = createAuxGrid(grid,hw);    // get auxiliargrid
-        for(int row =0; row < hw; row ++){
-            for(int col =0; col<hw; col++){
-                if (auxgrid[row][col] == 1){
-                    auxgrid[row][col] = 0;
-                    int cutOneAns = getALLBFS(auxgrid,0,hw,visited);
-                    if(cutOneAns > max  ){
-                        max = cutOneAns;
+        for(int row =0; row < hw; row ++)
+		{
+            for(int col =0; col<hw; col++)
+			{
+                if (auxgrid[row][col] == 1)
+				{
+                    auxgrid[row][col] = 0; //cut one tree
+                    int cutOneAns = savedTrees(auxgrid,0,hw,visited); // 
+                    if(cutOneAns > maxSavedtrees  ){
+                        maxSavedtrees = cutOneAns;
                     }
-                    for (int i=0; i< hw; i++)
+                    for (int i=0; i< hw; i++) // clean the visited matrix
                     {
                         visited[i] = new bool[hw];
                         for (int j = 0; j < hw; j++)
                             visited[i][j] = false;
                     }
-                    auxgrid[row][col] = 1;     
+                    auxgrid[row][col] = 1;  // return the tree   
                 }
             }
         }
-	  return max;
+	  return maxSavedtrees;
 }
 
-int getAnswerTwo(int **grid, int hw, bool **visited, int max){
-	int **auxgrid = createAuxGrid(grid,hw);
-	for(int rowb =0; rowb< hw; rowb++){
-		for(int colb =0; colb < hw; colb++ ){
-				if (auxgrid[rowb][colb] == 1 ){
-						auxgrid[rowb][colb] = 0;
-					for(int row =0; row< hw; row++){
-						for(int col =0; col < hw; col++ ){
-							if(auxgrid[row][col] == 1){
-								auxgrid[row][col] =0;
-								int cutOneAns = getALLBFS(auxgrid,0,hw,visited);
-								if(cutOneAns > max  ){
-									max = cutOneAns;
+int cutTwo(int **grid, int hw, bool **visited, int maxSavedtrees){
+	int **auxgrid = createAuxGrid(grid,hw); // create an auxiliar grid
+	
+	for(int rowb =0; rowb< hw; rowb++)
+	{
+		for(int colb =0; colb < hw; colb++ )
+		{
+				if (auxgrid[rowb][colb] == 1 )
+				{
+						auxgrid[rowb][colb] = 0; // cut one tree
+					for(int row =0; row< hw; row++)
+					{
+						for(int col =0; col < hw; col++ )
+						{
+							if(auxgrid[row][col] == 1)
+							{
+								auxgrid[row][col] =0; //cut one tree
+
+								int cutOneAns = savedTrees(auxgrid,0,hw,visited); // 
+								if(cutOneAns > maxSavedtrees  )
+								{
+									maxSavedtrees = cutOneAns;
 								}
-								for (int i=0; i< hw; i++)
+								for (int i=0; i< hw; i++) // initialize the visited matrix
 								{
 									visited[i] = new bool[hw];
 									for (int j = 0; j < hw; j++)
 										visited[i][j] = false;
 								}
-								auxgrid[row][col] = 1;
+								auxgrid[row][col] = 1; // return the tree
 							}// cut 2
 						}
 					}
-					auxgrid[rowb][colb] = 1;
+					auxgrid[rowb][colb] = 1; // return the tree
 			}//cut 1
 		}
 	}
-   return max;
+   return maxSavedtrees;
 }
 
-int getMax(int a, int b){
+int getMaxSavedTrees(int a, int b){
 	if (a>b)
 		return a;
 	return b;
@@ -331,10 +343,10 @@ int main(){
         cout << endl;
 		int ans = 0;
 		
-		if(cuttree == 2)
+		if(cuttree == 2)  // this section is when you cut 2 trees
         {
-            // this section is when you cut 2 trees
-			int ansZero =getALLBFS(grid, cuttree, hw, visited);
+          
+			int ansZero =savedTrees(grid, cuttree, hw, visited);  // saved trees when no trees are down
 
             //Initialize the visited matrix
 			for (int i=0; i< hw; i++)
@@ -344,10 +356,11 @@ int main(){
 					visited[i][j] = false;
 			}
 
-			int max =0;
+			int maxSavedTrees =0;
 
-			int ansOne = getAnswerOne(grid,hw,visited, max);
+			int ansOne = cutOne(grid,hw,visited, maxSavedTrees); // saved trees when one tree is down
 
+			//Initialize the visited matrix
 			for (int i=0; i< hw; i++)
 			{
 				visited[i] = new bool[hw];
@@ -355,13 +368,16 @@ int main(){
 					visited[i][j] = false;
 			}
 			
-			int ansTow = getAnswerTwo(grid,hw,visited,max);
-			ans = getMax(getMax(ansZero,ansOne),ansTow);			
+			int ansTwo = cutTwo(grid,hw,visited,maxSavedTrees);//  saved trees when two trees are down
+			ans = getMaxSavedTrees(getMaxSavedTrees(ansZero,ansOne),ansTwo); // get the max saved trees if cut one, two or none		
 		}
-        else if (cuttree == 1){
+        else if (cuttree == 1)
+		{
+				//this section is when you cut 1 tree
 
-			int ansZero =getALLBFS(grid, cuttree, hw, visited);
+			int ansZero =savedTrees(grid, cuttree, hw, visited); // saved trees when no trees are down
 
+			//Initialize the visited matrix
 			for (int i=0; i< hw; i++)
 			{
 				visited[i] = new bool[hw];
@@ -369,11 +385,11 @@ int main(){
 					visited[i][j] = false;
 			}
 
-			int max =0;
+			int maxSavedTrees =0;
 
-			int ansOne = getAnswerOne(grid,hw,visited, max);
+			int ansOne = cutOne(grid,hw,visited, maxSavedTrees);
 
-			ans =getMax(ansZero,ansOne);
+			ans =getMaxSavedTrees(ansZero,ansOne);
 		}
         
 		cout << "#" << tc <<":"<< ans << endl;
