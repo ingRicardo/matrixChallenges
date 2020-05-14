@@ -283,7 +283,7 @@ int cutTwo(int **grid, int hw, bool **visited, int maxSavedtrees){
 							{
 								auxgrid[row][col] =0; //cut one tree
 
-								int cutOneAns = savedTrees(auxgrid,0,hw,visited); // 
+								int cutOneAns = savedTrees(auxgrid,0,hw,visited); //  saved Trees when one tree is down
 								if(cutOneAns > maxSavedtrees  )
 								{
 									maxSavedtrees = cutOneAns;
