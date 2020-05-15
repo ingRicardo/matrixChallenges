@@ -111,8 +111,8 @@ int main()
         int answer = -1; // if the cards cannot be sorted even after 5 times of shuffling, print -1 as the answer
         while (!states.empty())
         {
-            const State &current = states.front();
-            states.pop();
+            const State &current = states.front(); // get the front values
+            states.pop(); // delete the front value 
 
             if (isSorted(current.deck, deckSize)) // if current deck is sorted
             {
