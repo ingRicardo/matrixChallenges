@@ -17,9 +17,10 @@
     split half and half
     N =4
     L = 1 to 4/2 = 1 to 2
-    L -> 12
+    L -> 1,2
     R = 4/2 + 1 to 4 = 3 to 4 
-    R -> 34
+    R -> 3,4
+
 
 
 

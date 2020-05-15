@@ -26,10 +26,10 @@ struct Queue
     }
 
 private:
-    const int mMaxSize;
-    int mFront;
-    int mBack;
-    T *mData;
+    const int mMaxSize; //max size of the queue
+    int mFront; //front value of the queue
+    int mBack; 
+    T *mData; // data structure
 };
 
 struct State
@@ -67,12 +67,13 @@ bool isSorted(const int *deck, const int deckSize)
 
 void join(const int *left, const int *right, const int skip, const int deckSize, int *outDeck)
 {
-    for (int i = 0; i < skip; ++i)
+    for (int i = 0; i < skip; ++i) // 1 to N/2
     {
-        outDeck[i] = left[i];
+        outDeck[i] = left[i];  // saves the lef cards based on skip size
     }
 
-    for (int i = 0; i < (deckSize / 2) - skip; i++)
+    //skip=1, 4/2 - 1 = 1, lIndex = 0 * 2 + 1 = 1,rIndex = 1+1 = 2, outDeck[1] = left[1+0], outDeck[2] = right[0]
+    for (int i = 0; i < (deckSize / 2) - skip; i++)  // 
     {
         const int lIndex = i * 2 + skip;
         const int rIndex = lIndex + 1;
@@ -80,7 +81,7 @@ void join(const int *left, const int *right, const int skip, const int deckSize,
         outDeck[rIndex] = right[i];
     }
 
-    for (int i = (deckSize / 2) - skip; i < (deckSize / 2); ++i)
+    for (int i = (deckSize / 2) - skip; i < (deckSize / 2); ++i)   // N/2 +1 to N
     {
         outDeck[deckSize / 2 + i] = right[i];
     }
@@ -90,24 +91,24 @@ int main()
 {
     freopen("input.txt", "r", stdin);
 
-    int shuffled[MAX_CARDS]; // int vector with max cards size
+    int shuffled[MAX_CARDS]; // shuffle vector with max cards size
     Queue<State> states(1000000); //initialization of queue with State structure
 
     int tc;
     cin >> tc;
     for (int c = 1; c <= tc; ++c)
     {
-        int deckSize;
+        int deckSize;  //N
         cin >> deckSize;
 
         State initial;
-        for (int i = 0; i < deckSize; ++i)
+        for (int i = 0; i < deckSize; ++i) // N=deckSize
         {
             cin >> initial.deck[i]; // add values to the initial state
         }
         states.push(initial);  //add the initial state to the states queue
 
-        int answer = -1;
+        int answer = -1; // if the cards cannot be sorted even after 5 times of shuffling, print -1 as the answer
         while (!states.empty())
         {
             const State &current = states.front();
@@ -115,19 +116,19 @@ int main()
 
             if (isSorted(current.deck, deckSize)) // if current deck is sorted
             {
-                answer = current.shuffles;
+                answer = current.shuffles; // print the answer if cards are sorted
                 states.clear();
                 break;
             }
 
-            if (current.shuffles <= 4) //maximum number of shuffles is limited to 5 
+            if (current.shuffles <= 4) //maximum number of shuffles is limited to 5 , it goes from 0 to 4 (0,1,2,3,4)
             {
                 for (int skip = 0; skip < deckSize / 2; ++skip) //takes the half of the deck
                 {
-                    const int *left = current.deck;
-                    const int *right = current.deck + (deckSize / 2);
+                    const int *left = current.deck; // 1 to N/2
+                    const int *right = current.deck + (deckSize / 2); // N/2 +1 to N
 
-                    join(left, right, skip, deckSize, shuffled);
+                    join(left, right, skip, deckSize, shuffled); // shuffle left 
                     states.push(State(shuffled, deckSize, current.shuffles + 1));
 
                     join(right, left, skip, deckSize, shuffled);
