@@ -73,26 +73,68 @@ private:
 
 void join(const int *left, const int *right, const int skip, const int deckSize, int *outDeck)
 {
+    cout << " ======== join ========= "<<endl;
     for (int i = 0; i < skip; ++i) // 1 to N/2
     {
         outDeck[i] = left[i];  // saves the lef cards based on skip size
+
+        cout << "outDeck["<< i << "] "<<outDeck[i] <<endl;
     }
 
     //skip=1, 4/2 - 1 = 1, lIndex = 0 * 2 + 1 = 1,rIndex = 1+1 = 2, outDeck[1] = left[1+0], outDeck[2] = right[0]
     for (int i = 0; i < (deckSize / 2) - skip; i++)  // 
     {
         const int lIndex = i * 2 + skip;
+        cout << " lIndex  "<< lIndex<<endl;
         const int rIndex = lIndex + 1;
+        cout<< " rIndex "<< rIndex <<endl;
         outDeck[lIndex] = left[skip + i];
+        cout << " outDeck["<<lIndex<<"] lIndex -> "<< outDeck[lIndex] <<endl;
         outDeck[rIndex] = right[i];
+        cout << " outDeck["<<rIndex<<"] rIndex -> "<< outDeck[rIndex] <<endl;
     }
 
     for (int i = (deckSize / 2) - skip; i < (deckSize / 2); ++i)   // N/2 +1 to N
     {
         outDeck[deckSize / 2 + i] = right[i];
+        cout << "*outDeck["<<deckSize / 2 + i<<"] " <<  right[i] << endl;
     }
 }
+bool isSorted(const int *deck, const int deckSize)
+{
+    bool isAscOrder = true, isDescOrder = true;
+    cout << " ------ isSorted -----" <<endl;
+    int min = deck[0];
+    cout << " min "<< min << endl; 
+    int max = deck[0];
+    cout << " max "<< max << endl;
 
+    cout << "isAscOrder "<< isAscOrder << " isDescOrder "<< isDescOrder << endl;
+    for (int i = 1; (isAscOrder || isDescOrder) && i < deckSize; ++i)
+    {
+        if (min > deck[i]) // if min > deck current value
+        { 
+            isAscOrder = false;  // is not ascent order 
+        }
+        else
+        {
+            min = deck[i]; // save the min
+        }
+
+        if (max < deck[i])  // if max is minor than current deck value
+        {
+            isDescOrder = false; // is not descent order
+        }
+        else
+        {
+            max = deck[i]; //save the max
+        }
+
+        cout <<"\n for i : "<< i << " min "<< min << " max "<< max << " isAscOrder "<< isAscOrder << " isDescOrder "<< isDescOrder;
+    }
+    cout << "\n -------------------------  "<<endl;
+    return isAscOrder || isDescOrder;
+}
 int main()
 {
 
@@ -112,7 +154,7 @@ int main()
         cin >>deckSize;
         int *vec = new int[deckSize];
         
-
+        cout << " deck size "<< deckSize<<endl;
         State initial;
         for (int i = 0; i < deckSize; ++i) // N=deckSize
         {
@@ -122,18 +164,35 @@ int main()
         cout << "\ninitial shuffles "<< initial.shuffles<<endl;
     
         states.push(initial); 
+        cout << " pushing values.."<<endl;
+        int answer = -1; //
+
+        cout << " is states empty ? "<< states.empty() << endl; 
 
         while (!states.empty())
         {
-            const State &current = states.front(); // get the front values
-
             
+            const State &current = states.front(); // get the front values
+           // cout << " front -> " << states.front().deck[0] <<endl;
             for (int i = 0; i < deckSize; ++i) // N=deckSize
             {
                 cout << "\n current "<< current.deck[i] << " shuffles -> "<< current.shuffles;
             }
             cout << endl;
+
+            cout << "states queue size ->  "<< states.size()<<endl;
+          
+
             states.pop(); // delete the front value 
+            cout << " popping.. "<<endl;
+            if (isSorted(current.deck, deckSize)) // if current deck is sorted
+            {
+                cout << "\n is sorted "<<endl;
+                answer = current.shuffles; // print the answer if cards are sorted
+                states.clear();
+                break;
+            }
+
 
              if (current.shuffles <= 4) //maximum number of shuffles is limited to 5 , it goes from 0 to 4 (0,1,2,3,4)
             {
@@ -145,18 +204,20 @@ int main()
                     const int *left = current.deck; // 1 to N/2
                     const int *right = current.deck + (deckSize / 2); // N/2 +1 to N
 
-                     cout<<"---- skip ---- "<< skip<<endl;
+                     /*cout<<"---- skip ---- "<< skip<<endl;
                      for (int i = 0; i < deckSize; ++i)
                      {
                         
                          cout<<"left "<< left[i]<<endl;
                          cout<<"right "<< right[i]<<endl;
                      } 
-                    cout << endl;
-                    //join(left, right, skip, deckSize, shuffled); // shuffle left 
-                    //states.push(State(shuffled, deckSize, current.shuffles + 1));
+                    cout << endl;*/
+                    join(left, right, skip, deckSize, shuffled); // shuffle left 
+                    states.push(State(shuffled, deckSize, current.shuffles + 1));
 
-
+                    
+                    join(right, left, skip, deckSize, shuffled);
+                    states.push(State(shuffled, deckSize, current.shuffles + 1));
 
                    // const int *right = current.deck + (deckSize / 2); // N/2 +1 to N
 
@@ -175,6 +236,7 @@ int main()
 
         }*/
         cout <<endl;
+          cout << "#" << tc << ":" << answer << endl;
     }
 
 
