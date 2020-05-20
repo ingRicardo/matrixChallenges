@@ -119,18 +119,19 @@ using namespace std;
 void rec(int start ,int **blocks_arr,int row, int col, int size)
 {
    
-
      //cout << "NOT CHANGE "<< blocks_arr[start][1]<<", "<<blocks_arr[start][0] <<endl;
-    if(start == 5)
-        return;
+  //  if(start == 5)
+   //     return;
     
-    for (int s =start; s<size; ++s)
+   // cout << " s+1 ==== "<<start<< endl;
+
+    for (int s =start; s<size; s++)
     {
         int row = blocks_arr[s][0];
         int col = blocks_arr[s][1];
 
         cout <<"start -> "<< start << ", s -> "<<s <<  endl;
-        rec(start+1 ,blocks_arr,row, col, size);
+        rec(s+1 ,blocks_arr,row, col, size);
 
       
     }
