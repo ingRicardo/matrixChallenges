@@ -116,34 +116,54 @@ using namespace std;
 
     */
 
-void rec(int start ,int **blocks_arr,int row, int col, int size)
+void rec(int start ,int **blocks_arr,int row, int col, int size, int next, int row_rot, int col_rot, int &res)
 {
-   
      //cout << "NOT CHANGE "<< blocks_arr[start][1]<<", "<<blocks_arr[start][0] <<endl;
-  //  if(start == 5)
-   //     return;
-    
+    if(start == 5)
+    {
+     //   cout << "return "<<start<< " ->  "<< row << ", "<< col << endl;
+           // cout << "res "<< res<<endl;
+        return;
+    }           
    // cout << " s+1 ==== "<<start<< endl;
-
+   // cout << " ****  "<<start<<endl;
     for (int s =start; s<size; s++)
     {
         int row = blocks_arr[s][0];
         int col = blocks_arr[s][1];
+        
+        int static_row = blocks_arr[next][0];
+        int static_col = blocks_arr[next][1];
 
-        cout <<"start -> "<< start << ", s -> "<<s <<  endl;
-        rec(s+1 ,blocks_arr,row, col, size);
+        int ro_row = blocks_arr[s][1];
+        int ro_col = blocks_arr[s][0];
+       // s+=1;
+        //start = s;
+        cout<< "static : "<<static_row << ", "<< static_col <<", start -> "<< start << ", s -> "<<s << " variable : "<< row <<", "<<col;
+        cout<<", rotation : "<< ro_row << ", "<< ro_col <<endl;
+        
+        if ( (static_row < row && static_col < col ) || ( static_row < ro_row && static_col < ro_col ))
+        {
+            res+=1;
+        }
 
-      
+        rec(s+1 ,blocks_arr,row, col, size, next, ro_row, ro_col, res);
+       // cout << " after rec start "<< start <<endl;
+       // cout<< "after rec - static : "<<static_row << ", "<< static_col <<", start -> "<< start << ", s -> "<<s << " variable : "<< row <<", "<<col<<endl;
+
+        return;
+  
     }
-    cout << " ---- "<<endl;
+    cout << " ---- "<<start<<endl;
+
 }
 
 void func(int **blocks_arr, int size)
 {
 
-    int start =0;
-    rec(start,blocks_arr,0,0,size);
-
+    int start =0, next =0, res =0;
+    rec(start,blocks_arr,0,0,size, next,0,0, res);
+    cout << "res "<< res<<endl;
 }
 
 
@@ -161,6 +181,7 @@ int main()
     {
         cin>> blocks;
         int **blocks_arr = new int*[blocks];
+        
         int x,y;
         for (int b =0; b<blocks; ++b)
         {
