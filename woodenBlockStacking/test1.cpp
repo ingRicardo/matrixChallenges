@@ -1,11 +1,6 @@
 #include <iostream>
 using namespace std;
 
-int main()
-{
-    cout <<" wooden block stacking"<<endl;
-
-
     /*
     # of blocks = 5
     dimensions of the blocks
@@ -108,18 +103,57 @@ int main()
 
 ------------------------------------------
     
-                5, 5   7, 4  3, 6  10, 8  4, 7  6, 3   8, 10 
-        2, 2     OK     OK    OK    OK     OK     OK    OK  
-        5, 5     -      -     -     OK     -       -    OK
-        7, 4     -      -     -     OK     -       -    OK
-        3, 6     -      -     -     OK     OK      -    OK
-        10, 8    -      -     -     -      -       -    -
+              2, 2  5, 5   7, 4  3, 6  10, 8  4, 7  6, 3   8, 10     rotation & normal 
+        2, 2   -      OK     OK    OK    OK     OK     OK    OK  
+        5, 5   -      -      -     -     OK     -       -    OK
+        7, 4   -      -      -     -     OK     -       -    OK
+        3, 6   -      -      -     -     OK     OK      -    OK
+        10, 8  -      -      -     -     -      -       -    -
         
+
+        how many OK does each pair have?
+        10,8   4,7  3,6   2,2
+
     */
+
+void rec(int start ,int **blocks_arr,int row, int col, int size)
+{
+   
+
+     //cout << "NOT CHANGE "<< blocks_arr[start][1]<<", "<<blocks_arr[start][0] <<endl;
+    if(start == 5)
+        return;
+    
+    for (int s =start; s<size; ++s)
+    {
+        int row = blocks_arr[s][0];
+        int col = blocks_arr[s][1];
+
+        cout <<"start -> "<< start << ", s -> "<<s <<  endl;
+        rec(start+1 ,blocks_arr,row, col, size);
+
+      
+    }
+    cout << " ---- "<<endl;
+}
+
+void func(int **blocks_arr, int size)
+{
+
+    int start =0;
+    rec(start,blocks_arr,0,0,size);
+
+}
+
+
+int main()
+{
+    cout <<" wooden block stacking"<<endl;
+
 
     freopen("input.txt","r",stdin);
 
-    int t,blocks;
+    int t,blocks=0;
     cin>>t;
     cout <<"test  cases "<<t<<endl;
     for (int tc =1; tc<=1; ++tc)
@@ -139,6 +173,7 @@ int main()
             cout<<endl;
         }                
         cout<<endl;
+        func(blocks_arr,blocks);
     }
 
 
