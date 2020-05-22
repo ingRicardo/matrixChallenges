@@ -114,8 +114,84 @@ using namespace std;
         how many OK does each pair have?
         10,8   4,7  3,6   2,2
 
-        
+            [2 2 ,5 5 ,7 4, 3 6 ,10 8]
 
+            if (2,2 > 5,5)
+            if (2,2 > 7,4)
+            if (2,2 > 3,6)
+            if (2,2 > 10,8)
+
+            res =0
+
+            if (5,5 > 2,2)
+                1
+            if (5,5 > 5, 5)
+            if (5,5 > 7, 4)
+            if (5,5 > 3, 6)
+            if (5,5 > 10, 8)
+
+            if (7, 4 > 5,5)
+                1
+            if (7, 4 > 7,4)
+            if (7, 4 > 3,6)
+            if (7, 4 > 10,8)
+
+            res =1
+
+            if (3, 6 > 2,2)
+                1
+            if (3, 6 > 5,5)
+            if (3, 6 > 7,4)
+            if (3, 6 > 3,6)
+            if (3, 6 > 10,8)
+
+            res =1
+
+            if (10, 8 > 2,2)
+                1
+            if (10, 8 > 5,5)
+                1
+            if (10, 8 > 7,4)
+                1
+            if (10, 8 > 3,6)
+                1
+            if (10, 8 > 10,8)
+
+            res = 4
+
+
+           2, 2
+           5, 5
+           7, 4
+           3, 6
+           10, 8 
+=========================
+    2, 2  -- > 5, 5
+              7, 4
+              3, 6
+              10, 8 
+
+
+    5, 5  --->7, 4
+              3, 6
+              10, 8 
+    7, 4  --->3, 6
+              10, 8 
+    3, 6 ---->10, 8
+
+    how many blocks are smallert than the current?
+    2, 2                                    res =0
+    5, 5  -- > 2, 2                         res =1
+    7, 4  -- > 2, 2 --> 3, 6                res =2
+    3, 6  -- > 2, 2                         res =1
+    10, 8 -- > 2, 2  --> 5,5 -> 7,4 ->3,6   res =4 
+
+
+    sort desc 
+    10, 8
+    7, 4
+    3, 6
+    
     */
 
 void rec(int start ,int **blocks_arr,int row, int col, int size, int next, int row_rot, int col_rot, int &res)
@@ -139,12 +215,12 @@ void rec(int start ,int **blocks_arr,int row, int col, int size, int next, int r
         cout<< "static : "<<static_row << ", "<< static_col <<", start -> "<< start << ", s -> "<<s << " variable : "<< row <<", "<<col;
         cout<<", rotation : "<< ro_row << ", "<< ro_col <<endl;
         
-        if ( (static_row < row && static_col < col ) )
+        if ( (static_row > row && static_col > col ) )
         {
             cout << "normal"<<endl;
             res+=1;
         } 
-        else if ( static_row < ro_row && static_col < ro_col )
+        else if ( static_row > ro_row && static_col > ro_col )
         {
             cout << "rotation"<<endl;
             res+=1;
@@ -175,6 +251,13 @@ void func(int **blocks_arr, int size)
 }
 
 
+void func1(int **blocks_arr, int size)
+{
+
+
+
+}
+
 int main()
 {
     cout <<" wooden block stacking"<<endl;
@@ -189,7 +272,6 @@ int main()
     {
         cin>> blocks;
         int **blocks_arr = new int*[blocks];
-        
         int x,y;
         for (int b =0; b<blocks; ++b)
         {
@@ -199,6 +281,8 @@ int main()
             blocks_arr[b][0]=x;
             blocks_arr[b][1]=y;
             
+            
+
             cout << blocks_arr[b][0] << ", "<<  blocks_arr[b][1];
             cout<<endl;
         }                
