@@ -195,16 +195,17 @@ int res=0;
 
     */
 
-void rec(int start ,int **blocks_arr,int row, int col, int size, int next, int row_rot, int col_rot, int &cc )
+void rec(int start ,int **blocks_arr,int row, int col, int size, int next, int row_rot, int col_rot, int &cc, bool **visited )
 {
     if(start == 5)
     {
        
-        cc=0;
+      //  cc=0;
+        cout << "return "<<endl;
         return;
     }      
 
-
+    
     for (int s =start; s<size; s++)
     {
         int row = blocks_arr[s][0];
@@ -233,7 +234,7 @@ void rec(int start ,int **blocks_arr,int row, int col, int size, int next, int r
         cout << "cc ==> "<<cc<< " res "<<res<<endl;
         if (cc>res)
             res =cc;
-        rec(s+1 ,blocks_arr,row, col, size, next, ro_row, ro_col, cc);
+        rec(s+1 ,blocks_arr,row, col, size, next, ro_row, ro_col, cc, visited);
        // cout << " after rec start "<< start <<endl;
        // cout<< "after rec - static : "<<static_row << ", "<< static_col <<", start -> "<< start << ", s -> "<<s << " variable : "<< row <<", "<<col<<endl;
         return;
@@ -244,12 +245,12 @@ void rec(int start ,int **blocks_arr,int row, int col, int size, int next, int r
 
 }
 
-void func(int **blocks_arr, int size)
+void func(int **blocks_arr, int size, bool **visited)
 {
     int start =0, next =0,r=0,cc=0;
     for (int n = 0; n< size; n++)
     {
-        rec(start,blocks_arr,0,0,size, n,0,0, cc);
+        rec(start,blocks_arr,0,0,size, n,0,0, cc, visited);
     }
 }
 
@@ -275,14 +276,20 @@ int main()
     {
         cin>> blocks;
         int **blocks_arr = new int*[blocks];
+        bool **visited = new bool*[blocks];
+
         int x,y;
         for (int b =0; b<blocks; ++b)
         {
             cin>> x;
             cin>> y;
             blocks_arr[b] = new int [2];
+            visited[b] = new bool[2];
             blocks_arr[b][0]=x;
             blocks_arr[b][1]=y;
+            visited[b][0] = false;
+            visited[b][1] = false;
+
             
             
 
@@ -290,7 +297,7 @@ int main()
             cout<<endl;
         }                
         cout<<endl;
-        func(blocks_arr,blocks);
+        func(blocks_arr,blocks,visited);
 
         cout << "#"<<tc<<":"<<res<<endl;
         res =0;
