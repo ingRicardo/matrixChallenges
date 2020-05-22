@@ -188,10 +188,8 @@ using namespace std;
 
 
     sort desc 
-    10, 8
-    7, 4
-    3, 6
-    
+    2, 2
+
     */
 
 void rec(int start ,int **blocks_arr,int row, int col, int size, int next, int row_rot, int col_rot, int &res)
