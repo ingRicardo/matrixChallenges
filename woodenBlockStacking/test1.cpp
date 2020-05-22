@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-
+int res=0;
     /*
     # of blocks = 5
     dimensions of the blocks
@@ -188,16 +188,23 @@ using namespace std;
 
 
     sort desc 
-    2, 2
+    10,8 ->         (3, 6),(7, 4),(5, 5),(2, 2)         inside of it = 4
+    7, 4 or 4, 7 -> (3, 6),(2, 2)                       inside of it = 2
+    3, 6 ->         (2, 2)                              inside of it = 1 
+    5, 5 ->         (2, 2)                              inside of it = 1
 
     */
 
-void rec(int start ,int **blocks_arr,int row, int col, int size, int next, int row_rot, int col_rot, int &res)
+void rec(int start ,int **blocks_arr,int row, int col, int size, int next, int row_rot, int col_rot, int &cc )
 {
     if(start == 5)
     {
+       
+        cc=0;
         return;
-    }           
+    }      
+
+
     for (int s =start; s<size; s++)
     {
         int row = blocks_arr[s][0];
@@ -210,21 +217,23 @@ void rec(int start ,int **blocks_arr,int row, int col, int size, int next, int r
         int ro_col = blocks_arr[s][0];
        // s+=1;
         //start = s;
-        cout<< "static : "<<static_row << ", "<< static_col <<", start -> "<< start << ", s -> "<<s << " variable : "<< row <<", "<<col;
-        cout<<", rotation : "<< ro_row << ", "<< ro_col <<endl;
+      //  cout<< "static : "<<static_row << ", "<< static_col <<", start -> "<< start << ", s -> "<<s << " variable : "<< row <<", "<<col;
+      //  cout<<", rotation : "<< ro_row << ", "<< ro_col <<endl;
         
-        if ( (static_row > row && static_col > col ) )
+        if ( (static_row > row && static_col > col ) || (static_row >= row && static_col > col ) || (static_row > row && static_col >= col ) )
         {
-            cout << "normal"<<endl;
-            res+=1;
+            cout << "normal this "<<static_row<<", "<< static_col << " contains "<< row<< ", "<<col<<endl;
+            cc+=1;
         } 
-        else if ( static_row > ro_row && static_col > ro_col )
+        else if ( (static_row > ro_row && static_col > ro_col) || (static_row >= ro_row && static_col > ro_col) || (static_row > ro_row && static_col >= ro_col) )
         {
-            cout << "rotation"<<endl;
-            res+=1;
+            cout << "rotation this "<<static_row<<", "<< static_col << " contains "<< ro_row<< ", "<<ro_col<<endl;
+            cc+=1;
         }
-
-        rec(s+1 ,blocks_arr,row, col, size, next, ro_row, ro_col, res);
+        cout << "cc ==> "<<cc<< " res "<<res<<endl;
+        if (cc>res)
+            res =cc;
+        rec(s+1 ,blocks_arr,row, col, size, next, ro_row, ro_col, cc);
        // cout << " after rec start "<< start <<endl;
        // cout<< "after rec - static : "<<static_row << ", "<< static_col <<", start -> "<< start << ", s -> "<<s << " variable : "<< row <<", "<<col<<endl;
         return;
@@ -237,14 +246,10 @@ void rec(int start ,int **blocks_arr,int row, int col, int size, int next, int r
 
 void func(int **blocks_arr, int size)
 {
-
-    int start =0, next =0, res =0;
+    int start =0, next =0,r=0,cc=0;
     for (int n = 0; n< size; n++)
     {
-        rec(start,blocks_arr,0,0,size, n,0,0, res);
-        cout << "res "<< res<<endl;
-        res=0;
-
+        rec(start,blocks_arr,0,0,size, n,0,0, cc);
     }
 }
 
@@ -266,7 +271,7 @@ int main()
     int t,blocks=0;
     cin>>t;
     cout <<"test  cases "<<t<<endl;
-    for (int tc =1; tc<=1; ++tc)
+    for (int tc =1; tc<=5; ++tc)
     {
         cin>> blocks;
         int **blocks_arr = new int*[blocks];
@@ -286,6 +291,10 @@ int main()
         }                
         cout<<endl;
         func(blocks_arr,blocks);
+
+        cout << "#"<<tc<<":"<<res<<endl;
+        res =0;
+
     }
 
 
