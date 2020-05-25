@@ -199,13 +199,11 @@ void rec(int start ,int **blocks_arr,int row, int col, int size, int next, int r
 {
     if(start == 5)
     {
-       
       //  cc=0;
         cout << "return "<<endl;
         return;
     }      
-
-    
+  
     for (int s =start; s<size; s++)
     {
         int row = blocks_arr[s][0];
@@ -216,20 +214,25 @@ void rec(int start ,int **blocks_arr,int row, int col, int size, int next, int r
 
         int ro_row = blocks_arr[s][1];
         int ro_col = blocks_arr[s][0];
-       // s+=1;
-        //start = s;
-      //  cout<< "static : "<<static_row << ", "<< static_col <<", start -> "<< start << ", s -> "<<s << " variable : "<< row <<", "<<col;
-      //  cout<<", rotation : "<< ro_row << ", "<< ro_col <<endl;
+
         
-        if ( (static_row > row && static_col > col ) || (static_row >= row && static_col > col ) || (static_row > row && static_col >= col ) )
+        if ((static_row > row && static_col > col ) || 
+            (static_row >= row && static_col > col ) || 
+            (static_row > row && static_col >= col ) )
         {
             cout << "normal this "<<static_row<<", "<< static_col << " contains "<< row<< ", "<<col<<endl;
-            cc+=1;
+
+         
+            
         } 
-        else if ( (static_row > ro_row && static_col > ro_col) || (static_row >= ro_row && static_col > ro_col) || (static_row > ro_row && static_col >= ro_col) )
+        else if ( (static_row > ro_row && static_col > ro_col) ||
+                 (static_row >= ro_row && static_col > ro_col) || 
+                 (static_row > ro_row && static_col >= ro_col) )
         {
             cout << "rotation this "<<static_row<<", "<< static_col << " contains "<< ro_row<< ", "<<ro_col<<endl;
-            cc+=1;
+
+         
+            
         }
         cout << "cc ==> "<<cc<< " res "<<res<<endl;
         if (cc>res)
@@ -247,6 +250,10 @@ void rec(int start ,int **blocks_arr,int row, int col, int size, int next, int r
 
 void func(int **blocks_arr, int size, bool **visited)
 {
+
+    //(2 <= X&Y <= 100)  // visited
+
+
     int start =0, next =0,r=0,cc=0;
     for (int n = 0; n< size; n++)
     {
