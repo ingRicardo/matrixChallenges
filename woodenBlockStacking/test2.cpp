@@ -3,11 +3,38 @@ using namespace std;
 int res=0;
 
 
+void rec(int n, int ** blocks_arr, int size)
+{
+    if(n >4)
+    {
+        cout << "return n "<<n<<endl;
+        return;
+    }
+    int  row = blocks_arr[n][0];
+    int  col = blocks_arr[n][1];
+    cout << " ------ "<<endl;
+    cout << "row " << row<< " col "<< col<<endl;
+    int cc =0;
+   for(int t= 0; t< size; t++)
+   {
+        int  nextrow = blocks_arr[t][0];
+        int  nextcol = blocks_arr[t][1];
+        cout << " nextrow  "<< nextrow << " nextcol "<< nextcol <<endl;
+        if ( (row > nextrow && col >nextcol ) || (row > nextcol && col >nextrow) )
+        {
+            cc+=1;
+            cout << "contains -> "<< nextrow << ", "<< nextcol <<endl;
+        }
+   }
+    cout << row << ", "<<col << " contains "<< cc<<endl;
+    rec(n+1, blocks_arr, size);
+}
+
 void func2(int ** blocks_arr, int size)
 {
-    int  row = blocks_arr[0][0];
-    int  col = blocks_arr[0][1];
-    cout << "row " << row<< " col "<< col<<endl;
+    int n =0;
+    rec(n, blocks_arr, size);
+
     /*bool **visited = new bool *[row];
 
     for(int r =0; r< row; r++)
@@ -21,6 +48,13 @@ void func2(int ** blocks_arr, int size)
         cout<<endl;
     }*/
   
+    /*
+        2,2<5,5 = 1
+        2,2<3,6 = 1
+        2,2<3,6<4,7 = 2
+        2,2<3,6<4,7<10,8 = 4
+
+    */
 
 
 }
