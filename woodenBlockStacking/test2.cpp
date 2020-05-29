@@ -5,7 +5,7 @@ int res=1;
 
 void rec(int n, int ** blocks_arr, int size, int nextRow, int nextCol,int &cc)
 {
-    if(n >=4)
+    if(n >=(size-1))
     {
         cout << "return n "<<n<<endl;
         return;
@@ -13,13 +13,20 @@ void rec(int n, int ** blocks_arr, int size, int nextRow, int nextCol,int &cc)
     int r = nextRow;
     int c = nextCol;
     cout << " current -> "<< r << ", "<<c <<endl;
-    if (r> blocks_arr[n+1][0] && c > blocks_arr[n+1][1] )
+    if ( (r> blocks_arr[n+1][0] && c > blocks_arr[n+1][1])  || 
+        (r>= blocks_arr[n+1][0] && c > blocks_arr[n+1][1]) ||
+        (r> blocks_arr[n+1][0] && c >= blocks_arr[n+1][1]) ||
+        (r>= blocks_arr[n+1][0] && c >= blocks_arr[n+1][1]) )
     {
         cout << "normal "<<blocks_arr[n+1][0] << ", "<< blocks_arr[n+1][1]<<endl;
         nextRow = blocks_arr[n+1][0]; nextCol = blocks_arr[n+1][1];
         cc+=1;
     }
-    else if (r > blocks_arr[n+1][1] && c > blocks_arr[n+1][0] )
+    else if ( ( r > blocks_arr[n+1][1] && c > blocks_arr[n+1][0] )  ||
+            ( r >= blocks_arr[n+1][1] && c > blocks_arr[n+1][0] )  ||
+            ( r > blocks_arr[n+1][1] && c >= blocks_arr[n+1][0] ) ||
+            ( r >= blocks_arr[n+1][1] && c >= blocks_arr[n+1][0] )
+      )
     {
         cout << "rotation "<<blocks_arr[n+1][1]<<", "<<  blocks_arr[n+1][0]<<endl;
         nextRow = blocks_arr[n+1][1];nextCol = blocks_arr[n+1][0];
@@ -58,8 +65,7 @@ void func2(int ** blocks_arr, int size)
 	{		
 		for(int j=i+1;j<size;j++)
 		{
-			if(blocks_arr[i][0] < blocks_arr[j][0] && 
-               blocks_arr[i][1] < blocks_arr[j][1])
+			if( ( blocks_arr[i][0] < blocks_arr[j][0] && blocks_arr[i][1] < blocks_arr[j][1] ))
 			{
 				r  =blocks_arr[i][0];
                 c = blocks_arr[i][1];
@@ -114,7 +120,7 @@ int main()
     int t,blocks=0;
     cin>>t;
     cout <<"test  cases "<<t<<endl;
-    for (int tc =1; tc<=1; ++tc)
+    for (int tc =1; tc<=7; ++tc)
     {
         cin>> blocks;
         int **blocks_arr = new int*[blocks];
