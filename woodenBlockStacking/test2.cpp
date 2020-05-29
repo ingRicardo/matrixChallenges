@@ -42,21 +42,22 @@ void func2(int ** blocks_arr, int size)
     cout << "function 2 "<<endl;
 
     bool **visited = new bool*[size];
-
+    int  **blocks_aux = new int*[size];
     for (int b =0; b<size; ++b)
     {
         visited[b] = new bool [2];
         visited[b][0]=false;
         visited[b][1]=false;
-
+        blocks_aux[b] = new int [2];
+        blocks_aux[b][0] =0;
+        blocks_aux[b][1] =0;
         cout << visited[b][0] << ", "<<  visited[b][1];
         cout<<endl;
     }                
-
     //sorting 
    // int max [][] ={}; 
   // int **blocks_tmp = new int*[2];
-
+/*
     int n =0;
     int r = blocks_arr[n][0];
     int c = blocks_arr[n][1];
@@ -85,7 +86,7 @@ void func2(int ** blocks_arr, int size)
     int cc =1;
     rec(n, blocks_arr, size, blocks_arr[n][0],blocks_arr[n][1],cc);
     res = cc;
-    cout << "res ------> "<<res <<endl;
+    cout << "res ------> "<<res <<endl;*/
     /*bool **visited = new bool *[row];
 
     for(int r =0; r< row; r++)
@@ -107,6 +108,28 @@ void func2(int ** blocks_arr, int size)
 
     */
 
+   int nextRow = 0;
+   int nextCol = 0;
+
+    for (int n = 0; n< size ; n++)
+    {
+        int r = blocks_arr[n][0];
+        int c = blocks_arr[n][1];
+        int cc =0;
+        cout << "current "<< r << ", "<< c <<endl;
+        for(int i=0;i<size;i++)
+        {
+            if((r > blocks_arr[i][0] && c > blocks_arr[i][1]) ||(r > blocks_arr[i][1] && c > blocks_arr[i][0]) )
+            {
+                cout <<" "<< blocks_arr[i][0] << ", "<< blocks_arr[i][1] <<endl;
+                nextRow = blocks_arr[i][0]; nextCol =  blocks_arr[i][1];
+                // implentation of the blocks_aux loop to compare with the next
+                
+                cc++;
+            }
+        }
+        cout << "cc "<< cc <<endl;
+    }
 
 }
 
@@ -120,7 +143,7 @@ int main()
     int t,blocks=0;
     cin>>t;
     cout <<"test  cases "<<t<<endl;
-    for (int tc =1; tc<=7; ++tc)
+    for (int tc =1; tc<=1; ++tc)
     {
         cin>> blocks;
         int **blocks_arr = new int*[blocks];
