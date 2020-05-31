@@ -49,8 +49,8 @@ void func2(int ** blocks_arr, int size)
         visited[b][0]=false;
         visited[b][1]=false;
         blocks_aux[b] = new int [2];
-        blocks_aux[b][0] =0;
-        blocks_aux[b][1] =0;
+        blocks_aux[b][0] =blocks_arr[b][0];
+        blocks_aux[b][1] =blocks_arr[b][1];
         cout << visited[b][0] << ", "<<  visited[b][1];
         cout<<endl;
     }                
@@ -110,7 +110,7 @@ void func2(int ** blocks_arr, int size)
 
    int nextRow = 0;
    int nextCol = 0;
-
+    //int 
     for (int n = 0; n< size ; n++)
     {
         int r = blocks_arr[n][0];
@@ -124,8 +124,27 @@ void func2(int ** blocks_arr, int size)
                 cout <<" "<< blocks_arr[i][0] << ", "<< blocks_arr[i][1] <<endl;
                 nextRow = blocks_arr[i][0]; nextCol =  blocks_arr[i][1];
                 // implentation of the blocks_aux loop to compare with the next
+
+
+                //COMPARE CURRENT HOW MANY TIMES IS CONTAINED LOOP 
+
+
+             //   blocks_aux[i][0] = nextRow;
+              //  blocks_aux[i][1] = nextCol;        
+ /*               for (int x = 0; x< size ; x++)
+                {
+                    if (blocks_aux[x][0] == nextRow && blocks_aux[x][1] == nextCol)
+                    {
+                       
+                        cc++;
+                        cout << "add "<< nextRow << ", "<< nextCol << " -> cc "<< cc << endl;
+                    } 
+
+                    
+                }
+*/
                 
-                cc++;
+                
             }
         }
         cout << "cc "<< cc <<endl;
