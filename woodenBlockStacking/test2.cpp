@@ -108,46 +108,56 @@ void func2(int ** blocks_arr, int size)
 
     */
 
-   int nextRow = 0;
-   int nextCol = 0;
+   int nextRow = 0, notRow=0;
+   int nextCol = 0, notCol=0;
+   int maxNotMatch =0;
     //int 
     for (int n = 0; n< size ; n++)
     {
         int r = blocks_arr[n][0];
         int c = blocks_arr[n][1];
-        int cc =0;
+        int inside =0, contain =0,notmatch=0,res=0;
+
         cout << "current "<< r << ", "<< c <<endl;
         for(int i=0;i<size;i++)
         {
-            if((r > blocks_arr[i][0] && c > blocks_arr[i][1]) ||(r > blocks_arr[i][1] && c > blocks_arr[i][0]) )
+            if((r < blocks_arr[i][0] && c < blocks_arr[i][1]) ||(r < blocks_arr[i][1] && c < blocks_arr[i][0]) )
             {
-                cout <<" "<< blocks_arr[i][0] << ", "<< blocks_arr[i][1] <<endl;
+                cout <<" iNSIDE OF -> "<< blocks_arr[i][0] << ", "<< blocks_arr[i][1] <<endl;
                 nextRow = blocks_arr[i][0]; nextCol =  blocks_arr[i][1];
                 // implentation of the blocks_aux loop to compare with the next
-
-
-                //COMPARE CURRENT HOW MANY TIMES IS CONTAINED LOOP 
-
-
-             //   blocks_aux[i][0] = nextRow;
-              //  blocks_aux[i][1] = nextCol;        
- /*               for (int x = 0; x< size ; x++)
-                {
-                    if (blocks_aux[x][0] == nextRow && blocks_aux[x][1] == nextCol)
-                    {
-                       
-                        cc++;
-                        cout << "add "<< nextRow << ", "<< nextCol << " -> cc "<< cc << endl;
-                    } 
-
-                    
-                }
-*/
-                
+                inside++;
+  
                 
             }
+            else  if((r > blocks_arr[i][0] && c > blocks_arr[i][1]) ||(r > blocks_arr[i][1] && c > blocks_arr[i][0]) )
+            {
+                if (blocks_arr[i][0] != notRow && blocks_arr[i][1] != notCol)
+                {
+                    cout << "RES -> "<< blocks_arr[i][0] << ", "<<blocks_arr[i][1] <<endl; 
+                    res++;
+                }
+                    cout <<" CONTAINS -> "<< blocks_arr[i][0] << ", "<< blocks_arr[i][1] <<endl;
+                    contain++;
+            }
+            else if((r != blocks_arr[i][0] && c != blocks_arr[i][1]) /*||(r != blocks_arr[i][1] && c != blocks_arr[i][0])*/ )
+            {
+                 cout <<" NOT MATCH -> "<< blocks_arr[i][0] << ", "<< blocks_arr[i][1] <<endl;
+                notmatch++;
+            }
+            
         }
-        cout << "cc "<< cc <<endl;
+        if(notmatch > maxNotMatch)
+        {
+            notRow = r;
+            notCol = c;
+            maxNotMatch = notmatch;
+
+        }
+            
+
+        cout << "total inside "<< inside << " AND total contains "<< contain<<" notmatch "<< notmatch<< " MAX NOT MATCH "<< notRow<<", "<<notCol;
+        cout << " res "<< res <<endl;
     }
 
 }
