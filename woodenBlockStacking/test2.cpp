@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-int res=1;
+int res=0;
 
 
 void rec(int n, int ** blocks_arr, int size, int nextRow, int nextCol,int &cc)
@@ -107,7 +107,7 @@ void func2(int ** blocks_arr, int size)
         2,2<3,6<4,7<10,8 = 4
 
     */
-
+   res =0;
    int nextRow = 0, notRow=0;
    int nextCol = 0, notCol=0;
    int maxNotMatch =0;
@@ -116,7 +116,7 @@ void func2(int ** blocks_arr, int size)
     {
         int r = blocks_arr[n][0];
         int c = blocks_arr[n][1];
-        int inside =0, contain =0,notmatch=0,res=0;
+        int inside =0, contain =0,notmatch=0,resu=1;
 
         cout << "current "<< r << ", "<< c <<endl;
         for(int i=0;i<size;i++)
@@ -130,12 +130,15 @@ void func2(int ** blocks_arr, int size)
   
                 
             }
-            else  if((r > blocks_arr[i][0] && c > blocks_arr[i][1]) ||(r > blocks_arr[i][1] && c > blocks_arr[i][0]) )
+            else  if((r >= blocks_arr[i][0] && c > blocks_arr[i][1]) ||
+                     (r > blocks_arr[i][1] && c >= blocks_arr[i][0]) )
             {
                 if (blocks_arr[i][0] != notRow && blocks_arr[i][1] != notCol)
                 {
                     cout << "RES -> "<< blocks_arr[i][0] << ", "<<blocks_arr[i][1] <<endl; 
-                    res++;
+                    resu++;
+                    if(res < resu)
+                        res = resu;
                 }
                     cout <<" CONTAINS -> "<< blocks_arr[i][0] << ", "<< blocks_arr[i][1] <<endl;
                     contain++;
@@ -157,7 +160,10 @@ void func2(int ** blocks_arr, int size)
             
 
         cout << "total inside "<< inside << " AND total contains "<< contain<<" notmatch "<< notmatch<< " MAX NOT MATCH "<< notRow<<", "<<notCol;
-        cout << " res "<< res <<endl;
+        cout << " res "<< resu <<endl;
+     
+           
+        
     }
 
 }
@@ -172,7 +178,7 @@ int main()
     int t,blocks=0;
     cin>>t;
     cout <<"test  cases "<<t<<endl;
-    for (int tc =1; tc<=1; ++tc)
+    for (int tc =1; tc<=5; ++tc)
     {
         cin>> blocks;
         int **blocks_arr = new int*[blocks];
