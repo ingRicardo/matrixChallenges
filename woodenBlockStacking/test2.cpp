@@ -43,6 +43,7 @@ void func2(int ** blocks_arr, int size)
 
     bool **visited = new bool*[size];
     int  **blocks_aux = new int*[size];
+    int  *countVect = new int[size];
     for (int b =0; b<size; ++b)
     {
         visited[b] = new bool [2];
@@ -51,6 +52,7 @@ void func2(int ** blocks_arr, int size)
         blocks_aux[b] = new int [2];
         blocks_aux[b][0] =blocks_arr[b][0];
         blocks_aux[b][1] =blocks_arr[b][1];
+        countVect[b] = 0;
         cout << visited[b][0] << ", "<<  visited[b][1];
         cout<<endl;
     }                
@@ -107,7 +109,7 @@ void func2(int ** blocks_arr, int size)
         2,2<3,6<4,7<10,8 = 4
 
     */
-   res =0;
+/*   res =0;
    int nextRow = 0, notRow=0;
    int nextCol = 0, notCol=0;
    int maxNotMatch =0;
@@ -140,10 +142,10 @@ void func2(int ** blocks_arr, int size)
                     if(res < resu)
                         res = resu;
                 }
-                    cout <<" CONTAINS -> "<< blocks_arr[i][0] << ", "<< blocks_arr[i][1] <<endl;
+                    cout <<" CONTAINS -> "<< blocks_arr[i][0] << ", "<< blocks_arr[i][1] << " res ++ "<< res<< endl;
                     contain++;
             }
-            else if((r != blocks_arr[i][0] && c != blocks_arr[i][1]) /*||(r != blocks_arr[i][1] && c != blocks_arr[i][0])*/ )
+            else if((r != blocks_arr[i][0] && c != blocks_arr[i][1]) /*||(r != blocks_arr[i][1] && c != blocks_arr[i][0])*//* )
             {
                  cout <<" NOT MATCH -> "<< blocks_arr[i][0] << ", "<< blocks_arr[i][1] <<endl;
                 notmatch++;
@@ -157,15 +159,88 @@ void func2(int ** blocks_arr, int size)
             maxNotMatch = notmatch;
 
         }
-            
-
         cout << "total inside "<< inside << " AND total contains "<< contain<<" notmatch "<< notmatch<< " MAX NOT MATCH "<< notRow<<", "<<notCol;
         cout << " res "<< resu <<endl;
-     
-           
-        
-    }
+    }*/
+    int rotr;
+    int rotc;
+    res=0;
+    for (int rot = 0; rot< 2; rot++)
+    {
+        if (rot ==0)
+        {
+            rotr = 0;
+            rotc = 1 ;
+        }
+        else if (rot == 1)
+        {
+            rotr = 1;
+            rotc = 0 ;
+        }
+        for (int n = 0; n< size ; n++)
+        {
+            int r = blocks_arr[n][rotr];
+            int c = blocks_arr[n][rotc];
+            int inside =0, contain =0,notmatch=0,resu=1;
 
+            if (rotr == 0 && rotc == 1)
+            {
+            // normal
+                cout << "--- current  normal "<< r << ", "<< c <<endl;
+            }
+            else 
+            {
+           // rotation
+                cout << "--- current  rotation "<< r << ", "<< c <<endl;
+            }
+            for(int i=0;i<size;i++)
+            {
+                    if( (r > blocks_arr[i][0] && c > blocks_arr[i][1]) || 
+                       (r >= blocks_arr[i][0] && c > blocks_arr[i][1]) ||
+                       (r > blocks_arr[i][0] && c >= blocks_arr[i][1]) )
+                    { 
+                        cout <<"contains : "<< blocks_arr[i][0] << ", "<< blocks_arr[i][1] <<endl;
+                    }
+                    else if( (r < blocks_arr[i][0] && c < blocks_arr[i][1]) || 
+                       (r <= blocks_arr[i][0] && c < blocks_arr[i][1]) ||
+                       (r < blocks_arr[i][0] && c <= blocks_arr[i][1]) )
+                    { 
+                        cout <<"inside of "<< blocks_arr[i][0] << ", "<< blocks_arr[i][1] <<endl;
+                    }
+                    else if((r != blocks_arr[i][0] && c != blocks_arr[i][1]) &&
+                            (c != blocks_arr[i][0] && r != blocks_arr[i][1]) )
+                    {
+                        cout <<" NOT MATCH -> "<< blocks_arr[i][0] << ", "<< blocks_arr[i][1] <<endl;
+                        countVect[i] +=1;
+                    }
+                //rotation
+                 //   cout << "current rotation "<< c << ", "<< r <<endl;
+            }
+        }
+        cout << " ------- "<<endl;
+    } // main for
+        int exclude = countVect[0];
+        int indx =0;
+        for (int co =1; co <= size; co++)
+        {
+            if(countVect[co] > exclude  )
+            {
+                exclude = countVect[co];
+                indx = co;
+            }
+        }
+        if (exclude>0)
+        {
+            cout << "exlude this frecuency -> "<< exclude<< " index -> "<< indx<< " block "<< blocks_arr[indx][0]<<", "<<blocks_arr[indx][1]<<endl;
+            cout << endl;
+            for (int e =0; e<size; e++)
+            {
+                if (blocks_arr[e][0] != blocks_arr[indx][0] && blocks_arr[e][1] != blocks_arr[indx][1])
+                    res+=1;
+            }
+        }
+        else 
+            res = size;
 }
 
 int main()
@@ -178,7 +253,7 @@ int main()
     int t,blocks=0;
     cin>>t;
     cout <<"test  cases "<<t<<endl;
-    for (int tc =1; tc<=5; ++tc)
+    for (int tc =1; tc<=2; ++tc)
     {
         cin>> blocks;
         int **blocks_arr = new int*[blocks];
