@@ -264,11 +264,9 @@ void func2(int ** blocks_arr, int size)
         int r = blocks_arr[n][0];
         int c = blocks_arr[n][1];
         int inside =0, contain =0,notmatch=0,resu=1;
-
         cout << "current "<< r << ", "<< c <<endl;
         for(int i=0;i<size;i++)
         {
-            
                 if((r > blocks_arr[i][0] && c > blocks_arr[i][1]) ||(r > blocks_arr[i][1] && c > blocks_arr[i][0]) )
                 {
                         // normal - rotation 
@@ -282,12 +280,62 @@ void func2(int ** blocks_arr, int size)
                     cout <<" in -- "<< blocks_arr[i][0] << ", "<< blocks_arr[i][1] ;
                 }
 
-        
         }
         cout << "\n contains "<< countVect[n]<<endl;
         cout << "\n inside "<< insideVect[n]<<endl;
     } 
 
+
+    // IF "INSIDE" IS EQUALS TO SOME OTHER ONE 
+    //  CHECK WHO HAS THE MAXIMUN "CONTAIN"
+   int i, j, rep=0;
+    printf(" Repeating elements are "); 
+    for(i = 0; i < size; i++) 
+        for(j = i + 1; j < size; j++) 
+        if(insideVect[i] == insideVect[j]) 
+        {
+             rep = insideVect[i];
+            cout << rep << " "; 
+           
+        }
+
+        
+            
+    cout <<endl;
+
+    int de= 100000;
+    //check min contain
+    cout << " min contain : "<<endl;
+    int no =0;
+    for(i = 0; i < size; i++) 
+    {
+        if(insideVect[i] == rep) 
+        {
+        if (countVect[i]< de)
+        {
+            de = countVect[i];
+            cout <<" "<< countVect[i]<< " -> "<< blocks_arr[i][0]<< ", "<< blocks_arr[i][1]<< " idx "<< i<<endl;
+            no = i;
+        }
+            
+        
+        }
+    }
+    cout << " no "<<no <<endl;
+    cout << "\n res : "<<endl; 
+    int r=0;
+    if (no ==0)
+        no = 10000;
+     for(int u = 0; u < size; u++) 
+    {
+         if ( u != no)
+         {
+             cout << " "<< blocks_arr[u][0] << ", "<< blocks_arr[u][1] <<endl;
+             r++;
+         }
+    }
+    res = r;
+    cout <<endl;
 }
 
 int main()
@@ -300,7 +348,7 @@ int main()
     int t,blocks=0;
     cin>>t;
     cout <<"test  cases "<<t<<endl;
-    for (int tc =1; tc<=1; ++tc)
+    for (int tc =1; tc<=2; ++tc)
     {
         cin>> blocks;
         int **blocks_arr = new int*[blocks];
