@@ -258,7 +258,7 @@ void func2(int ** blocks_arr, int size)
 10 8
 
 */
-
+/*
     for (int n = 0; n< size ; n++)
     {
         int r = blocks_arr[n][0];
@@ -288,7 +288,7 @@ void func2(int ** blocks_arr, int size)
 
     // IF "INSIDE" IS EQUALS TO SOME OTHER ONE 
     //  CHECK WHO HAS THE MAXIMUN "CONTAIN"
-   int i, j, rep=0;
+   int i, j, rep=10000;
     printf(" Repeating elements are "); 
     for(i = 0; i < size; i++) 
         for(j = i + 1; j < size; j++) 
@@ -300,13 +300,13 @@ void func2(int ** blocks_arr, int size)
         }
 
         
-            
+    cout << " rep : "<< rep<<endl;     
     cout <<endl;
 
     int de= 100000;
     //check min contain
     cout << " min contain : "<<endl;
-    int no =0;
+    int no =10000;
     for(i = 0; i < size; i++) 
     {
         if(insideVect[i] == rep) 
@@ -324,8 +324,7 @@ void func2(int ** blocks_arr, int size)
     cout << " no "<<no <<endl;
     cout << "\n res : "<<endl; 
     int r=0;
-    if (no ==0)
-        no = 10000;
+ 
      for(int u = 0; u < size; u++) 
     {
          if ( u != no)
@@ -336,6 +335,35 @@ void func2(int ** blocks_arr, int size)
     }
     res = r;
     cout <<endl;
+
+    */
+
+  // int ** blocks_arr, int size
+    int restmp =0; 
+    for (int n = 0; n< size ; n++)
+    {
+        restmp =0;
+        int r = blocks_arr[n][0];
+        int c = blocks_arr[n][1];
+        cout << "current "<< r << ", "<< c <<endl;
+        for(int i=0;i<size;i++)
+        {
+
+                if( (r >= blocks_arr[i][0] && c >= blocks_arr[i][1]) ||
+                    (c >= blocks_arr[i][0] && r >= blocks_arr[i][1]) 
+                    
+                    ) 
+
+                {
+                    restmp++;
+                    
+                }
+
+
+        }
+        cout << "contains "<< restmp <<endl;
+    }
+    res = restmp;
 }
 
 int main()
@@ -348,7 +376,7 @@ int main()
     int t,blocks=0;
     cin>>t;
     cout <<"test  cases "<<t<<endl;
-    for (int tc =1; tc<=2; ++tc)
+    for (int tc =1; tc<=3; ++tc)
     {
         cin>> blocks;
         int **blocks_arr = new int*[blocks];
