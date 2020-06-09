@@ -358,6 +358,28 @@ void func2(int ** blocks_arr, int size)
                     restmp++;
                     
                 }
+                /*else if (  ( ((r <= blocks_arr[i][0] && c >= blocks_arr[i][1]) && (c >= blocks_arr[i][0] && r <= blocks_arr[i][1])) ||
+                             ((c <= blocks_arr[i][0] && r >= blocks_arr[i][1]) && (r >= blocks_arr[i][0] && c <= blocks_arr[i][1])) ) )
+                {
+                    // 5,5 -- 7,4    5,5 -- 3,6
+                    // 3,6 -- 7,4       6,3  7,4
+                    // 3,6 -- 5,5       6,3  5,5
+                    //  100, 50  --100, 100    50,100 --100, 100     
+                    cout << " --- no match "<<blocks_arr[i][0] << ", "<< blocks_arr[i][1]<< endl;
+                }*/
+                else if ( ( (r <= blocks_arr[i][0] && c <= blocks_arr[i][1]) ||
+                    (c <= blocks_arr[i][0] && r <= blocks_arr[i][1]) 
+                    
+                    ) ) 
+                    {
+
+                    }
+                else if ( ( (r != blocks_arr[i][0] && c != blocks_arr[i][1]) ||
+                    (c != blocks_arr[i][0] && r != blocks_arr[i][1]) ))
+                    {
+                        cout << " --- no match "<<blocks_arr[i][0] << ", "<< blocks_arr[i][1]<< endl;
+                    }
+                    
 
 
         }
@@ -376,7 +398,7 @@ int main()
     int t,blocks=0;
     cin>>t;
     cout <<"test  cases "<<t<<endl;
-    for (int tc =1; tc<=3; ++tc)
+    for (int tc =1; tc<=4; ++tc)
     {
         cin>> blocks;
         int **blocks_arr = new int*[blocks];
