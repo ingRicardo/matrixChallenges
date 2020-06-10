@@ -1,0 +1,105 @@
+
+
+
+100, 2
+45, 30
+40, 40
+20, 90
+90, 2
+2, 88
+77, 2
+3, 3
+40, 67
+38, 20
+
+
+output = 4
+=======================
+current  100, 2
+ no match :
+        45, 30
+        40, 40
+        20, 90
+        3, 3
+        40, 67
+        38, 20
+contains:
+  100, 2
+  90, 2 
+  2, 88
+  77, 2
+
+ --- contains 4
+========================
+current 45, 30
+--- contains 3
+      45, 30
+      3, 3
+      38, 20
+ --- no match 100, 2
+ --- no match 40, 40
+ --- no match 20, 90
+ --- no match 90, 2
+ --- no match 2, 88
+ --- no match 77, 2
+
+ --- inside of  40, 67
+
+ =========================
+
+ current 40, 40
+--- contains 3
+  40, 40
+  3, 3
+  38, 20
+
+ --- no match 100, 2
+ --- no match 45, 30
+ --- no match 20, 90
+ --- no match 90, 2
+ --- no match 2, 88
+ --- no match 77, 2
+
+ --- inside of  40, 67
+
+ ===================================================>  4
+  --- contains 1 inside 4 nomatch 0
+  --- contains 2 inside 1 nomatch 2
+  --- contains 3 inside 1 nomatch 1
+  --- contains 2 inside 2 nomatch 1
+  --- contains 5 inside 0 nomatch 0
+====================================================>  3
+ --- contains 1 inside 2 nomatch 0
+ --- contains 2 inside 1 nomatch 0
+ --- contains 3 inside 0 nomatch 0
+=====================================================> 3
+ --- contains 4 inside 0 nomatch 0
+ --- contains 2 inside 1 nomatch 1
+ --- contains 2 inside 1 nomatch 1
+ --- contains 1 inside 1 nomatch 2
+=====================================================> 3
+ --- contains 1 inside 1 nomatch 3
+ --- contains 2 inside 1 nomatch 2
+ --- contains 2 inside 1 nomatch 2
+ --- contains 4 inside 0 nomatch 1
+ --- contains 1 inside 0 nomatch 4
+=====================================================> 4
+ --- contains 4 inside 0 nomatch 6
+ --- contains 3 inside 1 nomatch 6
+ --- contains 3 inside 1 nomatch 6
+ --- contains 6 inside 0 nomatch 4
+ --- contains 3 inside 2 nomatch 5
+ --- contains 2 inside 3 nomatch 5
+ --- contains 1 inside 4 nomatch 5
+ --- contains 1 inside 5 nomatch 4
+ --- contains 5 inside 0 nomatch 5
+ --- contains 2 inside 4 nomatch 4
+
+1 delete the max (nomatch)
+2 get tne next max (nomatch)
+
+
+
+
+
+
