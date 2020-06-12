@@ -361,15 +361,7 @@ void func2(int ** blocks_arr, int size)
                     restmp++;
                     
                 }
-                /*else if (  ( ((r <= blocks_arr[i][0] && c >= blocks_arr[i][1]) && (c >= blocks_arr[i][0] && r <= blocks_arr[i][1])) ||
-                             ((c <= blocks_arr[i][0] && r >= blocks_arr[i][1]) && (r >= blocks_arr[i][0] && c <= blocks_arr[i][1])) ) )
-                {
-                    // 5,5 -- 7,4    5,5 -- 3,6
-                    // 3,6 -- 7,4       6,3  7,4
-                    // 3,6 -- 5,5       6,3  5,5
-                    //  100, 50  --100, 100    50,100 --100, 100     
-                    cout << " --- no match "<<blocks_arr[i][0] << ", "<< blocks_arr[i][1]<< endl;
-                }*/
+
                 else if ( ( (r <= blocks_arr[i][0] && c <= blocks_arr[i][1]) ||
                     (c <= blocks_arr[i][0] && r <= blocks_arr[i][1]) 
                     
@@ -385,8 +377,6 @@ void func2(int ** blocks_arr, int size)
                         nomatch++;
                     }
                     
-
-
         }
         cout << "\n --- contains "<< restmp <<" inside "<< inside << " nomatch "<< nomatch << endl;
     }
