@@ -114,3 +114,63 @@ current 45, 30
 
 
 
+take one block
+  compare with the next one
+  can i put current block on top of the next one?
+
+  yes 
+
+
+
+  no
+
+100 100
+100 50
+50 100
+60 60
+=============
+
+100 100    can i put  100 50,  50 100,  50 100, 100 50, 60 60, 60 60 on top of 100 100
+                        yes,   yes,  yes,  yes, yes, yes
+100 50     can i put 100 100 , 100 100,  50 100, 100 50, 60 60, 60 60 on top of 100 50
+                        no,  no , no, yes, no, no
+50 100      can i put 100 100, 100 100, 100 50, 50 100, 60 60, 60  on top of 50 100 
+                        no, no, no, yes, no, no
+60 60       can i put 100 100, 100 100, 100 50, 50 100, 100 50, 50 100 on top of 60 60
+                      no, no, no, no, no, no
+
+
+100 100  below of  100 50 , 50 100
+
+60 60
+=========================
+counter =1;
+can 100 100 be below of 100 50 => yes  counter++
+can 100 50 be below of  50 100 => no 
+can 100 50 be below of  100 50 => yes  (rotation) counter++
+can 50 100 be below of  60 60  => no
+can 50 100 be below of  60 60  => no   (rotation)
+
+counter =3
+============================
+100 50  below of   50 100
+        on top of  100 100
+60 60
+=========================
+2 2
+5 5
+7 4 
+3 6
+10 8
+
+2 2 below of 0
+5 5 below of 10 8 below of                                                                            2 2      7 4       3 6 
+7 4 below of 10 8 below of                                                                            2 2      3 6       5 5
+3 6 below of 7 4 below of 10 8  10 8 below of                                                         2 2      7 4       5 5 
+10 8 below of    2 2  below of 0     7 4 below of 10 8      3 6 below of 7 4     5 5  below of 10 8   2 2      3 6       5 5     7 4
+
+common 
+10 8
+10 8                  1
+7 4   10 8            1
+2 2  5 5  7 4   3 6   1
