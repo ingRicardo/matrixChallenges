@@ -247,12 +247,44 @@ common
 
 7 4 => 2 2  6 3(rotation)  6 3 => 2 2  3 6 => 2 2
                               1           1
+           draw 1 and 1
+           count elements 7 4 6 3(rotation) 2 2                         3
+normal
+7 4 => 2 2
+0
+max =0
+count elements 7 4 2 2                                                  2
+
+rotated
+4 7 => 2 2  3 6 => 2 2
+0              1
+max = 1
+count elements 4 7  3 6  2 2                                            3
+
 3 6 => 2 2 
+          max =0
+          count elements 3 6  2 2                                       2
+
+rotated
+6 3 => 2 2
+         max =0
+        count elements 6 3  2 2                                       2
 
 10 8 => 2 2  5 5 => 2 2  7 4 => 2 2  4 7(rotation) => 2 2  3 6  3 6 => 2 2  6 3(rotation) => 2 2
                 1         1                       2                 1             1
 
                 max = 2 which is 4 7(rotation) => 2 2  3 6 COUNT THE ELEMENTS  4 7  2 2  3 6  + current  4
+
+normal
+10 8 => 2 2  5 5=> 2 2  7 4 => 2 2    4 7(rotated) => 2 2  3 6  3 6 => 2 2 
+                1               1               2                       1
+                max =2
+                count elements 10 8   4 7   3 6   2 2                                   4
+rotated
+8 10 => 2 2  5 5=> 2 2  7 4 => 2 2    4 7(rotated) => 2 2  3 6  3 6 => 2 2 
+                1               1               2                       1
+                max =2
+                count elements 8 10   4 7   3 6   2 2                                   4
 ===========
 2 2
 3 3
@@ -260,10 +292,14 @@ common
 
 2 2
 3 3 => 2 2
+0
+max =0
+count elements 3 3      2 2                                     2
 4 4 => 2 2  3 3 => 2 2
                 1
                 
-               max =1  count elements   3 3 => 2 2   3 3 2 2 + current      3
+max =1 
+count elements  4 4     3 3     2 2                              3
 =========
 
 100 100
@@ -273,13 +309,44 @@ common
 
 100 100 = > 100 50   50 100(rotation)=> 50 100    50 100   100 50(rotation) => 100 50   60 60
                                 1                                 1
-100 50 =>   
+        draw  1   and 1    50 100(rotation)=> 50 100   100 50(rotation) => 100 50 count elements  50 100 100 50 + current   3     
 
-50 100 =>
+normal 
+100 100 = > 100 50   50 100(rotated) => 50 100   50 100    100 50(rotated) => 100 50    60 60
+        0                      1                                1                       0
+        draw 1 and 1
+count elements  100 100   50 100  50 100
+max =0
+count elements      100 100    100 50                           2
+
+rotated
+100 100 = > 100 50   
+max =0
+count elements      100 100    100 50                           2
+
+normal
+100 50 =>   
+max =0
+count elements  100 50                                          1
+
+rotated
+50 100 => 50 100
+max = 0
+count elements 50 100   50 100                                  2
+
+normal 
+50 100 => 50 100
+max = 0
+count elements 50 100   50 100                                  2
+
+rotated
+100 50 =>   
+max =0
+count elements  100 50                                          1
 
 60 60 =>
 
-        draw  1   and 1    50 100(rotation)=> 50 100   100 50(rotation) => 100 50 count elements  50 100 100 50 + current   3
+        
 
 ======
 
@@ -369,3 +436,4 @@ rotated
 20 38 =>
                 max =1
                 count elements 38 20  3 3                       => 1
+
