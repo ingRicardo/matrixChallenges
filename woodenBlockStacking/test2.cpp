@@ -339,7 +339,9 @@ void func2(int ** blocks_arr, int size)
     */
 
   // int ** blocks_arr, int size
-    int restmp =0,inside=0,nomatch=0; 
+  /*
+    int restmp =0,inside=0,nomatch=0,max=0; 
+
     for (int n = 0; n< size ; n++)
     {
         restmp =0;
@@ -357,7 +359,7 @@ void func2(int ** blocks_arr, int size)
                     ) 
 
                 {
-                     cout << "  "<<blocks_arr[i][0] << ", "<< blocks_arr[i][1];
+                 //    cout << "  "<<blocks_arr[i][0] << ", "<< blocks_arr[i][1];
                     restmp++;
                     
                 }
@@ -367,20 +369,74 @@ void func2(int ** blocks_arr, int size)
                     
                     ) ) 
                     {
-                        cout << "\n --- inside of  "<<blocks_arr[i][0] << ", "<< blocks_arr[i][1]<<endl;
+                     //   cout << "\n --- inside of  "<<blocks_arr[i][0] << ", "<< blocks_arr[i][1]<<endl;
                         inside++;
                     }
                 else if ( ( (r != blocks_arr[i][0] && c != blocks_arr[i][1]) ||
                     (c != blocks_arr[i][0] && r != blocks_arr[i][1]) ))
                     {
-                        cout << "\n --- no match "<<blocks_arr[i][0] << ", "<< blocks_arr[i][1]<<endl;
+                     //   cout << "\n --- no match "<<blocks_arr[i][0] << ", "<< blocks_arr[i][1]<<endl;
                         nomatch++;
                     }
                     
         }
         cout << "\n --- contains "<< restmp <<" inside "<< inside << " nomatch "<< nomatch << endl;
+        if (restmp>max)
+            max = restmp;
+        else if (max == restmp)
+            max++;
+
+        
+        cout << "MAX -> "<< max<<endl;
     }
     res = restmp;
+    */
+
+   int restmp =0,inside=0,nomatch=0,max=0; 
+
+    for (int n = 0; n< size ; n++)
+    {
+        restmp =0;
+        inside =0;
+        nomatch =0;
+        int r = blocks_arr[n][0];
+        int c = blocks_arr[n][1];
+        cout << "current "<< r << ", "<< c <<endl;
+        for(int i=0;i<size;i++)
+        {
+
+                if( (r >= blocks_arr[i][0] && c >= blocks_arr[i][1]) ||
+                    (c >= blocks_arr[i][0] && r >= blocks_arr[i][1]) 
+                    
+                    ) 
+                {
+                 //    cout << "  "<<blocks_arr[i][0] << ", "<< blocks_arr[i][1];
+                    restmp++;
+                            int r= blocks_arr[i][0];
+                            int c = blocks_arr[i][1];
+                            for(int i=0;i<size;i++)
+                            {
+                                if( (r >= blocks_arr[i][0] && c >= blocks_arr[i][1]) ||
+                                  (c >= blocks_arr[i][0] && r >= blocks_arr[i][1]) 
+                    
+                                    ) 
+                                    {
+                                             cout << "  "<<blocks_arr[i][0] << ", "<< blocks_arr[i][1];
+                                    }       
+                            }   
+                            cout<<endl;
+                }
+
+                    
+        }
+        cout << "\n --- contains "<< restmp<<endl;
+ 
+        
+ 
+    }
+    res = restmp;
+
+
 }
 
 int main()
@@ -393,7 +449,7 @@ int main()
     int t,blocks=0;
     cin>>t;
     cout <<"test  cases "<<t<<endl;
-    for (int tc =1; tc<=5; ++tc)
+    for (int tc =1; tc<=2; ++tc)
     {
         cin>> blocks;
         int **blocks_arr = new int*[blocks];

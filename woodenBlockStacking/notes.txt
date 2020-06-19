@@ -315,7 +315,7 @@ normal
 100 100 = > 100 50   50 100(rotated) => 50 100   50 100    100 50(rotated) => 100 50    60 60
         0                      1                                1                       0
         draw 1 and 1
-count elements  100 100   50 100  50 100
+count elements  100 100   50 100  50 100                                                3
 max =0
 count elements      100 100    100 50                           2
 
@@ -436,4 +436,17 @@ rotated
 20 38 =>
                 max =1
                 count elements 38 20  3 3                       => 1
-
+=======
+do
+take first element
+       
+        if contains an element 
+                tmp=0;
+                        take that element and compare it with all elements (loop)
+                        count the elements inside of it  tmp++
+                        if tmp>max
+                             max=tmp;
+                        else if tmp == max
+                             max++;
+                             
+until there are no elements
