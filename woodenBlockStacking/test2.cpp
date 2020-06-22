@@ -393,7 +393,8 @@ void func2(int ** blocks_arr, int size)
     */
 
    int restmp =0,inside=0,nomatch=0,max=0; 
-
+  int cct=0;
+    bool ent = false;
     for (int n = 0; n< size ; n++)
     {
         restmp =0;
@@ -411,20 +412,47 @@ void func2(int ** blocks_arr, int size)
                     ) 
                 {
                  //    cout << "  "<<blocks_arr[i][0] << ", "<< blocks_arr[i][1];
-                    restmp++;
-                            int r= blocks_arr[i][0];
-                            int c = blocks_arr[i][1];
-                            for(int i=0;i<size;i++)
-                            {
-                                if( (r >= blocks_arr[i][0] && c >= blocks_arr[i][1]) ||
-                                  (c >= blocks_arr[i][0] && r >= blocks_arr[i][1]) 
                     
-                                    ) 
-                                    {
-                                             cout << "  "<<blocks_arr[i][0] << ", "<< blocks_arr[i][1];
-                                    }       
-                            }   
-                            cout<<endl;
+                            int rr= blocks_arr[i][0];
+                            int cc = blocks_arr[i][1];
+                            if (r!=rr && c !=cc)
+                            {
+
+                                cout << "SECOND current "<< rr << ", "<< cc <<endl;
+                                cct=0;
+                              
+                                for(int i=0;i<size;i++)
+                                {
+                                    if( (rr >= blocks_arr[i][0] && cc >= blocks_arr[i][1]) ||
+                                    (cc >= blocks_arr[i][0] && rr >= blocks_arr[i][1])                                               
+                                        ) 
+                                        { 
+                                              cout << " NOTHING "<< blocks_arr[i][0] <<","<< blocks_arr[i][1]<<endl;
+                                                  if (rr != blocks_arr[i][0] && cc !=blocks_arr[i][1] &&
+                                                    r != blocks_arr[i][0] && c !=blocks_arr[i][1] )
+                                                {
+                                                  //  restmp++;
+                                                    cct++;
+                                                    ent = true;
+                                                    cout << "  "<<blocks_arr[i][0] << ", "<< blocks_arr[i][1];
+
+                                                }
+                                                if ( rr >= blocks_arr[i][1] && cc >=  blocks_arr[i][0])
+                                                {
+                                                    //rotation 
+                                                    cout << " rotation -> "<< blocks_arr[i][1] << ", "<<  blocks_arr[i][0] <<endl;
+                                                }
+                                                    
+                                                
+                                        }       
+                                }  //end for  
+                                cct+=2;
+                                if (cct >  restmp)
+                                    restmp =cct;
+
+                                cout<<"\n cct -> "<< cct<<" ent -> "<< ent<< endl;
+
+                            }
                 }
 
                     
@@ -434,8 +462,10 @@ void func2(int ** blocks_arr, int size)
         
  
     }
-    res = restmp;
-
+    
+        res = restmp;
+    
+    
 
 }
 
@@ -449,7 +479,7 @@ int main()
     int t,blocks=0;
     cin>>t;
     cout <<"test  cases "<<t<<endl;
-    for (int tc =1; tc<=2; ++tc)
+    for (int tc =1; tc<=3; ++tc)
     {
         cin>> blocks;
         int **blocks_arr = new int*[blocks];
