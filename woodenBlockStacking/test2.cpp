@@ -406,19 +406,32 @@ void func2(int ** blocks_arr, int size)
         cout << "\ncurrent "<< r << ", "<< c <<endl;
         for(int i=0;i<size;i++)
         {
+            if( (r > blocks_arr[i][0] && c > blocks_arr[i][1])  ||
+                (r > blocks_arr[i][0] && c >= blocks_arr[i][1]) ||
+                (r >= blocks_arr[i][0] && c > blocks_arr[i][1]) ) 
+            {
+                // cout << "normal "<<  blocks_arr[i][0]<< ", "<<  blocks_arr[i][1]<<endl;
+                int rr= blocks_arr[i][0];
+                int cc = blocks_arr[i][1];
+                    cout << "\nSECOND current "<< rr << ", "<< cc <<endl;
+                    for(int i=0;i<size;i++)
+                    {
+                        if( ((rr > blocks_arr[i][0] && cc > blocks_arr[i][1]) || (rr > blocks_arr[i][0] && cc >= blocks_arr[i][1]) || (rr >= blocks_arr[i][0] && cc > blocks_arr[i][1]) ) ||
+                        ( (rr > blocks_arr[i][1] && cc > blocks_arr[i][0]) || (rr > blocks_arr[i][1] && cc >= blocks_arr[i][0]) || (rr >= blocks_arr[i][1] && cc > blocks_arr[i][0]) )) 
+                        {
+                                cout << "  "<<  blocks_arr[i][0]<< ", "<<  blocks_arr[i][1];
+                        }
+                    }
 
-                if( (r >= blocks_arr[i][0] && c >= blocks_arr[i][1]) ||
-                    (c >= blocks_arr[i][0] && r >= blocks_arr[i][1]) 
-                    
-                    ) 
-                {
-                 //    cout << "  "<<blocks_arr[i][0] << ", "<< blocks_arr[i][1];
-                    
+            }
+
+
+
+                            /*
                             int rr= blocks_arr[i][0];
                             int cc = blocks_arr[i][1];
                             if (r!=rr && c !=cc)
                             {
-
                                 cout << "\nSECOND current "<< rr << ", "<< cc <<endl;
                                 cct=1;
                               
@@ -428,16 +441,11 @@ void func2(int ** blocks_arr, int size)
                                     (cc >= blocks_arr[i][0] && rr >= blocks_arr[i][1])                                               
                                         ) 
                                         { 
-                                           //   cout << "\n NOTHING "<< blocks_arr[i][0] <<","<< blocks_arr[i][1]<<endl;
-                                              /*    if (rr != blocks_arr[i][0] && cc !=blocks_arr[i][1] &&
-                                                    r != blocks_arr[i][0] && c !=blocks_arr[i][1] )
-                                                {*/
-                                                  //  restmp++;
+
                                                     ent = true;
                                                     if (rr == blocks_arr[i][0] && cc == blocks_arr[i][1])
                                                     {
-                                                        // itself is repeated 
-                                                     //   cct--;
+
                                                     }                                                        
                                                     else
                                                     {
@@ -446,15 +454,7 @@ void func2(int ** blocks_arr, int size)
                                                         
                                                     }
                                                     
-
-                                               // }
-                                      /*          if ( rr == blocks_arr[i][1] && cc ==  blocks_arr[i][0] )
-                                                {
-                                                    //rotation 
-                                                    cct++;
-                                                    cout << "\n rotation -> "<< blocks_arr[i][1] << ", "<<  blocks_arr[i][0] <<endl;
-                                                }
-                                       */             
+         
                                                 
                                         }       
                                 }  //end for  
@@ -463,18 +463,14 @@ void func2(int ** blocks_arr, int size)
                                 if (cct >=  restmp)
                                 {
                                     restmp =cct;
-                                 //   restmp++;
                                 }
-                                    
 
-                  //              cout<<"\n cct -> "<< cct<<" ent -> "<< ent<< " restmp "<< restmp << endl;
-
-                            }
-                }
+                            }*/
+                //}
 
                     
         }
-        cout << "\n --- contains "<< restmp<<endl;
+     //   cout << "\n --- contains "<< restmp<<endl;
  
         
  
