@@ -395,7 +395,7 @@ void func2(int ** blocks_arr, int size)
    int restmp =0,inside=0,nomatch=0,max=0; 
   int cct=0;
     bool ent = false;
-     restmp =0;
+  
     for (int n = 0; n< size ; n++)
     {
        
@@ -414,14 +414,48 @@ void func2(int ** blocks_arr, int size)
                 int rr= blocks_arr[i][0];
                 int cc = blocks_arr[i][1];
                     cout << "\nSECOND current "<< rr << ", "<< cc <<endl;
-                    for(int i=0;i<size;i++)
+                    cct =2;
+                    for(int j=0;j<size;j++)
                     {
-                        if( ((rr > blocks_arr[i][0] && cc > blocks_arr[i][1]) || (rr > blocks_arr[i][0] && cc >= blocks_arr[i][1]) || (rr >= blocks_arr[i][0] && cc > blocks_arr[i][1]) ) ||
-                        ( (rr > blocks_arr[i][1] && cc > blocks_arr[i][0]) || (rr > blocks_arr[i][1] && cc >= blocks_arr[i][0]) || (rr >= blocks_arr[i][1] && cc > blocks_arr[i][0]) )) 
+
+
+                        if( ((rr > blocks_arr[j][0] && cc > blocks_arr[j][1]) || (rr > blocks_arr[j][0] && cc >= blocks_arr[j][1]) || (rr >= blocks_arr[j][0] && cc > blocks_arr[j][1]) ) ||
+                        ( (rr > blocks_arr[j][1] && cc > blocks_arr[j][0]) || (rr > blocks_arr[j][1] && cc >= blocks_arr[j][0]) || (rr >= blocks_arr[j][1] && cc > blocks_arr[j][0]) )// ||
+                           /* (rr ==  blocks_arr[i][1] && cc == blocks_arr[i][0]) */    )
                         {
-                                cout << "  "<<  blocks_arr[i][0]<< ", "<<  blocks_arr[i][1];
+                                cout << "  "<<  blocks_arr[j][0]<< ", "<<  blocks_arr[j][1];
+                                cct++;
+
                         }
+
+
+                        if (  ( rr ==  blocks_arr[j][1] && cc == blocks_arr[j][0] ) &&  ( rr !=  blocks_arr[j][0] && cc != blocks_arr[j][1])  )
+                        {
+                            cct++;
+                            cout << "\n +1 "<<endl;
+                            
+                        }
+
+                        if ( ( rr ==  blocks_arr[j][0] && cc == blocks_arr[j][1] ) && i!=j)
+                        {
+                             cct++;
+                             cout << "\n ++1 "<<endl;
+                        }
+
+                        if ( ( rr >  blocks_arr[j][1] && cc > blocks_arr[j][0] ) )
+                        {
+                            // cct++;
+                            // cout << "\n ++1 "<<endl;
+                            // check the rotation 
+                            cout << " rot "<<endl;
+                        }
+
+
                     }
+                    cout<<"\n cct => "<< cct<<endl;
+                    if(cct>restmp)
+                        restmp = cct;
+
 
             }
 
