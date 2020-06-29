@@ -177,9 +177,9 @@ void func2(int ** blocks_arr, int size)
                               )
                         {
                             //normal
-                                cout << "  normal  "<<  blocks_arr[j][0]<< ", "<<  blocks_arr[j][1];
-                              tmr = blocks_arr[j][0]; tmc= blocks_arr[j][1];
-                                cct++;
+                            cout << "  normal  "<<  blocks_arr[j][0]<< ", "<<  blocks_arr[j][1];
+                            tmr = blocks_arr[j][0]; tmc= blocks_arr[j][1];
+                            cct++;
                         }
                         if (  ( rr ==  blocks_arr[j][1] && cc == blocks_arr[j][0] ) && 
                               ( rr !=  blocks_arr[j][0] && cc != blocks_arr[j][1])  )
@@ -200,8 +200,8 @@ void func2(int ** blocks_arr, int size)
                         {
 
                             //rotation
-                              cout << "  rotation  "<<  blocks_arr[j][1]<< ", "<<  blocks_arr[j][0];
-                              cct++;
+                            cout << "  rotation  "<<  blocks_arr[j][1]<< ", "<<  blocks_arr[j][0];
+                            cct++;
                         }
                     }
             }//if
