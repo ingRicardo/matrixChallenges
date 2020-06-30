@@ -11,25 +11,43 @@ int insideAmount(int currentX, int currentY, int nextX, int nextY)
         return 0;
 }
 
-void rec(int ** blocks_arr, int size, int &indx, int ac)
+void rec(int ** blocks_arr,int nextX, int nextY, int size, int &indx, int ac, int &n)
 {
- 
-    if (indx > size)
-        return;
-
-    int startX = blocks_arr[indx][0], startY=blocks_arr[indx][1];
-    cout << " start "<< startX << ", "<< startY <<endl;
-    for(int i=0; i< size; i++)
+    
+   /*
+    if (indx > (size-1))
     {
-        int nextX = blocks_arr[i][0], nextY = blocks_arr[i][1];
-        // cout << blocks_arr[i][0] << ", "<< blocks_arr[i][1]<<endl;
-        if (indx != i)
-            ac+= insideAmount(startX, startY, nextX, nextY);
+        cout << "=== STOP HERE ==> "<<ac<<" n "<< n<<endl;
+        return;
     }
-    cout << " inside "<< ac <<endl;
-    indx+=1;
-    cout << " indx "<< indx <<endl;
-    rec(blocks_arr,size,indx , ac);
+    */
+   
+    for(int i=indx; i< size; i++)
+    {
+
+        int startX = blocks_arr[i][0], startY=blocks_arr[i][1];
+        cout << "\n start "<< startX << ", "<< startY <<endl;
+        //int nextX = blocks_arr[i][0], nextY = blocks_arr[i][1];
+        //cout <<" next "<< nextX << ", "<< nextY<<" ";
+        /*
+       
+        if (  (indx != i)  &&  ( (startX >= nextX  && startY >= nextY) || (startX >= nextY  && startY >= nextX) ) )
+        {
+          
+            cout <<" "<< nextX << ", "<< nextY<<" ";
+            ac++;
+            indx+=1;
+            //ac+= insideAmount(startX, startY, nextX, nextY);
+            rec(blocks_arr,nextX, nextY,size,indx , ac,n );
+        } */
+        i++;
+        cout << "\n indx "<< indx<<endl;
+        rec(blocks_arr,nextX, nextY,size,i , ac,n );
+        indx =0;
+    }
+    cout<<endl;
+   
+   // rec(blocks_arr,nextX, nextY,size,indx , ac,n );
 
  }
 
@@ -48,10 +66,12 @@ void fun(int ** blocks_arr, int size)
     }
      cout << " inside "<< ac <<endl;
      */
-    int indx =0,ac=0;
+    int indx =0,ac=0,n=0, nextX=0,nextY=0;
+ 
 
-
-    rec(blocks_arr,size, indx, ac);
+        rec(blocks_arr,nextX, nextY,size, indx, ac, n);
+  
+    
 
 
  }
