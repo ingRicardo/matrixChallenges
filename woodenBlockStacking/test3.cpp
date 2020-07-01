@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 
+//https://www.techiedelight.com/find-permutations-given-string/
 
 int insideAmount(int currentX, int currentY, int nextX, int nextY)
 {
@@ -11,40 +12,25 @@ int insideAmount(int currentX, int currentY, int nextX, int nextY)
         return 0;
 }
 
-void rec(int ** blocks_arr,int nextX, int nextY, int size, int &indx, int ac, int &n)
+void rec(int ** blocks_arr,int nextX, int nextY, int size, int indx, int ac, int &n)
 {
     
-   /*
     if (indx > (size-1))
     {
         cout << "=== STOP HERE ==> "<<ac<<" n "<< n<<endl;
-        return;
+        return  ;
     }
-    */
-   
+    
     for(int i=indx; i< size; i++)
     {
 
-        int startX = blocks_arr[i][0], startY=blocks_arr[i][1];
-        cout << "\n start "<< startX << ", "<< startY <<endl;
-        //int nextX = blocks_arr[i][0], nextY = blocks_arr[i][1];
-        //cout <<" next "<< nextX << ", "<< nextY<<" ";
-        /*
+        
+        cout << "\n i = "<< i<< " -> "<<  blocks_arr[i][0] << ", "<< blocks_arr[i][1] << " indx = " <<indx << " -> "<< blocks_arr[indx][0] << ", "<< blocks_arr[indx][1] <<endl;
+        rec(blocks_arr,blocks_arr[i][0] , blocks_arr[i][1],size,i+1, ac,n );
        
-        if (  (indx != i)  &&  ( (startX >= nextX  && startY >= nextY) || (startX >= nextY  && startY >= nextX) ) )
-        {
-          
-            cout <<" "<< nextX << ", "<< nextY<<" ";
-            ac++;
-            indx+=1;
-            //ac+= insideAmount(startX, startY, nextX, nextY);
-            rec(blocks_arr,nextX, nextY,size,indx , ac,n );
-        } */
-        i++;
-        cout << "\n indx "<< indx<<endl;
-        rec(blocks_arr,nextX, nextY,size,i , ac,n );
-        indx =0;
+        //indx =0;
     }
+    
     cout<<endl;
    
    // rec(blocks_arr,nextX, nextY,size,indx , ac,n );
@@ -69,8 +55,8 @@ void fun(int ** blocks_arr, int size)
     int indx =0,ac=0,n=0, nextX=0,nextY=0;
  
 
-        rec(blocks_arr,nextX, nextY,size, indx, ac, n);
-  
+   rec(blocks_arr,nextX, nextY,size, indx, ac, n);
+    
     
 
 
