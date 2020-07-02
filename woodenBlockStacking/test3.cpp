@@ -2,7 +2,7 @@
 using namespace std;
 
 //https://www.techiedelight.com/find-permutations-given-string/
-
+//https://www.programiz.com/cpp-programming/examples/swapping
 int insideAmount(int currentX, int currentY, int nextX, int nextY)
 {
 
