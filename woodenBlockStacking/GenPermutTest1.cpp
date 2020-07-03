@@ -1,7 +1,7 @@
 
 #include <iostream>
 using namespace std;
-
+//https://www.codesdope.com/blog/article/generating-permutations-of-all-elements-of-an-arra/
 //function to print the array
 void printarray(int arr[], int size)
 {
