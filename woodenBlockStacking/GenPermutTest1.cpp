@@ -13,7 +13,27 @@ void printarray(int arr[], int size)
     printf("\n");
 }
 
- 
+void printarray2D(int arrX[], int arrY[], int size)
+{
+    int i,j;
+    for(i=0; i<size; i++)
+    {
+        cout << "\t"<< arrX[i]<< ", "<<arrY[i] ;
+        int curX = arrX[i]; int curY = arrY[i];
+        for(j=0; j<size; j++)
+        {
+            if(j!=i)
+            {
+               // cout << "\t ("<< arrY[j]<< ", "<< arrX[j]<<")";
+                 
+            }
+        }
+   //    cout << endl;
+    }
+    cout << endl;
+}
+
+
 //function to swap the variables
 void swap(int *a, int *b)
 {
@@ -25,23 +45,28 @@ void swap(int *a, int *b)
 
  
 //permutation function
-void permutation(int *arr, int start, int end)
+void permutation(int *arrX,int *arrY, int start, int end)
 {
     if(start==end)
     {
-        printarray(arr, end+1);
+       // printarray(arrX, end+1);
+        //printarray(arrY, end+1);
+        printarray2D(arrX, arrY, end+1);
+      
         return;
     }
     int i;
     for(i=start;i<=end;i++)
     {
         //swapping numbers
-        swap((arr+i), (arr+start));
+        swap((arrX+i), (arrX+start));
+        swap((arrY+i), (arrY+start));
         //fixing one first digit
         //and calling permutation on
         //the rest of the digits
-        permutation(arr, start+1, end);
-        swap((arr+i), (arr+start));
+        permutation(arrX, arrY,start+1, end);
+        swap((arrX+i), (arrX+start));
+        swap((arrY+i), (arrY+start));
     }
 }
 
@@ -60,17 +85,17 @@ int main()
         cin>> size;
         n= size;
         int **blocks_arr = new int*[size];
-        int *arr1 = new int[size];
-        int *arr2 = new int[size];
+        int *arrX = new int[size];
+        int *arrY = new int[size];
         for (int b =0; b<size; ++b)
         {
             cin>> x;
             cin>> y;
             blocks_arr[b] = new int [2];
             blocks_arr[b][0]=x;
-            arr1[b] = x;
+            arrX[b] = x;
             blocks_arr[b][1]=y;
-            arr2[b] = y;
+            arrY[b] = y;
 
            
         }
@@ -79,7 +104,7 @@ int main()
 
        // int arr[] = {1, 2, 3}; 
       //  int s = sizeof arr/sizeof arr[0]; 
-         permutation(arr1, 0, size-1);
+         permutation(arrX,arrY, 0, size-1);
     }
 
 
