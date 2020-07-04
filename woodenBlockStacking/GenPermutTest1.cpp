@@ -20,20 +20,37 @@ void printarray2D(int arrX[], int arrY[], int size)
     {
         cout << "\t"<< arrX[i]<< ", "<<arrY[i] ;
         int curX = arrX[i]; int curY = arrY[i];
-        for(j=0; j<size; j++)
-        {
-            if(j!=i)
-            {
-               // cout << "\t ("<< arrY[j]<< ", "<< arrX[j]<<")";
-                 
-            }
-        }
+ 
    //    cout << endl;
     }
     cout << endl;
 }
 
+int ** operation (int arrX[], int arrY[], int size)
+{
 
+    int **mat = new int*[size];
+
+    for(int i=0; i< size; i++)
+    {
+        mat[i] = new int[2];
+        mat[i][0] = arrX[i];
+        mat[i][1] = arrY[i];
+
+
+    }
+return mat;
+}
+
+void printMat(int **mat, int size)
+{
+    for(int i=0; i< size; i++)
+    {
+        cout << " "<< mat[i][0] <<","<< mat[i][1];
+    }
+    cout<<endl;
+
+}
 //function to swap the variables
 void swap(int *a, int *b)
 {
@@ -51,8 +68,11 @@ void permutation(int *arrX,int *arrY, int start, int end)
     {
        // printarray(arrX, end+1);
         //printarray(arrY, end+1);
-        printarray2D(arrX, arrY, end+1);
-      
+        //printarray2D(arrX, arrY, end+1);
+        int ** mat = operation(arrX,arrY,end+1);
+
+        printMat(mat, end+1);
+
         return;
     }
     int i;
