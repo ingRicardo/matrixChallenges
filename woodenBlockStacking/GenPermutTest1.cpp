@@ -3,6 +3,7 @@
 using namespace std;
 //https://www.codesdope.com/blog/article/generating-permutations-of-all-elements-of-an-arra/
 //function to print the array
+int resu=0;
 void printarray(int arr[], int size)
 {
     int i,j;
@@ -26,7 +27,7 @@ void printarray2D(int arrX[], int arrY[], int size)
     cout << endl;
 }
 
-int ** operation (int arrX[], int arrY[], int size)
+int ** buildMat (int arrX[], int arrY[], int size)
 {
 
     int **mat = new int*[size];
@@ -41,7 +42,30 @@ int ** operation (int arrX[], int arrY[], int size)
     }
 return mat;
 }
-
+int operation (int **mat, int size)
+{
+    int re =1;
+    int i=0;
+ //   cout << mat[i][0] << ","<< mat[i][1] ;
+    for(int j=1; j< size+1; j++)
+    {
+        // cout << " "<< mat[i][0] << "," << mat[i][1];
+        if (  j < (size) && i < (size+1)  &&  ( ( (mat[i][0] >= mat[j][0]) && (mat[i][1] >= mat[j][1]) ) || 
+                ( (mat[i][1] >= mat[j][0]) && (mat[i][0] >= mat[j][1]) )  )  )       
+        {
+ //          cout << " "<< mat[j][0] << "," << mat[j][1];
+            i++;
+            re++;
+        }
+        else
+        {
+            break;
+        }
+        
+    }
+ //  cout <<endl;
+return re;
+}
 void printMat(int **mat, int size)
 {
     for(int i=0; i< size; i++)
@@ -69,9 +93,12 @@ void permutation(int *arrX,int *arrY, int start, int end)
        // printarray(arrX, end+1);
         //printarray(arrY, end+1);
         //printarray2D(arrX, arrY, end+1);
-        int ** mat = operation(arrX,arrY,end+1);
+        int ** mat = buildMat(arrX,arrY,end+1);
+        int re=operation (mat,end+1);
+        if (re>resu)
+            resu = re;
 
-        printMat(mat, end+1);
+      //  printMat(mat, end+1);
 
         return;
     }
@@ -99,9 +126,9 @@ int main()
     int t,size=0,x,y,n=0;
     cin>>t;
     cout <<"test  cases "<<t<<endl;
-    for (int tc =1; tc<=1; ++tc)
+    for (int tc =1; tc<=25; ++tc)
     {
-
+        resu=0;
         cin>> size;
         n= size;
         int **blocks_arr = new int*[size];
@@ -117,14 +144,18 @@ int main()
             blocks_arr[b][1]=y;
             arrY[b] = y;
 
-           
+            cout << arrX[b] << ", "<<  arrY[b] ;
+            cout<<endl; 
         }
        // fun(blocks_arr, size, n);
 
 
        // int arr[] = {1, 2, 3}; 
       //  int s = sizeof arr/sizeof arr[0]; 
+     //   if(t != 22)
          permutation(arrX,arrY, 0, size-1);
+        
+         cout << "#"<<tc << ":"<<resu<<endl;
     }
 
 
