@@ -1,0 +1,452 @@
+
+
+
+100, 2
+45, 30
+40, 40
+20, 90
+90, 2
+2, 88
+77, 2
+3, 3
+40, 67
+38, 20
+
+
+output = 4
+=======================
+current  100, 2
+ no match :
+        45, 30
+        40, 40
+        20, 90
+        3, 3
+        40, 67
+        38, 20
+contains:
+  100, 2
+  90, 2 
+  2, 88
+  77, 2
+
+ --- contains 4
+========================
+current 45, 30
+--- contains 3
+      45, 30
+      3, 3
+      38, 20
+ --- no match 100, 2
+ --- no match 40, 40
+ --- no match 20, 90
+ --- no match 90, 2
+ --- no match 2, 88
+ --- no match 77, 2
+
+ --- inside of  40, 67
+
+ =========================
+
+ current 40, 40
+--- contains 3
+  40, 40
+  3, 3
+  38, 20
+
+ --- no match 100, 2
+ --- no match 45, 30
+ --- no match 20, 90
+ --- no match 90, 2
+ --- no match 2, 88
+ --- no match 77, 2
+
+ --- inside of  40, 67
+
+
+                                                                                                         common + inside 
+                                                                                                         common + itself
+
+                                        current          contains                                         
+                                                                                                          itself =1;
+                                                                                                          com=0                                                                                                                                                                                                            
+                                                                                                          if has common && not itself
+                                                                                                          com+=1
+                                                                                                          
+                                                                                                          
+                                                                                                          res = com+itself
+                                                                                                        
+ ===================================================================================================================================>  4 
+  --- contains 1 inside 4 nomatch 0       2, 2          2, 2                                             0            +4
+  --- contains 2 inside 1 nomatch 2       5, 5          2, 2  5, 5                                       1,0            +1
+  --- contains 3 inside 1 nomatch 1       7, 4          2, 2  7, 4  3, 6                                 1,1,0          +1  
+  --- contains 2 inside 2 nomatch 1       3, 6          2, 2  3, 6                                       1,1,2,0        +2
+  --- contains 5 inside 0 nomatch 0       10, 8         2, 2  5, 5  7, 4  3, 6  10, 8                    1,2,3,2,0      +0  
+====================================================================================================================================>  3 (2+1)
+ --- contains 1 inside 2 nomatch 0         2, 2         2, 2                                             0          +2
+ --- contains 2 inside 1 nomatch 0         3, 3         2, 2  3, 3                                       1,0          +1
+ --- contains 3 inside 0 nomatch 0         4, 4         2, 2  3, 3  4, 4                                 1,2,0          +0
+====================================================================================================================================> 3 (2+1)
+ --- contains 4 inside 0 nomatch 0        100, 100      100, 100  100, 50  50, 100  60, 60               0          +1
+ --- contains 2 inside 1 nomatch 1        100, 50       100, 50  50, 100                                 2,0        +1
+ --- contains 2 inside 1 nomatch 1        50, 100       100, 50  50, 100                                 2,2,0      +1 
+ --- contains 1 inside 1 nomatch 2        60, 60        60, 60                                           1,0,0,0    +1
+====================================================================================================================================> 3 (2+1)
+ --- contains 1 inside 1 nomatch 3        70, 80        70, 80                                           0          +1
+ --- contains 2 inside 1 nomatch 2        75, 75        75, 75  75, 75                                   0,0        +1
+ --- contains 2 inside 1 nomatch 2        75, 75        75, 75  75, 75                                   0,2,2      +1  
+ --- contains 4 inside 0 nomatch 1        90, 90        70, 80  75, 75  75, 75  90, 90                   1,2,2      +0
+ --- contains 1 inside 0 nomatch 4        30, 100       30, 100                                          0,0,0,0    +0 
+===================================================================================================================================> 4  (3+1)
+ --- contains 4 inside 0 nomatch 6        100, 2        100, 2  90, 2  2, 88  77, 2                      0          +1
+ --- contains 3 inside 1 nomatch 6        45, 30        45, 30  3, 3  38, 20                             0
+ --- contains 3 inside 1 nomatch 6        40, 40        40, 40  3, 3  38, 20                             0,2
+ --- contains 6 inside 0 nomatch 4        20, 90        20, 90  90, 2  2, 88  77, 2  3, 3  38, 20        3,2,2
+ --- contains 3 inside 2 nomatch 5        90, 2         90, 2  2, 88  77, 2                              2,0,0,3
+ --- contains 2 inside 3 nomatch 5        2, 88         2, 88  77, 2                                     2,0,0,2,2
+ --- contains 1 inside 4 nomatch 5        77, 2         77, 2                                            1,0,0,1,1,1
+ --- contains 1 inside 5 nomatch 4        3, 3          3, 3                                             0,1,1,1,0,0,0
+ --- contains 5 inside 0 nomatch 5        40, 67        45, 30  40, 40  3, 3  40, 67  38, 20             0,3,3,2,0,0,0,1
+ --- contains 2 inside 4 nomatch 4        38, 20        3, 3  38, 20                                     0,2,2,2,0,0,0,1,2
+
+
+
+
+
+
+
+take one block
+  compare with the next one
+  can i put current block on top of the next one?
+
+  yes 
+
+
+
+  no
+
+100 100
+100 50
+50 100
+60 60
+=============
+
+100 100    can i put  100 50,  50 100,  50 100, 100 50, 60 60, 60 60 on top of 100 100
+                        yes,   yes,  yes,  yes, yes, yes
+100 50     can i put 100 100 , 100 100,  50 100, 100 50, 60 60, 60 60 on top of 100 50
+                        no,  no , no, yes, no, no
+50 100      can i put 100 100, 100 100, 100 50, 50 100, 60 60, 60  on top of 50 100 
+                        no, no, no, yes, no, no
+60 60       can i put 100 100, 100 100, 100 50, 50 100, 100 50, 50 100 on top of 60 60
+                      no, no, no, no, no, no
+
+
+100 100  below of  100 50 , 50 100
+
+60 60
+=========================
+counter =1;
+can 100 100 be below of 100 50 => yes  counter++
+can 100 50 be below of  50 100 => no 
+can 100 50 be below of  100 50 => yes  (rotation) counter++
+can 50 100 be below of  60 60  => no
+can 50 100 be below of  60 60  => no   (rotation)
+
+counter =3
+============================
+100 50  below of   50 100
+        on top of  100 100
+60 60
+=========================
+2 2
+5 5
+7 4 
+3 6
+10 8
+
+2 2 below of 0
+5 5 below of 10 8 below of                                                                            2 2      7 4       3 6 
+7 4 below of 10 8 below of                                                                            2 2      3 6       5 5
+3 6 below of 7 4 below of 10 8  10 8 below of                                                         2 2      7 4       5 5 
+10 8 below of    2 2  below of 0     7 4 below of 10 8      3 6 below of 7 4     5 5  below of 10 8   2 2      3 6       5 5     7 4
+
+common 
+10 8
+10 8                  1
+7 4   10 8            1
+2 2  5 5  7 4   3 6   1
+===========================
+2 2
+5 5
+7 4 
+3 6
+10 8
+
+2 2 => 
+5 5 => 2 2
+7 4 => 2 2  3 6
+3 6 => 2 2
+10 8 => 5 5   7 4   3 6  2 2
+==================================
+2 2
+=====
+5 5 => 2 2
+        1
+====
+7 4 => 2 2
+        1
+===
+4 7 => 2 2  3 6
+        1   1
+===
+3 6 => 2 2
+        1
+===
+6 3 => 2 2
+        1
+===
+10 8 => 4 7         3 6         2 2           5 5
+        (1)(2)     2(1)         4(1)          1(1)
+================
+2 2
+3 3
+4 4
+
+2 2 =>
+3 3 => 2 2
+        1
+4 4 = > 3 3   2 2
+        1      2
+=================
+100 100
+100 50
+50 100
+60 60
+
+100 100 => 100 50   50 100    60 60
+
+100 50 => 
+
+50 100 (rotation) => 50 100  
+
+50 100 => 
+
+100 50 (rotation) => 100 50
+
+60 60 =>
+
+============================================================================
+2 2
+5 5
+7 4 
+3 6
+10 8
+
+2 2
+
+5 5 => 2 2
+
+7 4 => 2 2  6 3(rotation)  6 3 => 2 2  3 6 => 2 2
+                              1           1
+           draw 1 and 1
+           count elements 7 4 6 3(rotation) 2 2                         3
+normal
+7 4 => 2 2
+0
+max =0
+count elements 7 4 2 2                                                  2
+
+rotated
+4 7 => 2 2  3 6 => 2 2
+0              1
+max = 1
+count elements 4 7  3 6  2 2                                            3
+
+3 6 => 2 2 
+          max =0
+          count elements 3 6  2 2                                       2
+
+rotated
+6 3 => 2 2
+         max =0
+        count elements 6 3  2 2                                       2
+
+10 8 => 2 2  5 5 => 2 2  7 4 => 2 2  4 7(rotation) => 2 2  3 6  3 6 => 2 2  6 3(rotation) => 2 2
+                1         1                       2                 1             1
+
+                max = 2 which is 4 7(rotation) => 2 2  3 6 COUNT THE ELEMENTS  4 7  2 2  3 6  + current  4
+
+normal
+10 8 => 2 2  5 5=> 2 2  7 4 => 2 2    4 7(rotated) => 2 2  3 6  3 6 => 2 2 
+                1               1               2                       1
+                max =2
+                count elements 10 8   4 7   3 6   2 2                                   4
+rotated
+8 10 => 2 2  5 5=> 2 2  7 4 => 2 2    4 7(rotated) => 2 2  3 6  3 6 => 2 2 
+                1               1               2                       1
+                max =2
+                count elements 8 10   4 7   3 6   2 2                                   4
+===========
+2 2
+3 3
+4 4
+
+2 2
+3 3 => 2 2
+0
+max =0
+count elements 3 3      2 2                                     2
+4 4 => 2 2  3 3 => 2 2
+                1
+                
+max =1 
+count elements  4 4     3 3     2 2                              3
+=========
+
+100 100
+100 50
+50 100
+60 60
+
+100 100 = > 100 50   50 100(rotation)=> 50 100    50 100   100 50(rotation) => 100 50   60 60
+                                1                                 1
+        draw  1   and 1    50 100(rotation)=> 50 100   100 50(rotation) => 100 50 count elements  50 100 100 50 + current   3     
+
+normal 
+100 100 = > 100 50   50 100(rotated) => 50 100   50 100    100 50(rotated) => 100 50    60 60
+        0                      1                                1                       0
+        draw 1 and 1
+count elements  100 100   50 100  50 100                                                3
+max =0
+count elements      100 100    100 50                           2
+
+rotated
+100 100 = > 100 50   
+max =0
+count elements      100 100    100 50                           2
+
+normal
+100 50 =>   
+max =0
+count elements  100 50                                          1
+
+rotated
+50 100 => 50 100
+max = 0
+count elements 50 100   50 100                                  2
+
+normal 
+50 100 => 50 100
+max = 0
+count elements 50 100   50 100                                  2
+
+rotated
+100 50 =>   
+max =0
+count elements  100 50                                          1
+
+60 60 =>
+
+        
+
+======
+
+70 80
+75 75
+75 75
+90 90
+30 100
+
+70 80 =>
+
+75 75 => 75 75
+
+75 75 => 75 75
+
+90 90 = > 70 80     75 75=>75 75    75 75=>75 75 
+                      1                 1
+                draw 1 and 1    elements 75 75 75 75 + current
+
+30 100 => 
+
+======
+100 2
+45 30
+40 40
+20 90
+90 2
+2 88
+77 2
+3 3
+40 67
+38 20
+
+100 2 => 90 2=>77 2  77 2
+              1
+              count elemtns 90 2 77 2 + current   =>  3
+
+45 30 => 3 3  38 20=>3 3
+                1
+                max = 1
+              count elements 45 30   38 20    3 3  => 3
+
+40 40 => 3 3 38 20 => 3 3
+                1
+                max =1
+                cout elements 40 40 38 20 3 3     =>3
+
+20 90 =>       2 88   88 2=>77 2    3 3
+                        1
+                max =1
+                count elements 90 20(rotated)  88 2 77 2  => 3
+90 2 =>        77 2    2 77 (rotated )=> 
+                max =0
+
+               count elements 90 2   77 2    => 2
+
+2 88 = > 
+
+rotated
+88 2 => 77 2
+                max =0
+                count elements 88 2  77 2   => 2
+
+77 2 => 
+rotated
+2 77 => 
+                max=0
+                count elements 2 77  => 1
+
+3 3 => 
+                max=0
+                count elements 3 3   => 1
+
+40 67 =>        40 40=> 3 3 38 20     3 3     38 20 => 3 3
+                        2               0              1
+                max =2 
+                count elements 40 67  40 40     38 20  3 3          =>4
+rotated
+67 40 =>      45 30=> 3 3  38 20   40 40=> 3 3 38 20  38 20=>3 3
+                1               0       2               1
+                max =2
+                coiunt elements 67 40 40 40 38 20 3 3               =>4
+
+38 20 => 3 3
+
+rotated
+20 38 =>
+                max =1
+                count elements 38 20  3 3                       => 1
+=======
+do
+take first element
+       
+        if contains an element 
+                tmp=0;
+                        take that element and compare it with all elements (loop)
+                        count the elements inside of it  tmp++
+                        if tmp>max
+                             max=tmp;
+                        else if tmp == max
+                             max++;
+                             
+until there are no elements
