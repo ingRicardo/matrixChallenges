@@ -27,26 +27,24 @@ void printarray2D(int arrX[], int arrY[], int size)
     cout << endl;
 }
 
-int ** buildMat (int arrX[], int arrY[], int size)
+int  buildMat (int arrX[], int arrY[], int size)
 {
 
-    int **mat = new int*[size];
+    int mat[size][2]; //= new int[size][2];
 
     for(int i=0; i< size; i++)
     {
-        mat[i] = new int[2];
+      //  mat[i] = new int[2];
         mat[i][0] = arrX[i];
         mat[i][1] = arrY[i];
 
 
     }
-return mat;
-}
-int operation (int **mat, int size)
-{
+
+
     int re =1;
     int i=0;
- //   cout << mat[i][0] << ","<< mat[i][1] ;
+  //  cout << mat[i][0] << ","<< mat[i][1] ;
     for(int j=1; j< size+1; j++)
     {
         // cout << " "<< mat[i][0] << "," << mat[i][1];
@@ -64,6 +62,31 @@ int operation (int **mat, int size)
         
     }
  //  cout <<endl;
+
+return re;
+}
+int operation (int **mat, int size)
+{
+    int re =1;
+    int i=0;
+    //cout << mat[i][0] << ","<< mat[i][1] ;
+    for(int j=1; j< size+1; j++)
+    {
+        // cout << " "<< mat[i][0] << "," << mat[i][1];
+        if (  j < (size) && i < (size+1)  &&  ( ( (mat[i][0] >= mat[j][0]) && (mat[i][1] >= mat[j][1]) ) || 
+                ( (mat[i][1] >= mat[j][0]) && (mat[i][0] >= mat[j][1]) )  )  )       
+        {
+      //     cout << " "<< mat[j][0] << "," << mat[j][1];
+            i++;
+            re++;
+        }
+        else
+        {
+            break;
+        }
+        
+    }
+   //cout <<endl;
 return re;
 }
 void printMat(int **mat, int size)
@@ -84,6 +107,21 @@ void swap(int *a, int *b)
     *b = temp;
 }
 
+void swap2D(int *a, int *b, int *c, int *d)
+{
+    int temp;
+    temp = *a;
+    *a = *b;
+    *b = temp;
+
+    int temp2;
+    temp2 = *c;
+    *c = *d;
+    *d = temp2;
+
+
+}
+
  
 //permutation function
 void permutation(int *arrX,int *arrY, int start, int end)
@@ -93,8 +131,8 @@ void permutation(int *arrX,int *arrY, int start, int end)
        // printarray(arrX, end+1);
         //printarray(arrY, end+1);
         //printarray2D(arrX, arrY, end+1);
-        int ** mat = buildMat(arrX,arrY,end+1);
-        int re=operation (mat,end+1);
+       int re = buildMat(arrX,arrY,end+1);
+      //  int re=operation (mat,end+1);
         if (re>resu)
             resu = re;
 
@@ -106,14 +144,18 @@ void permutation(int *arrX,int *arrY, int start, int end)
     for(i=start;i<=end;i++)
     {
         //swapping numbers
-        swap((arrX+i), (arrX+start));
-        swap((arrY+i), (arrY+start));
+       // swap((arrX+i), (arrX+start));
+      //  swap((arrY+i), (arrY+start));
+
+        swap2D((arrX+i), (arrX+start), (arrY+i), (arrY+start));
+
         //fixing one first digit
         //and calling permutation on
         //the rest of the digits
         permutation(arrX, arrY,start+1, end);
-        swap((arrX+i), (arrX+start));
-        swap((arrY+i), (arrY+start));
+     //   swap((arrX+i), (arrX+start));
+     //   swap((arrY+i), (arrY+start));
+        swap2D((arrX+i), (arrX+start), (arrY+i), (arrY+start));
     }
 }
 
@@ -126,7 +168,7 @@ int main()
     int t,size=0,x,y,n=0;
     cin>>t;
     cout <<"test  cases "<<t<<endl;
-    for (int tc =1; tc<=1; ++tc)
+    for (int tc =1; tc<=t; ++tc)
     {
         resu=0;
         cin>> size;
@@ -144,8 +186,8 @@ int main()
             blocks_arr[b][1]=y;
             arrY[b] = y;
 
-            cout << arrX[b] << ", "<<  arrY[b] ;
-            cout<<endl; 
+           // cout << arrX[b] << ", "<<  arrY[b] ;
+          //  cout<<endl; 
         }
        // fun(blocks_arr, size, n);
 
