@@ -31,6 +31,41 @@ void printarray2D(int arrX[], int arrY[], int size)
     cout << endl;
 }
 
+int operation(int inflate[], int deflate[], int size, int k)
+{
+    int i,p,minIniPressure=k;
+	for(p =k; p>0; p--)
+	{
+		minIniPressure=p;
+		for(i=0; i<size; i++)
+		{
+			
+			minIniPressure += ( inflate[i] - deflate[i] );
+
+			//int tmp = minPressure+inflate-deflate ;
+			//
+		//	cout << " minIniPressure tmp => "<< minIniPressure<<endl;
+			if(minIniPressure == 0)
+			{
+				cout <<" "<< p << ","<< minIniPressure <<" ";
+				break;
+			}
+				
+			//cout << "\t"<< arrX[i]<< ", "<<arrY[i] ;
+			//int curX = arrX[i]; int curY = arrY[i];
+	//    cout << endl;
+		}
+	
+		if(minIniPressure ==0)
+			break;
+		
+	}
+
+	if (minIniPressure!=0)
+		p=-1;
+    cout << endl;
+	return p;
+}
 
 void permutation(int *arrX,int *arrY, int start, int end, int k)
 {
@@ -40,11 +75,13 @@ void permutation(int *arrX,int *arrY, int start, int end, int k)
         //printarray(arrY, end+1);
 		//cout << " k "<<k<<endl;
         printarray2D(arrX, arrY, end+1);
+	//	cout << "\n minPressure "<< operation(arrX, arrY, end+1, k)<<endl;
+		res=operation(arrX, arrY, end+1, k);
       // int result = buildMat(arrX,arrY,end+1);
 	  int result =0;
       //  int re=operation (mat,end+1);
-        if (result>res)
-            res = result;
+     //   if (result>res)
+     //       res = result;
 
       //  printMat(mat, end+1);
 
@@ -58,7 +95,7 @@ void permutation(int *arrX,int *arrY, int start, int end, int k)
 
         swap2D((arrX+i), (arrX+start), (arrY+i), (arrY+start));
 
-		cout << " k "<<k<<endl;
+	//	cout << " k "<<k<<endl;
         //fixing one first digit
         //and calling permutation on
         //the rest of the digits
@@ -133,7 +170,7 @@ freopen("input.txt","r",stdin);
 
 cin>> T;
 
-for(int tc =1; tc<=1; ++tc)
+for(int tc =1; tc<=3; ++tc)
 {
 	res =0;
 	cin>>N;
@@ -160,8 +197,8 @@ for(int tc =1; tc<=1; ++tc)
 		cout << deflate[i]<<endl;
 	}
 	cout <<endl;*/
-	for (int x =K; x>0; x--)
-		permutation(inflate,deflate, 0, N-1,x); 
+	//for (int x =K; x>0; x--)
+		permutation(inflate,deflate, 0, N-1,K); 
 
 	cout << "#"<<tc<<":"<<res<<endl;
 }
