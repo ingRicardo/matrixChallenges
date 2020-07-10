@@ -33,35 +33,49 @@ void printarray2D(int arrX[], int arrY[], int size)
 
 int operation(int inflate[], int deflate[], int size, int k)
 {
-    int i,p,minIniPressure=k;
-	for(p =k; p>0; p--)
+    int i,p,minIniPressure=0,tmp=0,tmp2=0,min=0 ;
+	//cout << " size " <<size <<endl; 
+	for(p =15; p>0; p--)
 	{
 		minIniPressure=p;
 		for(i=0; i<size; i++)
 		{
-			
-			minIniPressure += ( inflate[i] - deflate[i] );
-
-			//int tmp = minPressure+inflate-deflate ;
-			//
-		//	cout << " minIniPressure tmp => "<< minIniPressure<<endl;
-			if(minIniPressure == 0)
+			//int tmp = p+inflate[i]-deflate[i] ;
+		     //minIniPressure =  minIniPressure + inflate[i] - deflate[i]
+			//	10+(45)-(55) + (75) -(30) + (80) - (95)
+			if (i == 0)
 			{
-				cout <<" "<< p << ","<< minIniPressure <<" ";
-				break;
+				tmp2 += minIniPressure + inflate[i] - deflate[i];	
 			}
+			else
+			{
+				//tmp +=  inflate[i];			
+				tmp2 +=  inflate[i]  - deflate[i];	 
+			}
+			
+			//minIniPressure += ( inflate[i] - deflate[i] );
+ 
+			//	cout <<" "<< p << ","<< tmp2 <<" "<< " i "<< i <<endl;
+ 
 				
-			//cout << "\t"<< arrX[i]<< ", "<<arrY[i] ;
-			//int curX = arrX[i]; int curY = arrY[i];
-	//    cout << endl;
 		}
-	
-		if(minIniPressure ==0)
+		if (min < tmp2)
+		{
+			min = tmp2;
+			cout <<" "<< p << ","<< tmp2 <<" "<< " i "<< i <<endl;
+		}
+			
+
+		if(p ==15)
+		{
+			 
 			break;
+		}
+			
 		
 	}
 
-	if (minIniPressure!=0)
+	if (tmp2!=0)
 		p=-1;
     cout << endl;
 	return p;
@@ -170,7 +184,7 @@ freopen("input.txt","r",stdin);
 
 cin>> T;
 
-for(int tc =1; tc<=3; ++tc)
+for(int tc =1; tc<=1; ++tc)
 {
 	res =0;
 	cin>>N;
