@@ -1,7 +1,7 @@
 
 #include <iostream>
 using namespace std;
-int res=0;
+int res=0,minPress=0;;
 
 
 void swap2D(int *a, int *b, int *c, int *d)
@@ -33,17 +33,18 @@ void printarray2D(int arrX[], int arrY[], int size)
 
 int operation(int inflate[], int deflate[], int size, int k)
 {
-    int i,p,minIniPressure=0,tmp=0,tmp2=0,min=0 ;
+    int i,p,minIniPressure=0,tmp=0,tmp2=0,min=10000 ;
 	//cout << " size " <<size <<endl; 
 	for(p =15; p>0; p--)
 	{
+		tmp2=0;
 		minIniPressure=p;
 		for(i=0; i<size; i++)
 		{
 			//int tmp = p+inflate[i]-deflate[i] ;
 		     //minIniPressure =  minIniPressure + inflate[i] - deflate[i]
 			//	10+(45)-(55) + (75) -(30) + (80) - (95)
-			if (i == 0)
+			/*if (i == 0)
 			{
 				tmp2 += minIniPressure + inflate[i] - deflate[i];	
 			}
@@ -52,34 +53,62 @@ int operation(int inflate[], int deflate[], int size, int k)
 				//tmp +=  inflate[i];			
 				tmp2 +=  inflate[i]  - deflate[i];	 
 			}
-			
-			//minIniPressure += ( inflate[i] - deflate[i] );
- 
+			*/
+			minIniPressure += ( inflate[i] - deflate[i] );
+			tmp2 = minIniPressure;
 			//	cout <<" "<< p << ","<< tmp2 <<" "<< " i "<< i <<endl;
  
-				
+				cout << "tmp2 => "<< tmp2 <<endl;	
 		}
-		if (min < tmp2)
-		{
-			min = tmp2;
-			cout <<" "<< p << ","<< tmp2 <<" "<< " i "<< i <<endl;
-		}
-			
-
+cout << endl;
+/*
 		if(p ==15)
 		{
 			 
 			break;
-		}
+		}*/
+		//cout << "before min "<< min << " tmp2 "<< tmp2<<endl;
+		/*if (tmp2 < min)
+		{
+			min = tmp2;
+			minPress =tmp2;
+			cout <<" minPress : "<< minPress << ", min : "<< min <<" "<< "  tmp2  "<< tmp2 <<" i "<< i <<endl;
 			
-		
+		}
+			*/
+	
+		minPress = tmp2;
 	}
 
-	if (tmp2!=0)
-		p=-1;
-    cout << endl;
-	return p;
+//	if (tmp2!=0)
+//		p=-1;
+    cout <<" return the min pressure ==> "<< minPress<<  endl;
+	return minPress;
 }
+
+
+int operation2(int inflate[], int deflate[], int size, int k)
+{
+
+	int i,j;
+	//cout << " k "<< k<<endl;
+	int ts = 15, t=0;
+    for(i=0; i<size; i++)
+    {
+        cout << "\t"<< inflate[i]<< ", "<<deflate[i] ;
+        int curX = inflate[i]; int curY = deflate[i];
+
+		 ts +=  + curX - curY;
+
+   //    cout << endl;
+    }
+	cout << "\n ts => "<< ts<<endl;
+    cout << endl;
+	
+	return 0;
+}
+
+
 
 void permutation(int *arrX,int *arrY, int start, int end, int k)
 {
@@ -88,9 +117,9 @@ void permutation(int *arrX,int *arrY, int start, int end, int k)
        // printarray(arrX, end+1);
         //printarray(arrY, end+1);
 		//cout << " k "<<k<<endl;
-        printarray2D(arrX, arrY, end+1);
+       // printarray2D(arrX, arrY, end+1);
 	//	cout << "\n minPressure "<< operation(arrX, arrY, end+1, k)<<endl;
-		res=operation(arrX, arrY, end+1, k);
+		res=operation2(arrX, arrY, end+1, k);
       // int result = buildMat(arrX,arrY,end+1);
 	  int result =0;
       //  int re=operation (mat,end+1);
