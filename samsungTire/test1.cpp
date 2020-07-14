@@ -94,7 +94,7 @@ int operation2(int inflate[], int deflate[], int size, int k)
 	int ts = k, t=0,r=-1;
 	//for(int p=k; p>=0;p--)
 	//{ 
-		int p=10;
+		int p=15;
 		ts = p;
 		cout << " k "<<p<<endl;
 		for(i=0; i<size; i++)
@@ -103,13 +103,18 @@ int operation2(int inflate[], int deflate[], int size, int k)
 			int curX = inflate[i]; int curY = deflate[i];
 
 			ts +=   curX - curY;
-			if (ts == 0  )
+			if(ts <0 || ts>k)
 			{
+				cout << "\n DAMAGED at "<<ts<<endl;
+				break;
+			}
+		//	if (ts == 0   )
+		//	{
 				r=p;
 				cout << "\n min press "<< ts << " at "<< p<< " indx "<< i<< " k "<< k <<endl;
 	 
 
-			}
+		//	}
 
 		}
 	cout <<"\npressure => "<< ts << " i ="<< i<< " r "<< r<< endl;
