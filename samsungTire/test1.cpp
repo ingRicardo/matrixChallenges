@@ -92,36 +92,37 @@ int operation2(int inflate[], int deflate[], int size, int k)
 
 	int i;
 	int ts = k, t=0,r=-1;
-	//for(int p=k; p>=0;p--)
-	//{ 
-		int p=15;
+	for(int p=k; p>=0;p--)
+	{ 
+	//	int p=10;
 		ts = p;
-		cout << " k "<<p<<endl;
+	//	cout << " k "<<p<<endl;
 		for(i=0; i<size; i++)
 		{
-		    cout << "\t"<< inflate[i]<< ", "<<deflate[i] ;
+		//    cout << "\t"<< inflate[i]<< ", "<<deflate[i] ;
 			int curX = inflate[i]; int curY = deflate[i];
 
 			ts +=   curX - curY;
 			if(ts <0 || ts>k)
 			{
-				cout << "\n DAMAGED at "<<ts<<endl;
+		//		cout << "\n DAMAGED at "<<ts<<endl;
 				break;
 			}
-		//	if (ts == 0   )
-		//	{
+			if (ts == 0   )
+			{
 				r=p;
+
+
 				cout << "\n min press "<< ts << " at "<< p<< " indx "<< i<< " k "<< k <<endl;
 	 
-
-		//	}
+			}
 
 		}
-	cout <<"\npressure => "<< ts << " i ="<< i<< " r "<< r<< endl;
-//}
+//	cout <<"\npressure => "<< ts << " i ="<< i<< " r "<< r<< endl;
+}
 
  
-   cout << endl;
+  // cout << endl;
 	
 	return r;
 }
@@ -135,7 +136,7 @@ void permutation(int *arrX,int *arrY, int start, int end, int k)
        // printarray(arrX, end+1);
         //printarray(arrY, end+1);
 		//cout << " k "<<k<<endl;
-       // printarray2D(arrX, arrY, end+1);
+        printarray2D(arrX, arrY, end+1);
 	//	cout << "\n minPressure "<< operation(arrX, arrY, end+1, k)<<endl;
 		res=operation2(arrX, arrY, end+1, k);
 	//	cout << "res "<< res <<endl;
