@@ -91,7 +91,7 @@ int operation2(int inflate[], int deflate[], int size, int k)
 {
 
 	int i;
-	int ts = k, t=0,r=-1;
+	int ts = k, t=0,r=1000;
 	for(int p=k; p>=0;p--)
 	{ 
 	//	int p=10;
@@ -112,19 +112,22 @@ int operation2(int inflate[], int deflate[], int size, int k)
 			{
 				r=p;
 
-
 				cout << "\n min press "<< ts << " at "<< p<< " indx "<< i<< " k "<< k <<endl;
 	 
 			}
 
 		}
+	//	cout << " each final pressure => " << ts<<endl;
 //	cout <<"\npressure => "<< ts << " i ="<< i<< " r "<< r<< endl;
+	//	cout << " minpress "<< minPress << " r "<< r << endl;
+		if(r<minPress)
+			minPress=r;
 }
 
  
   // cout << endl;
-	
-	return r;
+
+	return minPress;
 }
 
 
@@ -139,9 +142,12 @@ void permutation(int *arrX,int *arrY, int start, int end, int k)
         printarray2D(arrX, arrY, end+1);
 	//	cout << "\n minPressure "<< operation(arrX, arrY, end+1, k)<<endl;
 		res=operation2(arrX, arrY, end+1, k);
+		if (res == 500)
+			res =-1;
 	//	cout << "res "<< res <<endl;
       // int result = buildMat(arrX,arrY,end+1);
 	  int result =0;
+	  
       //  int re=operation (mat,end+1);
      //   if (result>res)
      //       res = result;
@@ -235,7 +241,7 @@ cin>> T;
 
 for(int tc =1; tc<=1; ++tc)
 {
-	res =0;
+	res =0;minPress=500;
 	cin>>N;
 	cin>>K;
 	cout << N<<endl;
