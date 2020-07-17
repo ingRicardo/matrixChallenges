@@ -96,23 +96,27 @@ int operation2(int inflate[], int deflate[], int size, int k)
 	{ 
 	//	int p=10;
 		ts = p;
+		int ts2= 0;
 	//	cout << " k "<<p<<endl;
+		bool damaged = false, minimized = false;
 		for(i=0; i<size; i++)
 		{
 		//    cout << "\t"<< inflate[i]<< ", "<<deflate[i] ;
 			int curX = inflate[i]; int curY = deflate[i];
 
 			ts +=   curX - curY;
+			ts2 += curX - curY;
 			if(ts <0 || ts>k)
 			{
 		//		cout << "\n DAMAGED at "<<ts<<endl;
+				damaged = true;
 				break;
 			}
 			if (ts == 0   )
 			{
 				r=p;
-
-				cout << "\n min press "<< ts << " at "<< p<< " indx "<< i<< " k "<< k <<endl;
+				minimized= true;
+			//	cout << "\n min press "<< ts << " at "<< p<< " indx "<< i<< " k "<< k <<endl;
 	 
 			}
 
@@ -120,6 +124,20 @@ int operation2(int inflate[], int deflate[], int size, int k)
 	//	cout << " each final pressure => " << ts<<endl;
 //	cout <<"\npressure => "<< ts << " i ="<< i<< " r "<< r<< endl;
 	//	cout << " minpress "<< minPress << " r "<< r << endl;
+		if(!damaged)
+		{
+			int test2 = ts2;
+			cout <<" test2 "<< test2<< " inipressure "<< p << endl;
+		}
+		if( !damaged && minimized)
+		{
+			int test1 = p - ts ; 
+			cout << " test ts => "<<  ts<< " inipressure "<< p<<"  ====>  "<< test1<< endl;  
+		//	
+		//	cout << " test1 => "<< test1<<endl;
+		}
+		 
+		
 		if(r<minPress)
 			minPress=r;
 }
