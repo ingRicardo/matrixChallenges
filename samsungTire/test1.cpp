@@ -1,7 +1,7 @@
 
 #include <iostream>
 using namespace std;
-int res=0,minPress=0;;
+int res=0,minPress=0, minTest=10000,rr=0;
 
 
 void swap2D(int *a, int *b, int *c, int *d)
@@ -124,28 +124,38 @@ int operation2(int inflate[], int deflate[], int size, int k)
 	//	cout << " each final pressure => " << ts<<endl;
 //	cout <<"\npressure => "<< ts << " i ="<< i<< " r "<< r<< endl;
 	//	cout << " minpress "<< minPress << " r "<< r << endl;
+	int test3=0;
 		if(!damaged)
 		{
 			int test2 = ts2;
-			cout <<" test2 "<< test2<< " inipressure "<< p << endl;
+		//	cout <<" test2 "<< test2<< " inipressure "<< p << endl;
 		}
 		if( !damaged && minimized)
 		{
-			int test1 = p - ts ; 
-			cout << " test ts => "<<  ts<< " inipressure "<< p<<"  ====>  "<< test1<< endl;  
+		//	int test1 = p - ts ; 
+			//cout << " test ts => "<<  ts<< " inipressure "<< p<<"  ====>  "<< test1<< endl;  
 		//	
+			test3 = ts - 2*p;
+			cout << " test ts => "<<  ts<< " inipressure "<< p<<" test3 ==> "<<test3<<endl;  
 		//	cout << " test1 => "<< test1<<endl;
 		}
 		 
 		
 		if(r<minPress)
 			minPress=r;
+		
+		if(test3>0 && test3<minTest)
+		{
+			minTest=test3;
+			rr = p;
+			cout << " minTest "<< minTest<<" p "<< p<<endl;
+		}
 }
 
  
-  // cout << endl;
+   cout << endl<< " rr => "<<rr<<endl;
 
-	return minPress;
+	return rr;
 }
 
 
@@ -257,9 +267,9 @@ freopen("input.txt","r",stdin);
 
 cin>> T;
 
-for(int tc =1; tc<=1; ++tc)
+for(int tc =1; tc<=3; ++tc)
 {
-	res =0;minPress=500;
+	res =0;minPress=500,rr=-1;
 	cin>>N;
 	cin>>K;
 	cout << N<<endl;
