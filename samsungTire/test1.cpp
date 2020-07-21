@@ -1,9 +1,6 @@
-
 #include <iostream>
 using namespace std;
 int res=0,minPress=0, minTest=10000,rr=0;
-
-
 void swap2D(int *a, int *b, int *c, int *d)
 {
     int temp;
@@ -17,7 +14,6 @@ void swap2D(int *a, int *b, int *c, int *d)
     *d = temp2;
 
 }
-
 void printarray2D(int arrX[], int arrY[], int size)
 {
     int i,j;
@@ -25,90 +21,26 @@ void printarray2D(int arrX[], int arrY[], int size)
     {
         cout << "\t"<< arrX[i]<< ", "<<arrY[i] ;
         int curX = arrX[i]; int curY = arrY[i];
-
-   //    cout << endl;
     }
     cout << endl;
 }
 
-int operation(int inflate[], int deflate[], int size, int k)
-{
-    int i,p,minIniPressure=0,tmp=0,tmp2=0,min=10000 ;
-	//cout << " size " <<size <<endl; 
-	for(p =15; p>0; p--)
-	{
-		tmp2=0;
-		minIniPressure=p;
-		for(i=0; i<size; i++)
-		{
-			//int tmp = p+inflate[i]-deflate[i] ;
-		     //minIniPressure =  minIniPressure + inflate[i] - deflate[i]
-			//	10+(45)-(55) + (75) -(30) + (80) - (95)
-			/*if (i == 0)
-			{
-				tmp2 += minIniPressure + inflate[i] - deflate[i];	
-			}
-			else
-			{
-				//tmp +=  inflate[i];			
-				tmp2 +=  inflate[i]  - deflate[i];	 
-			}
-			*/
-			minIniPressure += ( inflate[i] - deflate[i] );
-			tmp2 = minIniPressure;
-			//	cout <<" "<< p << ","<< tmp2 <<" "<< " i "<< i <<endl;
- 
-				cout << "tmp2 => "<< tmp2 <<endl;	
-		}
-cout << endl;
-/*
-		if(p ==15)
-		{
-			 
-			break;
-		}*/
-		//cout << "before min "<< min << " tmp2 "<< tmp2<<endl;
-		/*if (tmp2 < min)
-		{
-			min = tmp2;
-			minPress =tmp2;
-			cout <<" minPress : "<< minPress << ", min : "<< min <<" "<< "  tmp2  "<< tmp2 <<" i "<< i <<endl;
-			
-		}
-			*/
-	
-		minPress = tmp2;
-	}
-
-//	if (tmp2!=0)
-//		p=-1;
-    cout <<" return the min pressure ==> "<< minPress<<  endl;
-	return minPress;
-}
-
-
 int operation2(int inflate[], int deflate[], int size, int k)
 {
-
 	int i;
 	int ts = k, t=0,r=1000;
 	for(int p=k; p>=0;p--)
 	{ 
-	//	int p=10;
 		ts = p;
-		int ts2= 0;
-	//	cout << " k "<<p<<endl;
 		bool damaged = false, minimized = false;
 		for(i=0; i<size; i++)
 		{
-		//    cout << "\t"<< inflate[i]<< ", "<<deflate[i] ;
-			int curX = inflate[i]; int curY = deflate[i];
+			int curX = inflate[i]; 
+			int curY = deflate[i];
 
 			ts +=   curX - curY;
-			ts2 += curX - curY;
 			if(ts <0 || ts>k)
 			{
-		//		cout << "\n DAMAGED at "<<ts<<endl;
 				damaged = true;
 				break;
 			}
@@ -116,158 +48,95 @@ int operation2(int inflate[], int deflate[], int size, int k)
 			{
 				r=p;
 				minimized= true;
-			//	cout << "\n min press "<< ts << " at "<< p<< " indx "<< i<< " k "<< k <<endl;
-	 
 			}
-
-		}
-	//	cout << " each final pressure => " << ts<<endl;
-//	cout <<"\npressure => "<< ts << " i ="<< i<< " r "<< r<< endl;
-	//	cout << " minpress "<< minPress << " r "<< r << endl;
-	int test3=0;
-		if(!damaged)
-		{
-			int test2 = ts2;
-		//	cout <<" test2 "<< test2<< " inipressure "<< p << endl;
-		}
+		}//end N for
+		int test3=0;
 		if( !damaged && minimized)
 		{
-		//	int test1 = p - ts ; 
-			//cout << " test ts => "<<  ts<< " inipressure "<< p<<"  ====>  "<< test1<< endl;  
-		//	
 			test3 = ts - 2*p;
-			cout << " test ts => "<<  ts<< " inipressure "<< p<<" test3 ==> "<<test3<<endl;  
-		//	cout << " test1 => "<< test1<<endl;
-		}
-		 
-		
+		} 
 		if(r<minPress)
+		{
 			minPress=r;
-		
+			cout << " minPress "<< minPress<<endl;
+		}
 		if(test3>0 && test3<minTest)
 		{
 			minTest=test3;
 			rr = p;
-			cout << " minTest "<< minTest<<" p "<< p<<endl;
 		}
+	}//end K for
+	return minPress;
 }
+int operation3(int inflate[], int deflate[], int size, int k)
+{
+	int i,ts = 0, t=0,r=1000;
+	bool damaged = false, minimized = false;
+	int x =0;
+	for(i=0; i<size; i++)
+	{
+		int curX = inflate[i]; 
+		int curY = deflate[i];
+		ts +=  curX - curY;
+		// -x = curX -curY -ts;
+		// x = -curX+curY+ts;
+		x = ts + curY - curX; 
+		cout << "X => "<< x <<endl;
+		if(ts <0 || ts>k)
+		{
+			damaged = true;
+			break;
+		}
+		else if (ts == 0)
+		{
 
- 
-   cout << endl<< " rr => "<<rr<<endl;
-
-	return rr;
+			cout << " minimized "<< endl;
+		}
+		else
+		{
+			//cout <<"testCase "<< i<< " ts "<<ts<<endl;
+		}
+		
+	}
+	if(ts<minPress && !damaged)
+	{
+		minPress=ts;
+		cout << " minPress "<< minPress<<" k "<< k<<endl;
+	}
+	return minPress;
 }
-
-
 
 void permutation(int *arrX,int *arrY, int start, int end, int k)
 {
     if(start==end)
     {
-       // printarray(arrX, end+1);
-        //printarray(arrY, end+1);
-		//cout << " k "<<k<<endl;
         printarray2D(arrX, arrY, end+1);
 	//	cout << "\n minPressure "<< operation(arrX, arrY, end+1, k)<<endl;
-		res=operation2(arrX, arrY, end+1, k);
+		res=operation3(arrX, arrY, end+1, k);
 		if (res == 500)
 			res =-1;
-	//	cout << "res "<< res <<endl;
-      // int result = buildMat(arrX,arrY,end+1);
-	  int result =0;
-	  
-      //  int re=operation (mat,end+1);
-     //   if (result>res)
-     //       res = result;
-
-      //  printMat(mat, end+1);
-
+	  	
         return;
     }
     int i;
     for(i=start;i<=end;i++)
     {
         //swapping numbers
-  
-
         swap2D((arrX+i), (arrX+start), (arrY+i), (arrY+start));
-
-	//	cout << " k "<<k<<endl;
         //fixing one first digit
         //and calling permutation on
         //the rest of the digits
         permutation(arrX, arrY,start+1, end,k);
- 
         swap2D((arrX+i), (arrX+start), (arrY+i), (arrY+start));
     }
 }
-
-
 int main()
 {
-
-	cout << "samsung tire"<<endl;
-
-  /*
-
-	max air pressure k= 100
-	initial pressure = 60
-	
-	inflate = 50  + 60  = 110
-	deflate = 40  
-	
-
-	inflate = 20
-	deflate = 90  
-
-	
-	15 + 80 = 95
-	95 - 95 = 0
-
-	0 + 75 = 75
-	75 - 30 = 45
-
-	45 + 45 = 90
-	90 - 55 = 35
-
-	current_pressure = initial_presure
-	current_pressure = current_pressure + ( inflate - deflate )
-	current_pressure  =  15 + (80 -95) = 15 +(- 15) = 0
-
-	 
-	x = x + ( inflate - deflate )
-	
-	x = initial_pressure = ? 
-int start =0, minPressure =0,k=100,N=3;
-recursion(start, minPressure, inflate ,  deflate, k , N);
-{
-	if(k == start || minPressure == 0)
-	{
-
-		return;
-	}
-	for (int p=start; p < N; p++)
-	{
-		minPressure = k;
-		minPressure = minPressure + ( inflate[p] - deflate[p] );
-		recursion(start++, minPressure, inflate ,  deflate, k--,N )
-	}
-	
-}
-
-5                                                  // T = 5
-3 100                                          // #1, N = 3, K = 100
-75 45 80                                    
-
-  */
-
-
 int T,N,K,inf,def;
 freopen("input.txt","r",stdin);
-
 cin>> T;
 
-for(int tc =1; tc<=3; ++tc)
+for(int tc =1; tc<=1; ++tc)
 {
 	res =0;minPress=500,rr=-1;
 	cin>>N;
@@ -287,20 +156,11 @@ for(int tc =1; tc<=3; ++tc)
 		cin >> def;
 		deflate[i] = def;
 	}
-/*
-	for(int i =0; i<N; i++)
-	{
-		cout << inflate[i]<<endl;
-		cout << deflate[i]<<endl;
-	}
-	cout <<endl;*/
-	//for (int x =K; x>0; x--)
-		permutation(inflate,deflate, 0, N-1,K); 
+
+	permutation(inflate,deflate, 0, N-1,K); 
 
 	cout << "#"<<tc<<":"<<res<<endl;
 }
-
-
 
 return 0;
 }
