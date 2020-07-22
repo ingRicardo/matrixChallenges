@@ -68,54 +68,59 @@ int operation2(int inflate[], int deflate[], int size, int k)
 	}//end K for
 	return minPress;
 }
-int operation3(int inflate[], int deflate[], int size, int k)
+int operation3(int inflate[], int deflate[], int size, int k, int time)
 {
 	int i,ts = 0, t=0,r=1000;
 	bool damaged = false, minimized = false;
-	int x =0;
-	for(i=0; i<size; i++)
-	{
-		int curX = inflate[i]; 
-		int curY = deflate[i];
-		ts +=  curX - curY;
-		// -x = curX -curY -ts;
-		// x = -curX+curY+ts;
-		x = ts + curY - curX; 
-		cout << "X => "<< x <<endl;
-		if(ts <0 || ts>k)
-		{
-			damaged = true;
-			break;
-		}
-		else if (ts == 0)
-		{
+	int x =0,locar=0;
+	cout << " time => "<<time<<endl;
 
-			cout << " minimized "<< endl;
-		}
-		else
-		{
-			//cout <<"testCase "<< i<< " ts "<<ts<<endl;
-		}
-		
-	}
-	if(ts<minPress && !damaged)
+	for(x =0; x<=k; x++)
 	{
-		minPress=ts;
-		cout << " minPress "<< minPress<<" k "<< k<<endl;
-	}
+		ts =x;
+		for(i=0; i<size; i++)
+		{
+			int curX = inflate[i]; 
+			int curY = deflate[i];
+
+			ts +=   curX - curY;
+		//	cout <<" ts "<< ts<<endl;
+			if(ts <0 || ts>k)
+			{
+				damaged = true;
+			//	locar = -1;
+				break;
+			//	cout << "== Damaged =="<<endl;
+				//return minPress;
+			}
+			else if (ts == 0)
+			{
+				cout << " minimized x => "<<x <<endl;
+			}
+		}
+		if(ts<minPress && !damaged)
+		{
+			minPress=ts;
+			//r=x;
+			cout << " minPress "<< minPress<<" k "<< k << " x "<< x<<  endl;
+		}
+
+	}//end for pressure 0-100 (K)
+
 	return minPress;
 }
 
-void permutation(int *arrX,int *arrY, int start, int end, int k)
+void permutation(int *arrX,int *arrY, int start, int end, int k,int &time)
 {
     if(start==end)
     {
         printarray2D(arrX, arrY, end+1);
+		time+=1;
 	//	cout << "\n minPressure "<< operation(arrX, arrY, end+1, k)<<endl;
-		res=operation3(arrX, arrY, end+1, k);
-		if (res == 500)
-			res =-1;
-	  	
+		res=operation3(arrX, arrY, end+1, k,time);
+		//if (res == 500)
+		//	res =-1;
+	  	cout << " res "<< res <<endl;
         return;
     }
     int i;
@@ -126,7 +131,7 @@ void permutation(int *arrX,int *arrY, int start, int end, int k)
         //fixing one first digit
         //and calling permutation on
         //the rest of the digits
-        permutation(arrX, arrY,start+1, end,k);
+        permutation(arrX, arrY,start+1, end,k,time);
         swap2D((arrX+i), (arrX+start), (arrY+i), (arrY+start));
     }
 }
@@ -139,6 +144,7 @@ cin>> T;
 for(int tc =1; tc<=1; ++tc)
 {
 	res =0;minPress=500,rr=-1;
+	int time =0;
 	cin>>N;
 	cin>>K;
 	cout << N<<endl;
@@ -157,7 +163,7 @@ for(int tc =1; tc<=1; ++tc)
 		deflate[i] = def;
 	}
 
-	permutation(inflate,deflate, 0, N-1,K); 
+	permutation(inflate,deflate, 0, N-1,K,time); 
 
 	cout << "#"<<tc<<":"<<res<<endl;
 }
