@@ -68,6 +68,11 @@ int operation2(int inflate[], int deflate[], int size, int k)
 	}//end K for
 	return minPress;
 }
+
+
+/*
+
+*/
 int operation3(int inflate[], int deflate[], int size, int k, int time)
 {
 	int i,ts = 0, t=0,r=1000;
@@ -77,7 +82,9 @@ int operation3(int inflate[], int deflate[], int size, int k, int time)
 
 	for(x =0; x<=k; x++)
 	{
+
 		ts =x;
+		damaged = false;
 		for(i=0; i<size; i++)
 		{
 			int curX = inflate[i]; 
@@ -95,14 +102,24 @@ int operation3(int inflate[], int deflate[], int size, int k, int time)
 			}
 			else if (ts == 0)
 			{
-				cout << " minimized x => "<<x <<endl;
+				cout << " minimized x => "<<x <<" index "<< i<<" damaged => "<< damaged <<endl;
 			}
 		}
+	
+
+		if(i>=size)
+		{
+			if(ts >=0 || ts<=k)
+			{
+				cout << " "<< ts<<"=>"<<x ;
+			}
+		}
+
 		if(ts<minPress && !damaged)
 		{
 			minPress=ts;
 			//r=x;
-			cout << " minPress "<< minPress<<" k "<< k << " x "<< x<<  endl;
+			cout << "\n minPress "<< minPress<<" k "<< k << " x "<< x<<  endl;
 		}
 
 	}//end for pressure 0-100 (K)
@@ -120,7 +137,7 @@ void permutation(int *arrX,int *arrY, int start, int end, int k,int &time)
 		res=operation3(arrX, arrY, end+1, k,time);
 		//if (res == 500)
 		//	res =-1;
-	  	cout << " res "<< res <<endl;
+	  	cout << "\n res "<< res <<endl;
         return;
     }
     int i;
