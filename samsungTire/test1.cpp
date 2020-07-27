@@ -128,14 +128,13 @@ int operation3(int inflate[], int deflate[], int size, int k, int time)
 	return minPress;
 }
 
-void permutation(int *arrX,int *arrY, int start, int end, int &k,int &time,int maxPressure)
+void permutation(int *arrX,int *arrY, int start, int end, int &k,int &time,int maxPressure, bool &found)
 {
     if(start==end)
     {
-        printarray2D(arrX, arrY, end+1);
+        //printarray2D(arrX, arrY, end+1);
 		time+=1;
-
-		int pre =k;
+		int pre =k,indx=100;
 		for(int e=0; e<end+1; e++)
 		{
 			pre +=  arrX[e] - arrY[e];
@@ -145,21 +144,28 @@ void permutation(int *arrX,int *arrY, int start, int end, int &k,int &time,int m
 				break;
 			}
 
-			if (pre == 0)
+			if (pre == 0 /*&& e == 0*/ && !found )
 			{
-
-				cout << " maxPressure  "<< maxPressure<< " currentPressure "<< k<<endl;		
-
+				found = true;
+				indx = e;
 			}
+		}//end for
+		if (pre > 0)
+		{
+				found = true;
 		}
-		cout << "\n pre "<<pre<<endl;
-	//	cout << "\n minPressure "<< operation(arrX, arrY, end+1, k)<<endl;
-	//	res=operation3(arrX, arrY, end+1, k,time);
-		//if (res == 500)
-		//	res =-1;
-	  	cout << "\n res "<< res <<endl;
+		else
+		{
+			found = false;
+		}
+		if (found /*&& indx == 0*/ && indx!=100)
+		{
+			printarray2D(arrX, arrY, end+1);
+			cout << " found "<< found << " pre "<< pre<< " Indx "<< indx<< " currentPressure "<< k<<endl;
+			res =k;
+		}
         return;
-    }
+    }// end if
     int i;
     for(i=start;i<=end;i++)
     {
@@ -168,21 +174,20 @@ void permutation(int *arrX,int *arrY, int start, int end, int &k,int &time,int m
         //fixing one first digit
         //and calling permutation on
         //the rest of the digits
-
-
-        permutation(arrX, arrY,start+1, end,k,time,maxPressure);
+        permutation(arrX, arrY,start+1, end,k,time,maxPressure, found);
         swap2D((arrX+i), (arrX+start), (arrY+i), (arrY+start));
     }
 }
 int main()
 {
 int T,N,K,inf,def;
+bool found = false;
 freopen("input.txt","r",stdin);
 cin>> T;
 
-for(int tc =1; tc<=1; ++tc)
+for(int tc =1; tc<=3; ++tc)
 {
-	res =0;minPress=500,rr=-1;
+	res =-1;minPress=500,rr=-1;
 	int time =0;
 	cin>>N;
 	cin>>K;
@@ -206,7 +211,7 @@ for(int tc =1; tc<=1; ++tc)
 	{
 		
 		//permutation(inflate,deflate, 0, N-1,K,time); 
-		permutation(inflate,deflate, 0, N-1,x,time,maxPressure); 
+		permutation(inflate,deflate, 0, N-1,x,time,maxPressure, found); 
 	}
 	
 
