@@ -134,6 +134,7 @@ void permutation(int *arrX,int *arrY, int start, int end, int &k,int &time,int m
     {
         //printarray2D(arrX, arrY, end+1);
 		time+=1;
+		bool f= false;
 		int pre =k,indx=1000;
 		for(int e=0; e<end+1; e++)
 		{
@@ -143,26 +144,24 @@ void permutation(int *arrX,int *arrY, int start, int end, int &k,int &time,int m
 				pre = -1;
 				break;
 			}
-			if (pre == 0 /*&& e == 0*/ && !found )
+			if (pre == 0 /*&& e == end */ )
 			{
-				found = true;
+				f= true;
 				indx = e;
+				
 			}
 		}//end for
-		if (pre > 0)
+		if (f && pre != -1)
 		{
-			found = true;
-		}
-		else
-		{
-			found = false;
-		}
-		if (found /*&& indx == 0*/ && indx!=1000)
-		{
+			cout <<endl;
+			cout << "\n "<< k<< " at index "<< indx<<endl;
 			printarray2D(arrX, arrY, end+1);
-			cout << " found "<< found << " pre "<< pre<< " Indx "<< indx<< " currentPressure "<< k<<endl;
-			res =k;
+
+			cout << " f=> "<< pre<<endl;
+
 		}
+
+		res =0;
         return;
     }// end if
     int i;
@@ -213,8 +212,7 @@ for(int tc =1; tc<=3; ++tc)
 		permutation(inflate,deflate, 0, N-1,x,time,maxPressure, found); 
 	}
 	
-
-	cout << "#"<<tc<<":"<<res<<endl;
+	cout << "\n#"<<tc<<":"<<res<<endl;
 }
 
 return 0;
