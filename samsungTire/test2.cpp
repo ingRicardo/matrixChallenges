@@ -128,14 +128,14 @@ int operation3(int inflate[], int deflate[], int size, int k, int time)
 	return minPress;
 }
 
-void permutation(int *arrX,int *arrY, int start, int end, int &k,int &time,int maxPressure, bool &found)
+void permutation(int *arrX,int *arrY, int start, int end, int &k,int &time,int maxPressure, bool &fend, bool &fstart)
 {
     if(start==end)
     {
         //printarray2D(arrX, arrY, end+1);
 		time+=1;
-		bool f= false;
-		int pre =k,indx=1000;
+	//	bool fend= false , bool fstart = false;
+		int pre =k,indxStart=1000, indxEnd=1000;
 		for(int e=0; e<end+1; e++)
 		{
 			pre +=  arrX[e] - arrY[e];
@@ -144,21 +144,34 @@ void permutation(int *arrX,int *arrY, int start, int end, int &k,int &time,int m
 				pre = -1;
 				break;
 			}
-			if (pre == 0 /*&& e == end */ )
+			if ( (pre == 0 && e == end  && !fend)  )
 			{
-				f= true;
-				indx = e;
+				fend= true;
+				indxEnd = e;
 				
 			}
+			else  if ( ( pre == 0 && e == 0 && !fstart) )
+			{
+				fstart= true;
+				indxStart = e;
+
+			}
 		}//end for
-		if (f && pre != -1)
+		if (fend && pre != -1 && indxEnd !=1000)
 		{
 			cout <<endl;
-			cout << "\n "<< k<< " at index "<< indx<<endl;
+			cout << "\n fend "<< k<< " at indxEnd "<< indxEnd<<endl;
 			printarray2D(arrX, arrY, end+1);
-
 			cout << " f=> "<< pre<<endl;
-
+			
+		}
+		if (fstart && pre !=-1 && indxStart !=1000)
+		{
+			cout <<endl;
+			cout << "\n fstart "<< k<< " at indxStart "<< indxStart<<endl;
+			printarray2D(arrX, arrY, end+1);
+			cout << " f=> "<< pre<<endl;
+			
 		}
 
 		res =0;
@@ -172,14 +185,14 @@ void permutation(int *arrX,int *arrY, int start, int end, int &k,int &time,int m
         //fixing one first digit
         //and calling permutation on
         //the rest of the digits
-        permutation(arrX, arrY,start+1, end,k,time,maxPressure, found);
+        permutation(arrX, arrY,start+1, end,k,time,maxPressure, fend, fstart);
         swap2D((arrX+i), (arrX+start), (arrY+i), (arrY+start));
     }
 }
 int main()
 {
 int T,N,K,inf,def;
-bool found = false;
+bool fstart = false, fend= false;
 freopen("input.txt","r",stdin);
 cin>> T;
 
@@ -209,7 +222,7 @@ for(int tc =1; tc<=3; ++tc)
 	{
 		
 		//permutation(inflate,deflate, 0, N-1,K,time); 
-		permutation(inflate,deflate, 0, N-1,x,time,maxPressure, found); 
+		permutation(inflate,deflate, 0, N-1,x,time,maxPressure, fend, fstart); 
 	}
 	
 	cout << "\n#"<<tc<<":"<<res<<endl;
