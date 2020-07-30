@@ -128,15 +128,17 @@ int operation3(int inflate[], int deflate[], int size, int k, int time)
 	return minPress;
 }
 
-void permutation(int *arrX,int *arrY, int start, int end, int &k,int &time,int maxPressure, bool &fend, bool &fstart)
+void permutation(int *arrX,int *arrY, int start, int end, int &k,int &time,int maxPressure, bool &fend, bool &fstart,
+ int &start_indx, int &end_indx)
 {
     if(start==end)
     {
         //printarray2D(arrX, arrY, end+1);
 		time+=1;
-	//	bool fend= false , bool fstart = false;
+		bool fend_1= false , fstart_1 = false;
 		int pre =k,indxStart=1000, indxEnd=1000;
-		for(int e=0; e<end+1; e++)
+		int e;
+		for(e=0; e<end+1; e++)
 		{
 			pre +=  arrX[e] - arrY[e];
 			if(pre<0 || pre>maxPressure)
@@ -146,29 +148,32 @@ void permutation(int *arrX,int *arrY, int start, int end, int &k,int &time,int m
 			}
 			if ( (pre == 0 && e == end  && !fend)  )
 			{
+				fend_1= true;
 				fend= true;
 				indxEnd = e;
 				
 			}
-			else  if ( ( pre == 0 && e == 0 && !fstart) )
+			if ( ( pre == 0 && e == 0  && !fstart) )
 			{
+				fstart_1= true;
 				fstart= true;
 				indxStart = e;
-
 			}
 		}//end for
-		if (fend && pre != -1 && indxEnd !=1000)
+		if (fend && pre !=-1 && end_indx ==0)
 		{
 			cout <<endl;
+			end_indx =1;
 			cout << "\n fend "<< k<< " at indxEnd "<< indxEnd<<endl;
 			printarray2D(arrX, arrY, end+1);
 			cout << " f=> "<< pre<<endl;
 			
 		}
-		if (fstart && pre !=-1 && indxStart !=1000)
+		if (fstart && pre !=-1 && start_indx==0)
 		{
 			cout <<endl;
-			cout << "\n fstart "<< k<< " at indxStart "<< indxStart<<endl;
+			start_indx =1;
+			cout << "\n fstart "<< k<< " at indxStart "<< indxStart<<" fstart_1 "<< fstart_1<<endl;
 			printarray2D(arrX, arrY, end+1);
 			cout << " f=> "<< pre<<endl;
 			
@@ -185,7 +190,7 @@ void permutation(int *arrX,int *arrY, int start, int end, int &k,int &time,int m
         //fixing one first digit
         //and calling permutation on
         //the rest of the digits
-        permutation(arrX, arrY,start+1, end,k,time,maxPressure, fend, fstart);
+        permutation(arrX, arrY,start+1, end,k,time,maxPressure, fend, fstart,start_indx, end_indx);
         swap2D((arrX+i), (arrX+start), (arrY+i), (arrY+start));
     }
 }
@@ -217,12 +222,12 @@ for(int tc =1; tc<=3; ++tc)
 		cin >> def;
 		deflate[i] = def;
 	}
-	int maxPressure =K;
+	int maxPressure =K,start_indx=0,end_indx=0;
 	for(int x =K; x>=0; x--)
 	{
 		
 		//permutation(inflate,deflate, 0, N-1,K,time); 
-		permutation(inflate,deflate, 0, N-1,x,time,maxPressure, fend, fstart); 
+		permutation(inflate,deflate, 0, N-1,x,time,maxPressure, fend, fstart,start_indx,end_indx); 
 	}
 	
 	cout << "\n#"<<tc<<":"<<res<<endl;
