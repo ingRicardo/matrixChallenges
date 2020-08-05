@@ -4,6 +4,11 @@ s2 = 2, 5, 8
 s3 = 3, 7
 s4 = 4, 9
 
+k=4
+k starts in k-1 then 
+k=3
+loop from i=0 to i<k ++i 
+
 k+1 
 Initial Position of each Switch
 0+1 = 1
