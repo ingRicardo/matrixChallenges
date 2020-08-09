@@ -44,6 +44,32 @@ s3    0   0
     result 9 bulbs shut down
     
     we're gonna permute the switches order 1,2,3,4
+    res =1000;
+    1,2,4,3
+    
+    for (int s =0; s<3; ++s)
+    {
+        for (int  i =switch[s] , j =0 ; j < bulbsSize; i+=switch[s], j++)
+        {
+            if(bulbs[i])
+            {
+                bulbs[i] = !bulbs[i];
+            }
+            else
+            {
+                bulbs[i] = bulbs[i];
+            }
+            if( bulbs[j] == 0)
+            {
+                totalBulbs+=1;
+            }
+        }
+
+        if ( totalBulbs < res)
+            res = totalBulbs;
+
+    }
+    
     attempts =0;
     totalBulbs =0;
 
