@@ -1,7 +1,7 @@
 //https://www.codesdope.com/blog/article/generating-permutations-of-all-elements-of-an-arra/
 #include <iostream>
 using namespace std;
-int res=0;
+int res=10000;
 void printArray(int arr[], int bulbs)
 {
 	for(int i=0; i<bulbs; ++i)
@@ -18,15 +18,36 @@ void swap(int *a, int *b)
 	*a = *b;
 	*b = temp;
 
-	
 }
 
-void permut(int *array,int bulbs, int suitch, int swdown, int start, int end)
+void permut(int *array,int bulbs, int *switches, int swdown, int start, int end, int totalBulbs, int swSize)
 {
 	//if (start == end)
-	if (start == 3)
+	if (start == end)
 	{
-		//printArray(array,bulbs);
+		//printArray(switches,swSize);
+
+		for (int s=0; s < 3; ++s)
+		{
+			for (int  i =switches[s] , j =0 ; j < end; i+=switches[s], j++)
+        	{
+				if(array[i])
+				{
+					array[i] = !array[i];
+				}
+				else
+				{
+					array[i] = array[i];
+				}
+				if( array[j] == 0)
+				{
+					totalBulbs+=1;
+				}
+			}
+			if ( totalBulbs < res)
+            	res = totalBulbs;
+
+		}
 		return;
 	}
 	
@@ -34,18 +55,23 @@ void permut(int *array,int bulbs, int suitch, int swdown, int start, int end)
 	for (i=start; i<=end; i++)
 	{
 
-		cout << " i "<< i << " start "<< start << " end "<< end<< endl;
-		swap( (array+i),(array+start));
-		permut(array,bulbs,suitch,swdown,start+1,end);
-		swap((array+i),(array+start));
+		//cout << " i "<< i << " start "<< start << " end "<< end<< endl;
+		swap( (switches+i),(switches+start));
+		permut(array,bulbs,switches,swdown,start+1,end, totalBulbs,swSize);
+		swap((switches+i),(switches+start));
 	}
 
 
 }
 
-void funcTest(int *array,int bulbs, int suitch, int swdown, int start, int end)
+void funcTest(int *array,int bulbs, int suitch, int swdown, int start, int end, int totalBulbs)
 {
-	permut(array,bulbs, suitch, swdown, start, end);
+	int *switches = new int[suitch];
+	for (int s=0; s< suitch; ++s)
+	{
+		switches[s] = s;
+	}
+	permut(array,bulbs, switches, swdown, start, end, totalBulbs, suitch);
 }
 int main()
 {
@@ -58,6 +84,7 @@ int main()
 	for (int tc=1; tc<=1; ++tc)
 	{
 		int bulbs,sw,swdown;
+		int totalBulbs=0;
 		cin >> bulbs;  cin >>sw;
 		cout << " bulbs "<< bulbs<< " switch "<< sw<<endl;
 		int *bulbVec = new int [bulbs];
@@ -68,7 +95,7 @@ int main()
 			bulbVec[b] = bulbval;
 			
 		}
-		funcTest(bulbVec,bulbs,sw,swdown,0,bulbs-1);
+		funcTest(bulbVec,bulbs,sw,swdown,0,bulbs-1,totalBulbs);
 		cout << endl;
 		cout<<"#"<<tc<<":"<<res<<endl; 
 	}
