@@ -23,38 +23,46 @@ void swap(int *a, int *b)
 void permut(int *array,int bulbs, int *switches, int swdown, int start, int end, int totalBulbs, int swSize)
 {
 	//if (start == end)
-	if (start == end)
+	if (start == swSize)
 	{
-		//printArray(switches,swSize);
+		printArray(switches,swSize);
 
-		for (int s=0; s < 3; ++s)
+		int *arrTmp = new int [end+1];
+		for(int i=0; i<end+1; i++)
 		{
-			for (int  i =switches[s] , j =0 ; j < end; i+=switches[s], j++)
+			arrTmp[i] = array[i]; 
+		}
+		printArray(arrTmp,end+1);
+
+		for (int s=0; s < 3; ++s) // attempts
+		{
+			for (int  i =switches[s] , j =0 ; j < end+1; i+=switches[s], j++)
         	{
-				if(array[i])
+				if(arrTmp[i])
 				{
-					array[i] = !array[i];
+					arrTmp[i] = !arrTmp[i];
 				}
 				else
 				{
-					array[i] = array[i];
+					arrTmp[i] = arrTmp[i];
 				}
-				if( array[j] == 0)
+				if( !arrTmp[j])
 				{
 					totalBulbs+=1;
 				}
 			}
+			printArray(arrTmp,end+1);
 			if ( totalBulbs < res)
             	res = totalBulbs;
 
-		}
+		} 
 		return;
 	}
 	
 	int i;
-	for (i=start; i<=end; i++)
+	//for (i=start; i<=end; i++)
+	for (i=start; i<swSize; i++)
 	{
-
 		//cout << " i "<< i << " start "<< start << " end "<< end<< endl;
 		swap( (switches+i),(switches+start));
 		permut(array,bulbs,switches,swdown,start+1,end, totalBulbs,swSize);
@@ -67,10 +75,17 @@ void permut(int *array,int bulbs, int *switches, int swdown, int start, int end,
 void funcTest(int *array,int bulbs, int suitch, int swdown, int start, int end, int totalBulbs)
 {
 	int *switches = new int[suitch];
+	int val=1;
+	cout << "initial switches "<<endl;
 	for (int s=0; s< suitch; ++s)
 	{
-		switches[s] = s;
+		switches[s] = val;
+		val++;
+		cout << " "<< switches[s]; 
 	}
+	cout <<endl;
+	cout <<endl;
+
 	permut(array,bulbs, switches, swdown, start, end, totalBulbs, suitch);
 }
 int main()
