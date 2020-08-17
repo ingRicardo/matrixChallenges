@@ -6,9 +6,18 @@ array1 => 0 1 2 3 4 5 6 7 8 9
 
 array2 => 1 0 0 0 0 
 
-if array1[i] ==0 && array2[i] == 1
+if array1[i] == 0 && j == 0 && array2[j] == 1
 starts from 1
 arry2[i] = array1[i]
+
+
+if array1[i] != 0 && j != 0 && array2[j] != 1
+    arry2[j] = array1[i]
+
+
+loop for array1
+
+
 
 A =13456
 Bi=33516
