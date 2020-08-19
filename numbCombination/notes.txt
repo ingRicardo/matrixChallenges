@@ -78,4 +78,40 @@ loop j-5
  A 13456
     x  x 
 
+
+int main() 
+{ 
+    int n = 5; 
+    int *array = new int[n];
+    findStrictlyIncreasingNum(100000-1, array, n); 
+    return 0; 
+} 
+
+void findStrictlyIncreasingNum(int start, int *array , int n) 
+{ 
+    // If number becomes N-digit, print it 
+    if (n == 10000) 
+    { 
+        //cout << array << " "; 
+        return; 
+    } 
+  
+    // start from (prev digit + 1) till 9 
+    for (int i = start; i <= 9; i++) 
+    { 
+        // append current digit to number 
+      //  string str = out + to_string(i); 
+        array[n] = i;
+        // recurse for next digit 
+        findStrictlyIncreasingNum(i + 1, array, n - 1); 
+    } 
+} 
+
+
+
+
 https://ideone.com/L8Nlzd
+https://socratic.org/questions/how-many-5-digit-numbers-can-be-formed-using-0-9-1
+
+
+https://www.geeksforgeeks.org/print-all-n-digit-strictly-increasing-numbers/
