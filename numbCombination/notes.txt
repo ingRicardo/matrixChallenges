@@ -77,3 +77,5 @@ loop j-5
  B 33516
  A 13456
     x  x 
+
+https://ideone.com/L8Nlzd
