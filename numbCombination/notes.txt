@@ -115,3 +115,4 @@ https://socratic.org/questions/how-many-5-digit-numbers-can-be-formed-using-0-9-
 
 
 https://www.geeksforgeeks.org/print-all-n-digit-strictly-increasing-numbers/
+https://www.codesdope.com/blog/article/generating-permutations-of-all-elements-of-an-arra/
