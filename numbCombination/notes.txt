@@ -61,7 +61,24 @@ step 1: break Bi into individual digits and save it on an int array
     }
 
 step 2: 
-
+    brute force 
+    for i =1 to 9
+        for j= 0 to 9
+            for k = 0 to 9
+                for l =0 to 9
+                    for m =0 to 9
+                        array [0] = i 
+                        array [1] = j
+                        array [2] = k
+                        array [3] = l 
+                        array [4] = m 
+            10000
+            10009
+            10099
+            10999
+            19999
+            99999
+            
 
     bi = 33516;
     loop from 10,000 to 99,999
