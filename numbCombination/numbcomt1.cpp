@@ -13,7 +13,7 @@ void printarr(int *arr, int size)
 void findStrictlyIncreasingNum(int start, int *array , int n,string out) 
 { 
     // If number becomes N-digit, print it 
-    if (n == 0) 
+    if (n < 0) 
     { 
         cout << out << " "; 
         //cout << " out "<< " n "<< n <<endl;
@@ -40,7 +40,7 @@ void gennumb(int n,int *b1, int c1, int d1)
      cout << " B1 : "<<endl;
      printarr(b1,5);
     int s = 5;
-     findStrictlyIncreasingNum(0, b1, s,""); 
+     findStrictlyIncreasingNum(0, b1, s-1,""); 
 }
 void operation(int n, int b1, int c1, int d1)
 {

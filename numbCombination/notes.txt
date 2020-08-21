@@ -61,6 +61,8 @@ step 1: break Bi into individual digits and save it on an int array
     }
 
 step 2: 
+
+
     bi = 33516;
     loop from 10,000 to 99,999
         10000  10001  10002  10003 ... 10009    
