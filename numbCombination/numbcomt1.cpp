@@ -11,12 +11,48 @@ void printarr(int *arr, int size)
     cout <<endl;
 }
 
-void testCompare(int *number, int *b1, int c1, int d1, int size)
+void testCompare(int *number, int *b1, int c1, int d1, int size , 
+                bool * &natural, int &c1count, int &d1count)
 {
 
-    printarr(number, size);
-    printarr(b1, size);
-    cout <<"----"<<endl;
+    //printarr(number, size);
+    //printarr(b1, size);
+
+    /*
+    bi 33516
+    A  13456
+
+    3x51x
+    1x45x
+
+    3x51x
+    1x45x
+    */
+
+    for (int j=0; j<size; ++j)
+    {
+        if( !natural[b1[j]] && number[j] == b1[j] )
+        {
+            natural[b1[j]] = true;
+            c1count+=1;
+        }
+        
+    }
+    int i=0;
+    do 
+    {
+        for (int j=0; j<size; ++j)
+        {
+            if (!natural[b1[j]] && b1[j] == number[i])
+            {
+                natural[b1[j]] = true;
+                d1count+=1;
+            }
+        }
+        i+=1;
+
+    }while(i < size);
+    //cout <<"----"<<endl;
 }
 
 int bruteForce2(int *b1, int c1, int d1)
@@ -24,8 +60,19 @@ int bruteForce2(int *b1, int c1, int d1)
     cout << "bruteForce2 "<<endl;
     int bitmp,size =5,i;
     int *number;
+    int c1count=0,d1count=0;
+
+
+
     for(int x = 10000; x < 100000; ++x)
     {
+        c1count=0;d1count=0;
+        bool *natural = new bool[10];
+        for(int n=0; n< 10; ++n)
+        {
+            natural[n] = false;
+        }
+
         bitmp = x; i=5-1;
         number = new int[size];
         while (bitmp != 0)
@@ -34,9 +81,23 @@ int bruteForce2(int *b1, int c1, int d1)
             bitmp /= 10;            
             i-=1;
         }
-        
-        testCompare(number,b1,c1,d1,size);
+        //create another array of numbers 
+        testCompare(number,b1,c1,d1,size, natural, c1count, d1count);
+        //cout << " c1count "<< c1count << " d1count "<< d1count <<endl; 
+        if (c1count == c1 && d1count == d1)
+        {
+            cout << " c1count "<< c1count << " d1count "<< d1count <<endl; 
+            printarr(number, size);
+            for(int i =0; i< 10; ++i)
+            {
+               if (natural[i])
+                    cout<< " "<< i;
+            }
+
+        }
+
     }
+
 
 return 0;
 
