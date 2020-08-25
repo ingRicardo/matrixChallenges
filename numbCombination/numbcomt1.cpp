@@ -27,32 +27,105 @@ void testCompare(int *number, int *b1, int c1, int d1, int size ,
 
     3x51x
     1x45x
-    */
 
-    for (int j=0; j<size; ++j)
+    18211
+    ------
+    31728
+    31782
+    31820
+
+    ci=0;di=3
+    XXX11
+    3X7XX
+
+    18211
+    31728
+
+    1 == 3
+        X
+    8 == 1
+        X
+    2 == 7
+        X
+    1 == 2
+        X
+    1 == 8
+        X
+
+
+
+
+    1 == 3
+        X
+    1 == 1
+        YES
+        X8211
+        3X728
+    8 == 3
+        X
+    8 == 7
+        X
+    8 == 2
+        X
+    8 == 8
+        YES
+        XX211
+        3X72X
+    2 == 3
+        X
+    2 == 7
+        X
+    2 == 2
+        YES
+        XXX11
+        3X7XX
+    1 == 3
+        X
+    1 == 7
+        X
+    1 == 3
+        X
+    1 == 7
+        X
+
+
+    ci=0;di=3
+    XXX11
+    3X7XX
+
+    ci=0;di=3
+    XXX11
+    3XXX0
+
+    */
+  bool * position = new bool[size];
+  for (int p =0; p<size; ++p)
+  {
+      position[p] = false;
+  }
+  int i=0, j=0;
+    for (i=0; i<size; i++)
     {
-        if( !natural[b1[j]] && number[j] == b1[j] )
+        for (j=0; j<size; j++)
         {
-            natural[b1[j]] = true;
-            c1count+=1;
-        }
-        
-    }
-    int i=0;
-    do 
-    {
-        for (int j=0; j<size; ++j)
-        {
-            if (!natural[b1[j]] && b1[j] == number[i])
+            if(number[i]==b1[j])
             {
-                natural[b1[j]] = true;
-                d1count+=1;
+                if (j==i && !position[j])
+                {
+                    c1count++;
+                    position[j] = true;
+                }
+                else if ( i != j && !position[j])
+                {
+                position[j] = true;
+                d1count++;
+                }
+
             }
         }
-        i+=1;
+    }
 
-    }while(i < size);
-    //cout <<"----"<<endl;
+ 
 }
 
 int bruteForce2(int *b1, int c1, int d1)
@@ -61,8 +134,6 @@ int bruteForce2(int *b1, int c1, int d1)
     int bitmp,size =5,i;
     int *number;
     int c1count=0,d1count=0;
-
-
 
     for(int x = 10000; x < 100000; ++x)
     {
@@ -83,18 +154,8 @@ int bruteForce2(int *b1, int c1, int d1)
         }
         //create another array of numbers 
         testCompare(number,b1,c1,d1,size, natural, c1count, d1count);
-        //cout << " c1count "<< c1count << " d1count "<< d1count <<endl; 
-        if (c1count == c1 && d1count == d1)
-        {
-            cout << " c1count "<< c1count << " d1count "<< d1count <<endl; 
-            printarr(number, size);
-            for(int i =0; i< 10; ++i)
-            {
-               if (natural[i])
-                    cout<< " "<< i;
-            }
-
-        }
+        if (d1count == d1 && c1count == c1)
+            cout << " c1 count "<< c1count << " d1 count "<<d1count<<endl;
 
     }
 
@@ -107,6 +168,7 @@ void gennumb(int n,int *b1, int c1, int d1)
     cout << "N "<<n<<" C1 "<<c1 <<" D1 "<<d1<<endl;
     cout << " B1 : "<<endl;
     printarr(b1,5);
+    cout << "------"<<endl;
     int s = 5;
     bruteForce2(b1, c1, d1);
      //findStrictlyIncreasingNum(0, b1, s-1,""); 
