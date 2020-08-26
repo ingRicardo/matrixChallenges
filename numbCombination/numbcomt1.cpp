@@ -98,34 +98,83 @@ void testCompare(int *number, int *b1, int c1, int d1, int size ,
     3XXX0
 
     */
-  bool * position = new bool[size];
+
+  int *numtmp =  new int [size]; 
   for (int p =0; p<size; ++p)
   {
-      position[p] = false;
+      numtmp[p] = number[p];
   }
+  int *b1tmp =  new int[size];
+  for (int p =0; p<size; ++p)
+  {
+      b1tmp[p] = b1[p];
+  }
+
+  int * naturaln = new int[10];
+  for (int p =0; p<10; ++p)
+  {
+      naturaln[p] = p;
+  }
+
+  bool * visited = new bool[10];
+  for (int p =0; p<10; ++p)
+  {
+     visited[p] = false;
+  }
+
   int i=0, j=0;
     for (i=0; i<size; i++)
     {
         for (j=0; j<size; j++)
         {
-            if(number[i]==b1[j])
+            if(numtmp[i]==b1tmp[j]  && !visited[numtmp[i]] )
             {
-                if (j==i && !position[j])
+
+                if (j==i )
                 {
                     c1count++;
-                    position[j] = true;
+                 //   numtmp[j] = 99;
+                 //   b1tmp[j] = 99;
+                    visited[numtmp[i]] = true;
+                    
                 }
-                else if ( i != j && !position[j])
+                /*else if ( i != j && !position[j])
                 {
-                position[j] = true;
-                d1count++;
+                    position[j] = true;
+                    d1count++;
                 }
+                */
+            }
 
+        }
+    }
+    for (int y =0 ; y < size; ++y)
+    {
+        int ini = b1tmp[y];
+        for (int x =0 ; x < size; ++x)
+        {
+            if (numtmp[x] == ini && x != y  && !visited[numtmp[x]] && !visited[ini] )
+            {
+                //numtmp[x] = 99;
+               // b1tmp[x] = 99;
+               // cout << " "<< ini;
+                d1count++;
+                visited[numtmp[x]] = true;
+                visited[ini] = true;
+                
             }
         }
     }
 
- 
+        if (d1count == d1 && c1count == c1)
+        {
+            cout << " c1 count "<< c1count << " d1 count "<<d1count<<endl;
+            printarr(numtmp, size);
+            printarr(b1tmp, size);
+
+        }
+
+
 }
 
 int bruteForce2(int *b1, int c1, int d1)
@@ -154,9 +203,8 @@ int bruteForce2(int *b1, int c1, int d1)
         }
         //create another array of numbers 
         testCompare(number,b1,c1,d1,size, natural, c1count, d1count);
-        if (d1count == d1 && c1count == c1)
-            cout << " c1 count "<< c1count << " d1 count "<<d1count<<endl;
 
+            
     }
 
 
