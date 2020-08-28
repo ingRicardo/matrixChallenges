@@ -10,7 +10,8 @@ void printarr(int *arr, int size)
     }
     cout <<endl;
 }
-
+//http://hpca23.cse.tamu.edu/taco/utsa-www/ut/utsa/cs3343/lecture25.html
+//https://www.mathplanet.com/education/algebra-2/discrete-mathematics-and-probability/permutations-and-combinations
 void testCompare(int *number, int *b1, int c1, int d1, int size , 
                 bool * &natural, int &c1count, int &d1count)
 {
