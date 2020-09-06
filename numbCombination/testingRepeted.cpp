@@ -5,6 +5,8 @@
 using namespace std;
 bool checkIfDigitApearsInNumber(int n, int digit, bool *visited);
 bool checkIfDigitApearsInTwoNumbers(int n,int m,bool *visited);
+int checkIfDigitApearsInNumberTest(int n, int m, bool *visited, int totc1);
+
 int main()
 {
     
@@ -14,9 +16,10 @@ int main()
        visited[i] = false;
     }
 
-    //cout << checkIfDigitApearsInNumber(12343,2, visited);
-    cout << checkIfDigitApearsInTwoNumbers(23213, 23423,visited); 
-
+    //cout << checkIfDigitApearsInNumber(12343,1, visited);
+    //cout << checkIfDigitApearsInTwoNumbers(23213, 23423,visited); 
+    int totc1 =0;
+    cout << checkIfDigitApearsInNumberTest(12433, 11433,visited, totc1);
    cout<<endl;
    for (int i=0; i<10; i++)
     {
@@ -24,6 +27,22 @@ int main()
     }
 
     return 0;
+}
+
+
+int checkIfDigitApearsInNumberTest(int n, int m,bool *visited, int totc1) {
+    if (n == 0 ) {
+       return totc1;
+    } else {
+       cout << " m "<< m <<endl ;
+       cout << " n "<< n <<endl ;
+       if ( n%10 == m%10 ) {
+          cout << " n "<< n<< " m "<< m << endl;
+          visited[n%10] = true;
+          totc1++;
+       } 
+          return checkIfDigitApearsInNumberTest(n/10, m/10,visited, totc1);
+    }
 }
 
 bool checkIfDigitApearsInNumber(int n, int digit,bool *visited) {
