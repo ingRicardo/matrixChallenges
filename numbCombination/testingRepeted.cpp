@@ -7,7 +7,7 @@ bool checkIfDigitApearsInNumber(int n, int digit, bool *visited);
 bool checkIfDigitApearsInTwoNumbers(int n,int m,bool *visited);
 int checkIfDigitApearsInNumberTest(int n, int m, bool *visited, int totc1);
 int checkIfDigitApearsInNumberTestPos(int n, int m,bool *visited, int totc1, int &pos, bool *visitedPos);
-
+int checkIfDigitApearsInNumberTestPosSingle(int n, int tmpn,int totc1, int &pos, bool *visitedPos);
 int main()
 {
     
@@ -26,10 +26,10 @@ int main()
     //cout << checkIfDigitApearsInNumber(12343,1, visited);
     //cout << checkIfDigitApearsInTwoNumbers(23213, 23423,visited); 
     int totc1 =0;
-   cout << checkIfDigitApearsInNumberTest(12433, 11433,visited, totc1);
+   cout << checkIfDigitApearsInNumberTest(12433, 11432,visited, totc1);
    cout<<endl;
    int pos=4;
-   checkIfDigitApearsInNumberTestPos(12433, 11433,visited, totc1,pos,visitedPos);
+   checkIfDigitApearsInNumberTestPos(12433, 11432,visited, totc1,pos,visitedPos);
    for (int i=0; i<10; i++)
     {
       cout <<" " << visited[i];
@@ -39,8 +39,26 @@ for (int i=0; i<5; i++)
     {
       cout <<" " << visitedPos[i];
     }
+cout << endl;
+int tmpn =0;
+checkIfDigitApearsInNumberTestPosSingle(11432,tmpn,totc1, pos,visitedPos);
 
     return 0;
+}
+
+
+int checkIfDigitApearsInNumberTestPosSingle(int n, int tmpn, int totc1, int &pos, bool *visitedPos)
+{
+    if (n == 0 ) {
+       return n;
+    } else {
+      
+      tmpn = n%10; 
+    } 
+     cout << " tmpn-> "<< tmpn <<endl ;
+     
+     return checkIfDigitApearsInNumberTestPosSingle(n/10, tmpn, totc1, pos, visitedPos);
+    
 }
 
 int checkIfDigitApearsInNumberTestPos(int n, int m,bool *visited, int totc1, int &pos, bool *visitedPos) {
@@ -54,8 +72,8 @@ int checkIfDigitApearsInNumberTestPos(int n, int m,bool *visited, int totc1, int
           visited[n%10] = true;
           visitedPos[pos] = true;
           totc1++;
-         
-         
+          
+          
           cout << " pos "<< pos<<endl;
        } 
            pos-=1;
