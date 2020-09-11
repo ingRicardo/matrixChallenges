@@ -8,6 +8,9 @@ bool checkIfDigitApearsInTwoNumbers(int n,int m,bool *visited);
 int checkIfDigitApearsInNumberTest(int n, int m, bool *visited, int totc1);
 int checkIfDigitApearsInNumberTestPos(int n, int m,bool *visited, int totc1, int &pos, bool *visitedPos);
 int checkIfDigitApearsInNumberTestPosSingle(int n, int tmpn,int totc1, int &pos, bool *visitedPos);
+int checkIfDigitApearsInNumberVisPos(int n, int digit, int &pos,bool *visited);
+void testingTwoFunc(int currentNumber, int &digit, int variableNumber,  int &pos, bool *visitedPos);
+int merginFunctions(int currentNumber, int &digit, int variableNumber,  int &pos, bool *visitedPos);
 int main()
 {
     
@@ -42,11 +45,59 @@ for (int i=0; i<5; i++)
 cout << endl;
 int tmpn =0;
 checkIfDigitApearsInNumberTestPosSingle(11432,tmpn,totc1, pos,visitedPos);
+int singlenum=0;
+pos=4;
+cout << "Tesing....."<<endl;
+testingTwoFunc(12433, singlenum, 11432,  pos,visitedPos);
 
     return 0;
 }
+int merginFunctions(int currentNumber, int &digit, int variableNumber,  int &pos, bool *visitedPos)
+{
 
+    if (currentNumber == 0 ) {
+       return currentNumber;
+    } else {
+      
+      digit = currentNumber%10; 
+      checkIfDigitApearsInNumberVisPos(variableNumber, digit, pos, visitedPos);
+    } 
+     cout << " digit-> "<< digit <<endl ;
+     pos -=1;
+     return merginFunctions(currentNumber/10, digit, variableNumber, pos, visitedPos);
 
+}
+void testingTwoFunc(int currentNumber, int &digit, int variableNumber,  int &pos, bool *visitedPos)
+{
+
+   for (int i=0; i<5; i++)
+    {
+      cout <<" " << visitedPos[i];
+    }
+      cout <<endl;
+   //checkIfDigitApearsInNumberTestPosSingle(variableNumber, digit, 0, pos,visitedPos);
+   //checkIfDigitApearsInNumberTestPosSingle
+   //checkIfDigitApearsInNumberVisPos
+   merginFunctions(currentNumber, digit, variableNumber, pos, visitedPos);
+}
+
+int checkIfDigitApearsInNumberVisPos(int n, int digit,int &pos,bool *visitedPos)
+{
+  if (n == 0) {
+       return false;
+    } else {
+      
+       if (n % 10 == digit) {
+          cout << " n "<< n << " digit "<< digit << " pos "<< pos << " vistedPos " << visitedPos[pos] <<endl;
+          visitedPos[digit] = true;
+          return true;
+       } else {
+          //pos-=1;
+          return checkIfDigitApearsInNumberVisPos(n/10, digit, pos, visitedPos);
+       }
+    }
+
+}
 int checkIfDigitApearsInNumberTestPosSingle(int n, int tmpn, int totc1, int &pos, bool *visitedPos)
 {
     if (n == 0 ) {
@@ -56,7 +107,7 @@ int checkIfDigitApearsInNumberTestPosSingle(int n, int tmpn, int totc1, int &pos
       tmpn = n%10; 
     } 
      cout << " tmpn-> "<< tmpn <<endl ;
-     
+     pos-=1;
      return checkIfDigitApearsInNumberTestPosSingle(n/10, tmpn, totc1, pos, visitedPos);
     
 }
