@@ -8,9 +8,12 @@ bool checkIfDigitApearsInTwoNumbers(int n,int m,bool *visited);
 int checkIfDigitApearsInNumberTest(int n, int m, bool *visited, int totc1);
 int checkIfDigitApearsInNumberTestPos(int n, int m,bool *visited, int totc1, int &pos, bool *visitedPos);
 int checkIfDigitApearsInNumberTestPosSingle(int n, int tmpn,int totc1, int &pos, bool *visitedPos);
-int checkIfDigitApearsInNumberVisPos(int n, int digit, int &pos,bool *visited);
+int checkIfDigitApearsInNumberVisPos(int n, int digit, int &pos,bool *visited, int currpos);
 void testingTwoFunc(int currentNumber, int &digit, int variableNumber,  int &pos, bool *visitedPos);
-int merginFunctions(int currentNumber, int &digit, int variableNumber,  int &pos, bool *visitedPos);
+int merginFunctions(int start, int currentNumber, int &digit, int variableNumber,  int &pos, bool *visitedPos, int currpos);
+
+int merginFunctionsV2(int start, int currentNumber, int &digit, int variableNumber,  int &pos, bool *visitedPos, int currpos);
+
 int main()
 {
     
@@ -52,20 +55,50 @@ testingTwoFunc(12433, singlenum, 11432,  pos,visitedPos);
 
     return 0;
 }
-int merginFunctions(int currentNumber, int &digit, int variableNumber,  int &pos, bool *visitedPos)
+
+int merginFunctionsV2(int start, int currentNumber, int &digit, int variableNumber,  int &pos, bool *visitedPos, int currpos)
+{
+   int tmp = 0;
+   for (int p=4; p >-1; --p)
+   {
+      tmp = currentNumber/10;
+      digit = tmp%10; 
+
+      cout << " merginFunctions digit "<< digit << " pos "<< p <<endl;
+      checkIfDigitApearsInNumberVisPos(variableNumber, digit, p, visitedPos, currpos);
+
+   }
+   return 0;
+}
+
+int merginFunctions(int start, int currentNumber, int &digit, int variableNumber,  int &pos, bool *visitedPos, int currpos)
 {
 
     if (currentNumber == 0 ) {
        return currentNumber;
     } else {
+         /*
+         m 11432   variableNumber
+         n 12433   currentNumber
+           10110
+           x1xx2
+           x2xx3
+
+         for(int start=; )
+
+         */
+       
       
       digit = currentNumber%10; 
-      checkIfDigitApearsInNumberVisPos(variableNumber, digit, pos, visitedPos);
-    } 
-     cout << " digit-> "<< digit <<endl ;
-     pos -=1;
-     return merginFunctions(currentNumber/10, digit, variableNumber, pos, visitedPos);
+      cout << " merginFunctions digit "<< digit << " pos "<< pos <<endl;
+      checkIfDigitApearsInNumberVisPos(variableNumber, digit, pos, visitedPos, currpos);
 
+      return 0;
+    } 
+     //cout << " digit-> "<< digit <<endl ;
+     //pos -=1;
+    // return merginFunctions(currentNumber/10, digit, variableNumber, pos, visitedPos);
+      return 0;
 }
 void testingTwoFunc(int currentNumber, int &digit, int variableNumber,  int &pos, bool *visitedPos)
 {
@@ -78,22 +111,29 @@ void testingTwoFunc(int currentNumber, int &digit, int variableNumber,  int &pos
    //checkIfDigitApearsInNumberTestPosSingle(variableNumber, digit, 0, pos,visitedPos);
    //checkIfDigitApearsInNumberTestPosSingle
    //checkIfDigitApearsInNumberVisPos
-   merginFunctions(currentNumber, digit, variableNumber, pos, visitedPos);
+   int currpos =4, start=0;
+   merginFunctions(start,currentNumber, digit, variableNumber, pos, visitedPos, currpos);
 }
 
-int checkIfDigitApearsInNumberVisPos(int n, int digit,int &pos,bool *visitedPos)
+int checkIfDigitApearsInNumberVisPos(int n, int digit,int &pos,bool *visitedPos, int currpos)
 {
   if (n == 0) {
        return false;
     } else {
-      
-       if (n % 10 == digit) {
-          cout << " n "<< n << " digit "<< digit << " pos "<< pos << " vistedPos " << visitedPos[pos] <<endl;
-          visitedPos[digit] = true;
+      /*
+         m 11432
+         n 12433
+           10110
+      */
+     cout << " digit inside "<< digit <<" pos "<<pos<<  " currpos "<< currpos <<endl;
+       if (n % 10 == digit && !visitedPos[pos] && !visitedPos[currpos] ) {
+          cout << "Equals == n "<< n << " digit "<< digit << " pos "<< pos << " currpos "<<currpos<<" vistedPos " << visitedPos[pos] <<endl;
+          visitedPos[pos] = true;
           return true;
        } else {
           //pos-=1;
-          return checkIfDigitApearsInNumberVisPos(n/10, digit, pos, visitedPos);
+          currpos-=1;
+          return checkIfDigitApearsInNumberVisPos(n/10, digit, pos, visitedPos, currpos);
        }
     }
 
