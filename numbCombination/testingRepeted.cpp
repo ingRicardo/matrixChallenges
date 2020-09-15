@@ -50,8 +50,12 @@ int tmpn =0;
 checkIfDigitApearsInNumberTestPosSingle(11432,tmpn,totc1, pos,visitedPos);
 int singlenum=0;
 pos=4;
-cout << "Tesing....."<<endl;
-testingTwoFunc(12433, singlenum, 11432,  pos,visitedPos);
+//cout << "Tesing....."<<endl;
+//testingTwoFunc(12433, singlenum, 11432,  pos,visitedPos);
+
+cout << "Testing mergingFunctiosv2.........." <<endl;
+int currpos =4, start=0, digit=0;
+merginFunctionsV2(start, 12433, digit, 11432, pos, visitedPos, currpos); 
 
     return 0;
 }
@@ -59,14 +63,18 @@ testingTwoFunc(12433, singlenum, 11432,  pos,visitedPos);
 int merginFunctionsV2(int start, int currentNumber, int &digit, int variableNumber,  int &pos, bool *visitedPos, int currpos)
 {
    int tmp = 0;
-   for (int p=4; p >-1; --p)
+   for (int x=3; x >-1; --x)
    {
-      tmp = currentNumber/10;
-      digit = tmp%10; 
+      currentNumber = currentNumber/10;
+      for (int p=4; p >-1; --p)
+      {
+        
+         digit = currentNumber%10; 
 
-      cout << " merginFunctions digit "<< digit << " pos "<< p <<endl;
-      checkIfDigitApearsInNumberVisPos(variableNumber, digit, p, visitedPos, currpos);
+         cout << " merginFunctionsV2 digit "<< digit << " pos "<< p <<endl;
+         checkIfDigitApearsInNumberVisPos(variableNumber, digit, p, visitedPos, currpos);
 
+      }
    }
    return 0;
 }
@@ -126,7 +134,7 @@ int checkIfDigitApearsInNumberVisPos(int n, int digit,int &pos,bool *visitedPos,
            10110
       */
      cout << " digit inside "<< digit <<" pos "<<pos<<  " currpos "<< currpos <<endl;
-       if (n % 10 == digit && !visitedPos[pos] && !visitedPos[currpos] ) {
+       if (n % 10 == digit && pos != currpos && !visitedPos[pos] && !visitedPos[currpos] ) {
           cout << "Equals == n "<< n << " digit "<< digit << " pos "<< pos << " currpos "<<currpos<<" vistedPos " << visitedPos[pos] <<endl;
           visitedPos[pos] = true;
           return true;
