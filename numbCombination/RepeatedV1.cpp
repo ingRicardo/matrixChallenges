@@ -4,6 +4,7 @@ using namespace std;
 int checkDigitEqualsInSamePosition(int n, int m, int totc1, int &pos, bool *visitedPos, bool *visitedPosV2);
 int checkIfDigitApearsInNumberVisPos(int totDiffPos, int n, int digit, int &pos,bool *visited, int currpos);
 int merginFunctionsV2( int currentNumber, int &digit, int variableNumber,  int &pos, bool *visitedPos, bool *visitedPosV2, int currpos);
+int testingByone(int currentNumber, int digit, int currpos,  int pos, bool *visitedPos, int totnum);
 
 int main()
 {
@@ -28,8 +29,18 @@ int main()
     }
     cout << endl;
     //cout << "Testing mergingFunctiosv2.........." <<endl;
-    int currpos =4, digit=0;
-    cout << " tota diff pos => "<<merginFunctionsV2( a, digit, b, pos, visitedPos, visitedPosV2, currpos)<<endl; 
+    int currpos =4, digit=b;
+    //cout << " tota diff pos => "<<merginFunctionsV2( a, digit, b, pos, visitedPos, visitedPosV2, currpos)<<endl; 
+   int rem, posVariable=4, totnum=0;
+   for (int i = 0; i < 5; i++) {
+      rem = digit %10;
+      digit = digit / 10;
+      cout << rem << " => " <<posVariable << endl;
+      totnum = testingByone(a, rem, currpos, posVariable, visitedPos,totnum);
+      posVariable--;
+   }
+   cout << "totnum => "<< totnum <<endl;
+   //testingByone(a, rem, b,  pos, visitedPos,visitedPosV2,currpos);
 
    for (int i=0; i<5; i++)
     {
@@ -57,6 +68,28 @@ int checkDigitEqualsInSamePosition(int n, int m, int totSamePos, int &pos, bool 
            pos-=1;
           return checkDigitEqualsInSamePosition(n/10, m/10,totSamePos, pos, visitedPos, visitedPosV2);
     }
+}
+
+
+
+
+int testingByone(int currentNumber, int digit,  int currpos, int pos, bool *visitedPos, int totnum)
+{
+
+   if (currentNumber == 0 ) {
+       return totnum;
+    } else {
+       if ( currentNumber%10 == digit && !visitedPos[pos]) {
+         
+         cout << " equals " << digit << " pos "<< pos << " currpos "<< currpos<< endl;
+         visitedPos[pos] = true;
+         visitedPos[currpos] = true;
+         totnum++;
+       } 
+          currpos-=1;
+          return  testingByone(currentNumber/10, digit,  currpos, pos, visitedPos, totnum);
+    }
+
 }
 
 
