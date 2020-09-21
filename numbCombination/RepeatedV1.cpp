@@ -4,7 +4,7 @@ using namespace std;
 int checkDigitEqualsInSamePosition(int n, int m, int totc1, int &pos, bool *visitedPos, bool *visitedPosV2);
 int checkIfDigitApearsInNumberVisPos(int totDiffPos, int n, int digit, int &pos,bool *visited, int currpos);
 int merginFunctionsV2( int currentNumber, int &digit, int variableNumber,  int &pos, bool *visitedPos, bool *visitedPosV2, int currpos);
-int testingByone(int currentNumber, int digit, int currpos,  int pos, bool *visitedPos, int totnum);
+int testingByone(int currentNumber, int digit, int currpos,  int pos, bool *visitedPos, bool *visitedPosV2, int totnum);
 
 int main()
 {
@@ -15,8 +15,8 @@ int main()
        visitedPos[i] = false;
        visitedPosV2[i] = false;
     }
-    int totSamePos =0, pos=4, a = 13456, b=33516 ;
-    cout << " a "<< a <<endl << " b "<< b <<endl;
+    int totSamePos =0, pos=4, a = 67677, b=76766 ;
+    cout << " current "<< a <<endl << " variable "<< b <<endl;
     cout << " total same pos => "<<checkDigitEqualsInSamePosition(a, b, totSamePos,pos,visitedPos,visitedPosV2)<<endl;
     for (int i=0; i<5; i++)
     {
@@ -36,10 +36,10 @@ int main()
       rem = digit %10;
       digit = digit / 10;
       cout << rem << " => " <<posVariable << endl;
-      totnum = testingByone(a, rem, currpos, posVariable, visitedPos,totnum);
+      totnum = testingByone(a, rem, currpos, posVariable, visitedPos,visitedPosV2,totnum);
       posVariable--;
    }
-   cout << "totnum => "<< totnum <<endl;
+   cout << "totnum diff pos => "<< totnum <<endl;
    //testingByone(a, rem, b,  pos, visitedPos,visitedPosV2,currpos);
 
    for (int i=0; i<5; i++)
@@ -73,21 +73,23 @@ int checkDigitEqualsInSamePosition(int n, int m, int totSamePos, int &pos, bool 
 
 
 
-int testingByone(int currentNumber, int digit,  int currpos, int pos, bool *visitedPos, int totnum)
+int testingByone(int currentNumber, int digit,  int currpos, int pos, bool *visitedPos,bool *visitedPosV2, int totnum)
 {
 
    if (currentNumber == 0 ) {
        return totnum;
     } else {
-       if ( currentNumber%10 == digit && !visitedPos[pos]) {
+        //cout <<"current "<< currentNumber%10 << " currpos "<< currpos <<" isCurrposVisited "<<  visitedPos[currpos]<<endl;
+        //cout <<" digit "<< digit << " pos "<< pos <<" isPosVisited "<<  visitedPosV2[pos]<<endl;
+        if ( currentNumber%10 == digit && !visitedPos[pos] && !visitedPosV2[currpos]) {
          
          cout << " equals " << digit << " pos "<< pos << " currpos "<< currpos<< endl;
          visitedPos[pos] = true;
-         visitedPos[currpos] = true;
+         visitedPosV2[currpos] = true;
          totnum++;
        } 
           currpos-=1;
-          return  testingByone(currentNumber/10, digit,  currpos, pos, visitedPos, totnum);
+          return  testingByone(currentNumber/10, digit,  currpos, pos, visitedPos, visitedPosV2, totnum);
     }
 
 }
