@@ -37,6 +37,66 @@ int checkDigitEqualsInSamePosition(int a, int b, int &total_c, int &pos, bool *&
     }
 }
 
+void operationArr(int *bi, int *ci, int *di, int size)
+{
+    bool *visiteda = new bool[size];
+    bool *visitedb = new bool[size];
+    for(int i=0; i<size; ++i)
+    {
+        visiteda[i] = false;
+        visitedb[i] = false;
+    }
+
+
+    for (int a =10000; a< 100000; ++a)
+    {
+        bool match = true;
+        for(int x =0; x< size; ++x)
+        {
+            int total_c=0, total_d =0,pos=4; 
+            total_c = checkDigitEqualsInSamePosition(a, bi[x], total_c,pos,visiteda,visitedb);
+        
+            int currpos =4, digit=bi[x];
+            //cout << " tota diff pos => "<<merginFunctionsV2( a, digit, b, pos, visitedPos, visitedPosV2, currpos)<<endl; 
+            int rem, posVariable=4;
+            for (int i = 0; i < size; i++) {
+                rem = digit %10;
+                digit = digit / 10;
+            // cout << rem << " => " <<posVariable << endl;
+                total_d = checkDigitEqualsInDiffPosition(a, rem, currpos, posVariable, visiteda,visitedb,total_d);
+                posVariable--;
+            }
+
+            for(int i=0; i<size; ++i)
+            {
+                visiteda[i] = false;
+                visitedb[i] = false;
+            }
+
+            if (total_c == ci[x] && total_d == di[x])
+            {  
+               continue;
+            }
+            else
+            {
+                match = false;
+                break;
+            }
+            
+        }
+        if(match)
+            cout << a <<endl;
+        
+        
+
+    }
+
+
+
+
+     
+}
+
 void operation(int b, int c, int d)
 {
     bool *visiteda = new bool[5];
@@ -110,14 +170,21 @@ int main()
         cin >> st;
         cout << " "<< st<<endl;
         int b,c,d;
-        for(int i=1; i <=1; ++i)
+        int *bi = new int[st];
+        int *ci = new int[st];
+        int *di = new int[st];
+        for(int i=0; i <st; ++i)
         {
-
+            
             cin >> b;cin >> c; cin>>d;
-            cout << b << " " << c << " "<< d <<endl;
-            operation(b, c,  d);
+            bi[i] = b;
+            ci[i] = c;
+            di[i] = d;
+         //   cout << b << " " << c << " "<< d <<endl;
+            //operation(b, c,  d);
+           
         }
-    
+         operationArr(bi, ci, di, st);
 
     }
 
