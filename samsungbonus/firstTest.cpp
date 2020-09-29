@@ -1,15 +1,13 @@
 #include <iostream>
 using namespace std;
 
-
   struct node
   {
     int data;
     node *next;
   };	
 
-
-    class list
+  class list
   {
     private:
     node *head, *tail;
@@ -20,7 +18,7 @@ using namespace std;
       tail=NULL;
     }
 
-  void createnode(int value)
+    void createnode(int value)
     {
       node *temp=new node;
       temp->data=value;
@@ -38,33 +36,80 @@ using namespace std;
       }
     }
 
-
-  void display()
-  {
-    node *temp=new node;
-    temp=head;
-    while(temp!=NULL)
+    void display()
     {
-      cout<<temp->data<<"\t";
-      temp=temp->next;
+      node *temp=new node;
+      temp=head;
+      while(temp!=NULL)
+      {
+        cout<<temp->data<<"\t";
+        temp=temp->next;
+      }
+    } 
+
+    int getPriority()
+    {
+      node *temp=new node;
+      temp=head; int prio=0;
+      while(temp!=NULL)
+      {
+        if (temp->data < -2) prio =1;
+        else prio=2;
+        temp=temp->next;
+      }
+      return prio;
     }
-  } 
+
+
+    bool AreAllBalls()
+    {
+      node *temp=new node;
+      temp=head;
+      while(temp!=NULL)
+      {
+        if (temp->data < 0) return false;
+        temp=temp->next;
+      }
+      return true;
+    } 
+
+    bool Has2AtMostOperatorBalls()
+    {
+      node *temp=new node;
+      temp=head;int opera=0;
+      while(temp!=NULL)
+      {
+        if (temp->data < 0) opera++;
+        temp=temp->next;
+      }
+      if (opera > 0 && opera <= 2) return true;
+      return false;
+    } 
+  
+    bool hasMoreBalls()
+    {
+      node *temp=new node;
+      temp=head;
+      int balls=0,opera=0;
+      while(temp!=NULL)
+      {
+        if (temp->data >0) balls++;
+        else opera++;
+        temp=temp->next;
+      }
+      if(balls > opera)
+          return true;
+      return false;
+    } 
+
     bool ExpreVal()
     {
         node *temp=new node;
         temp=head; 
-        if (temp == NULL || temp->data < 0 )
-        {
-            return false;
-        }
-        if (tail == NULL || tail->data < 0)
-        {
-            return false;
-        }
-            
+        if (temp == NULL || temp->data < 0 ) return false;
+        if (tail == NULL || tail->data < 0) return false;
         if (temp != NULL && temp->data >0)
         {
-
             int current;
             while(temp!=NULL)
             {
@@ -73,25 +118,22 @@ using namespace std;
                 temp=temp->next;
                 if(current < 0 && temp->data < 0)
                     return false;    
-                        
             }
         }
         return true;        
     }
-
   };	
 
-list  populateList(list lt, int arr[], int size)
-{
-
-    int i,j;
-    for(i=0; i<size; i++)
-    {
-      //  cout<< " "<< arr[i];
-        lt.createnode(arr[i]);
-    }
-    return lt;
-}
+  list  populateList(list lt, int arr[], int size)
+  {
+      int i,j;
+      for(i=0; i<size; i++)
+      {
+        //  cout<< " "<< arr[i];
+          lt.createnode(arr[i]);
+      }
+      return lt;
+  }
 
 //function to print the array
 void printarray(int arr[], int size)
@@ -121,7 +163,13 @@ void permutation(int *arr, int start, int end)
         printarray(arr, end+1);
         ls.display();
         cout<<endl;
-        cout << ls.ExpreVal()<<endl;
+        cout << "The expresion is valid -> "<< ls.ExpreVal()<<endl;
+        if (ls.ExpreVal() && ls.hasMoreBalls() && ls.Has2AtMostOperatorBalls())
+          cout <<" priority -> "<<  ls.getPriority()<<endl;
+
+        cout << "has more balls -> "<<ls.hasMoreBalls()<<endl;
+        cout << "has at most 2 operator balls -> "<< ls.Has2AtMostOperatorBalls()<<endl;
+        cout << "Are all just balls -> "<< ls.AreAllBalls()<<endl;
         return;
     }
     int i;
