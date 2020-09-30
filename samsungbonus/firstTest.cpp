@@ -47,6 +47,67 @@ using namespace std;
       }
     } 
 
+    void operaPrio2()
+    {
+      node *temp=new node;
+      temp=head;
+      int currentVal=0,oper=0,nextVal=0;
+      while(temp!=NULL)
+      {
+        currentVal = temp->data;
+        cout<<temp->data<<"\t";
+        temp=temp->next;
+        if (currentVal < 0)
+            oper = currentVal;
+        if (temp->data > 0)
+            nextVal = currentVal;
+        if (oper == 0)
+        {
+
+        }
+        
+      }
+    } 
+
+    int operation(int prio)
+    {
+      int res =0;
+      if (prio == 1)
+      {
+      }
+      else if (prio == 2)
+      {
+        /*
+          4	-2	8 = 8-4 =4
+          8	-2	4 = 4-8 =-4
+        */
+       reverse();
+       cout << " print in reverse order -> ";
+       display();
+       cout<<endl;
+      }
+
+      return res;
+    }
+        /* Function to reverse the linked list */
+    void reverse() 
+    { 
+        // Initialize current, previous and 
+        // next pointers 
+        node* current = head; 
+        node *prev = NULL, *next = NULL; 
+        while (current != NULL) { 
+            // Store next 
+            next = current->next; 
+            // Reverse current node's pointer 
+            current->next = prev; 
+            // Move pointers one position ahead. 
+            prev = current; 
+            current = next; 
+        } 
+        head = prev; 
+    } 
+
     int getPriority()
     {
       node *temp=new node;
@@ -161,15 +222,23 @@ void permutation(int *arr, int start, int end)
         list ls;
         ls =  populateList(ls,arr, end+1);
         printarray(arr, end+1);
-        ls.display();
-        cout<<endl;
-        cout << "The expresion is valid -> "<< ls.ExpreVal()<<endl;
+        //cout << "The expresion is valid -> "<< ls.ExpreVal()<<endl;
         if (ls.ExpreVal() && ls.hasMoreBalls() && ls.Has2AtMostOperatorBalls())
+        {
+          cout << "The expresion is valid -> "<< ls.ExpreVal()<<endl;
+          ls.display();
+          cout<<endl;
           cout <<" priority -> "<<  ls.getPriority()<<endl;
-
-        cout << "has more balls -> "<<ls.hasMoreBalls()<<endl;
-        cout << "has at most 2 operator balls -> "<< ls.Has2AtMostOperatorBalls()<<endl;
-        cout << "Are all just balls -> "<< ls.AreAllBalls()<<endl;
+          cout << " has more balls -> "<<ls.hasMoreBalls()<<endl;
+          cout << " has at most 2 operator balls -> "<< ls.Has2AtMostOperatorBalls()<<endl;
+          cout << " Are all just balls -> "<< ls.AreAllBalls()<<endl;
+          ls.operation(ls.getPriority());
+         // ls.reverse();
+         // cout << " print in reverse order -> ";
+        //  ls.display();
+        //  cout<<endl;
+        }
+    
         return;
     }
     int i;
