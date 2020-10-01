@@ -47,25 +47,21 @@ using namespace std;
       }
     } 
 
-    void operaPrio2()
+    void operaDetail()
     {
       node *temp=new node;
       temp=head;
-      int currentVal=0,oper=0,nextVal=0;
+      
       while(temp!=NULL)
       {
-        currentVal = temp->data;
+       
+        if(temp->data < 0)
+        {
+          //is an operator
+        }
         cout<<temp->data<<"\t";
         temp=temp->next;
-        if (currentVal < 0)
-            oper = currentVal;
-        if (temp->data > 0)
-            nextVal = currentVal;
-        if (oper == 0)
-        {
-
-        }
-        
+       
       }
     } 
 
