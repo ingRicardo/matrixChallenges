@@ -47,22 +47,68 @@ using namespace std;
       }
     } 
 
+    int getSize()
+    {
+      node *temp=new node;
+      temp=head;
+      int s =0;
+      while(temp!=NULL)
+      {
+        s++;
+        temp=temp->next;
+      }
+      return s;
+    } 
+
+
     void operaDetail()
     {
       node *temp=new node;
       temp=head;
-      
+      int current=0, acc=-1,opr=0,next=0,res=0;
       while(temp!=NULL)
       {
-       
-        if(temp->data < 0)
+        current = temp->data; 
+        //cout<<temp->data<<"\t";
+        temp=temp->next;
+        next = temp->data;
+        if(current < 0)
         {
           //is an operator
+          opr = current;
+        }else {
+          if (acc == -1)
+              acc = current;
+          else
+            acc = acc * 10 + current;
         }
-        cout<<temp->data<<"\t";
-        temp=temp->next;
+
+        if (next < 0)
+        {
+          opr = next;
+        }
+        else
+        {
+          if (acc == -1)
+              acc = next;
+          else
+            acc = acc * 10 + next;
+        }
+        if(acc > -1 && opr < 0)
+        {
+          cout << " close to oper "<<endl;
+            if(temp != NULL  )
+            {
+              cout << " enter "<<endl;
+              if ( opr == -1) res = res + (acc + temp->next->data);
+              else if ( opr == -2) res = res + (acc - temp->next->data);
+              else if ( opr == -3) res = res + (acc * temp->next->data);
+              else if ( opr == -4) res = res + (acc / temp->next->data);
+            }
+        }
        
       }
+      cout << "-> "<<res<<endl;
     } 
 
     int operation(int prio)
@@ -82,7 +128,7 @@ using namespace std;
        display();
        cout<<endl;
       }
-
+      operaDetail();
       return res;
     }
         /* Function to reverse the linked list */
@@ -255,6 +301,7 @@ int * arr = new int[3];
 arr[0] = 4;
 arr[1] = 8;
 arr[2] = -2;
+bool *visited = new bool[10];
 
    //calling permutation function
     permutation(arr, 0, 3-1);
