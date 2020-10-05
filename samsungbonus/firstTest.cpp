@@ -65,9 +65,10 @@ using namespace std;
     {
       node *temp=new node;
       temp=head;
-      int current=0, acc=-1,opr=0,next=0,res=0;
+      int current=0, acc=-1,opr=0,next=0,res=0,checkSize=0;
       while(temp!=NULL)
       {
+        checkSize++;
         current = temp->data; 
         //cout<<temp->data<<"\t";
         temp=temp->next;
@@ -76,30 +77,45 @@ using namespace std;
         {
           //is an operator
           opr = current;
-        }else {
+        }else if(current >0)
+        {
+          if (acc >- 1)
+            acc = acc * 10 + current;
+        }
+         if (next < 0)
+         {
+          opr = next;
+         } else if (next > 0)
+         {
+           acc = next;
+
+            if (acc >- 1)
+              acc = acc * 10 + next;
+          /*
           if (acc == -1)
               acc = current;
           else
             acc = acc * 10 + current;
-        }
 
-        if (next < 0)
-        {
-          opr = next;
-        }
-        else
-        {
-          if (acc == -1)
-              acc = next;
+          if (next < 0)
+          {
+            opr = next;
+          }
           else
-            acc = acc * 10 + next;
+          {
+            if (acc == -1)
+                acc = next;
+            else
+              acc = acc * 10 + next;
+          }
+          */
         }
         if(acc > -1 && opr < 0)
         {
-          cout << " close to oper "<<endl;
+          cout << " close to oper "<<opr<< " acc "<< acc << endl;
             if(temp != NULL  )
             {
-              cout << " enter "<<endl;
+              cout << " enter "<< getSize()<<  endl;
               if ( opr == -1) res = res + (acc + temp->next->data);
               else if ( opr == -2) res = res + (acc - temp->next->data);
               else if ( opr == -3) res = res + (acc * temp->next->data);
