@@ -65,7 +65,7 @@ using namespace std;
     {
       node *temp=new node;
       temp=head;
-      int current=0, acc=-1,opr=0,next=0,res=0,checkSize=0;
+      int current=0, acc=-1,opr=0,next=-6,res=0,checkSize=0;
       while(temp!=NULL)
       {
         checkSize++;
@@ -73,24 +73,29 @@ using namespace std;
         //cout<<temp->data<<"\t";
         temp=temp->next;
         next = temp->data;
+
+        cout << "=== current => "<< current << " next => "<< next << " acc => "<<acc<<endl;
         if(current < 0)
         {
           //is an operator
           opr = current;
-        }else if(current >0)
+        }else if(current >=0 )
         {
-          if (acc >- 1)
+          if (acc == -1 ) acc=0;
             acc = acc * 10 + current;
+            cout << " current good  => "<<current<<" acc " <<acc<<endl; 
         }
          if (next < 0)
          {
           opr = next;
          } else if (next > 0)
          {
-           acc = next;
+         //  acc = next;
 
-            if (acc >- 1)
+          if (current > -1)
               acc = acc * 10 + next;
+
+               cout << " next good  => "<<next<< " acc "<< acc<<endl; 
           /*
           if (acc == -1)
               acc = current;
@@ -115,7 +120,7 @@ using namespace std;
           cout << " close to oper "<<opr<< " acc "<< acc << endl;
             if(temp != NULL  )
             {
-              cout << " enter "<< getSize()<<  endl;
+              cout << " enter "<< getSize()<< " current "<<current << " next "<<next<< " acc "<<acc<<endl;
               if ( opr == -1) res = res + (acc + temp->next->data);
               else if ( opr == -2) res = res + (acc - temp->next->data);
               else if ( opr == -3) res = res + (acc * temp->next->data);
